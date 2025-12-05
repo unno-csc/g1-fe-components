@@ -68,95 +68,89 @@ export const getProgramActionsbyPath = (path: string, module: IModule): IProgram
 	};
 
 	const targetPath: string = path;
-	const normalizedTarget = extractPathname(targetPath);
-	console.log('getProgramActionsbyPath: buscando path:', targetPath, 'normalizado:', normalizedTarget);
+	// const normalizedTarget = extractPathname(targetPath);
 
 	const submodules = module.submodules ?? [];
-	console.log('getProgramActionsbyPath: submodules encontrados:', submodules.length);
 	
 	for (const submodule of submodules) {
-		console.log('getProgramActionsbyPath: revisando submodule:', submodule.name, 'id:', submodule.id);
 		
 		// 1) Buscar en programs del submódulo
 		const programs = submodule.programs;
 		if (programs && programs.length > 0) {
-			console.log('getProgramActionsbyPath: programas directos encontrados:', programs.length);
 			for (const program of programs) {
 				const url = program.url ? program.url : undefined;
 				const programPath = program.path ? program.path : undefined;
-				console.log('getProgramActionsbyPath: programa:', program.name, 'url:', url, 'path:', programPath);
 				
 				// Buscar tanto en url como en path
 				const urlMatch = url && typeof url === 'string' && url.length > 0 && matchesPath(url, targetPath);
 				const pathMatch = programPath && typeof programPath === 'string' && programPath.length > 0 && matchesPath(programPath, targetPath);
 				
 				if (urlMatch || pathMatch) {
-					console.log('getProgramActionsbyPath: MATCH encontrado en programa:', program.name, 'urlMatch:', urlMatch, 'pathMatch:', pathMatch);
 					if (program.actions) {
 						return { actions: program.actions, program: program };
-					} else {
-						console.log('getProgramActionsbyPath: programa encontrado pero sin actions');
-					}
-				} else {
-					// Log detallado cuando no hay match para debugging
-					if (url) {
-						const urlNormalized = extractPathname(url);
-						const targetNormalized = extractPathname(targetPath);
-						console.log(`getProgramActionsbyPath: NO match URL - programa: "${urlNormalized}" vs buscado: "${targetNormalized}"`);
-					}
-					if (programPath) {
-						const pathNormalized = extractPathname(programPath);
-						const targetNormalized = extractPathname(targetPath);
-						console.log(`getProgramActionsbyPath: NO match PATH - programa: "${pathNormalized}" vs buscado: "${targetNormalized}"`);
-					}
-				}
+					} 
+					// else {
+					// 	console.log('getProgramActionsbyPath: programa encontrado pero sin actions');
+					// }
+				} 
+				// else {
+				// 	// Log detallado cuando no hay match para debugging
+				// 	if (url) {
+				// 		const urlNormalized = extractPathname(url);
+				// 		const targetNormalized = extractPathname(targetPath);
+				// 		console.log(`getProgramActionsbyPath: NO match URL - programa: "${urlNormalized}" vs buscado: "${targetNormalized}"`);
+				// 	}
+				// 	if (programPath) {
+				// 		const pathNormalized = extractPathname(programPath);
+				// 		const targetNormalized = extractPathname(targetPath);
+				// 		console.log(`getProgramActionsbyPath: NO match PATH - programa: "${pathNormalized}" vs buscado: "${targetNormalized}"`);
+				// 	}
+				// }
 			}
 		}
 
 		// 2) Buscar en groups -> programs
 		const groups = submodule.groups;
 		if (groups && groups.length > 0) {
-			console.log('getProgramActionsbyPath: grupos encontrados:', groups.length);
 			for (const group of groups) {
 				const groupPrograms = group.programs;
 				if (groupPrograms && groupPrograms.length > 0) {
-					console.log('getProgramActionsbyPath: programas en grupo', group.name, ':', groupPrograms.length);
+					
 					for (const program of groupPrograms) {
 						const url = program.url ? program.url : undefined;
 						const programPath = program.path ? program.path : undefined;
-						console.log('getProgramActionsbyPath: programa en grupo:', program.name, 'url:', url, 'path:', programPath);
 						
 						// Buscar tanto en url como en path
 						const urlMatch = url && typeof url === 'string' && url.length > 0 && matchesPath(url, targetPath);
 						const pathMatch = programPath && typeof programPath === 'string' && programPath.length > 0 && matchesPath(programPath, targetPath);
 						
 						if (urlMatch || pathMatch) {
-							console.log('getProgramActionsbyPath: MATCH encontrado en programa del grupo:', program.name, 'urlMatch:', urlMatch, 'pathMatch:', pathMatch);
+							
 							if (program.actions) {
 								return { actions: program.actions, program: program };
-							} else {
-								console.log('getProgramActionsbyPath: programa encontrado pero sin actions');
-							}
-						} else {
-							// Log detallado cuando no hay match para debugging
-							if (url) {
-								const urlNormalized = extractPathname(url);
-								const targetNormalized = extractPathname(targetPath);
-								console.log(`getProgramActionsbyPath: NO match URL (grupo) - programa: "${urlNormalized}" vs buscado: "${targetNormalized}"`);
-							}
-							if (programPath) {
-								const pathNormalized = extractPathname(programPath);
-								const targetNormalized = extractPathname(targetPath);
-								console.log(`getProgramActionsbyPath: NO match PATH (grupo) - programa: "${pathNormalized}" vs buscado: "${targetNormalized}"`);
-							}
-						}
+							} 
+							// else {
+							// 	console.log('getProgramActionsbyPath: programa encontrado pero sin actions');
+							// }
+						} 
+						// else {
+						// 	// Log detallado cuando no hay match para debugging
+						// 	if (url) {
+						// 		const urlNormalized = extractPathname(url);
+						// 		const targetNormalized = extractPathname(targetPath);
+						// 		console.log(`getProgramActionsbyPath: NO match URL (grupo) - programa: "${urlNormalized}" vs buscado: "${targetNormalized}"`);
+						// 	}
+						// 	if (programPath) {
+						// 		const pathNormalized = extractPathname(programPath);
+						// 		const targetNormalized = extractPathname(targetPath);
+						// 		console.log(`getProgramActionsbyPath: NO match PATH (grupo) - programa: "${pathNormalized}" vs buscado: "${targetNormalized}"`);
+						// 	}
+						// }
 					}
 				}
 			}
 		}
 	}
-
-	console.log('getProgramActionsbyPath: NO se encontró ningún programa que coincida');
 	return undefined;
 };
 

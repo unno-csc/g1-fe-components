@@ -6,22 +6,13 @@ import { DEFAULT_PAGINATION_CONFIG } from '../../constants';
 import { useTable } from '../../hooks/useTable/useTable';
 import { ITableColumnAction, TStrictTableColumnsType } from '../../types';
 import { ColumnsType, TablePaginationConfig } from 'antd/es/table';
+import { SorterResult, FilterValue } from 'antd/es/table/interface';
 
 export type ITablePersonData = {
 	id: number;
 	name: string;
 	age: number;
 	address: string;
-	testColumnOne: string;
-	testColumnTwo: string;
-	testColumnThree: string;
-	testColumnFour: string;
-	testColumnFive: string;
-	testColumnSix: string;
-	testColumnSeven: string;
-	testColumnEight: string;
-	testColumnNine: string;
-	testColumnTen: string;
 };
 
 export const sampleData: ITablePersonData[] = [
@@ -30,101 +21,91 @@ export const sampleData: ITablePersonData[] = [
 		name: 'Jim Green',
 		age: 32,
 		address: 'New York No. 1 Lake Park',
-		testColumnOne: 'Test Column One Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnTwo: 'Test Column Two Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnThree: 'Test Column Three Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnFour: 'Test Column Four Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnFive: 'Test Column Five Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnSix: 'Test Column Six Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnSeven: 'Test Column Seven Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnEight: 'Test Column Eight Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnNine: 'Test Column Nine Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
-		testColumnTen: 'Test Column Ten Value 1 Value 2 Value 3 Value 4 Value 5 Value 6 Value 7 Value 8 Value 9 Value 10',
 	},
-	// {
-	// 	id: 2,
-	// 	name: 'Jim Greens',
-	// 	age: 42,
-	// 	address: 'London No. 1 Lake Park',
-	// },
-	// {
-	// 	id: 3,
-	// 	name: 'Joe Black',
-	// 	age: 32,
-	// 	address: 'Sydney No. 1 Lake Park',
-	// },
-	// {
-	// 	id: 4,
-	// 	name: 'Jim Red',
-	// 	age: 28,
-	// 	address: 'London No. 2 Lake Park',
-	// },
-	// {
-	// 	id: 5,
-	// 	name: 'John Smith',
-	// 	age: 45,
-	// 	address: 'New York No. 5 West Street',
-	// },
-	// {
-	// 	id: 6,
-	// 	name: 'Joe White',
-	// 	age: 25,
-	// 	address: 'Sydney No. 3 East Road',
-	// },
-	// {
-	// 	id: 7,
-	// 	name: 'Jim Blue',
-	// 	age: 38,
-	// 	address: 'London No. 4 North Avenue',
-	// },
-	// {
-	// 	id: 8,
-	// 	name: 'John Wilson',
-	// 	age: 50,
-	// 	address: 'New York No. 7 South Lane',
-	// },
-	// {
-	// 	id: 9,
-	// 	name: 'Mike Johnson',
-	// 	age: 35,
-	// 	address: 'Chicago No. 10 Main St',
-	// },
-	// {
-	// 	id: 10,
-	// 	name: 'Sarah Davis',
-	// 	age: 29,
-	// 	address: 'Boston No. 15 Oak Ave',
-	// },
-	// {
-	// 	id: 11,
-	// 	name: 'Tom Miller',
-	// 	age: 41,
-	// 	address: 'Miami No. 20 Beach Blvd',
-	// },
-	// {
-	// 	id: 12,
-	// 	name: 'Lisa Garcia',
-	// 	age: 33,
-	// 	address: 'Seattle No. 25 Pine St',
-	// },
-	// {
-	// 	id: 13,
-	// 	name: 'David Rodriguez',
-	// 	age: 47,
-	// 	address: 'Denver No. 30 Mountain Rd',
-	// },
-	// {
-	// 	id: 14,
-	// 	name: 'Emily Taylor',
-	// 	age: 26,
-	// 	address: 'Portland No. 35 River Way',
-	// },
-	// {
-	// 	id: 15,
-	// 	name: 'Chris Martinez',
-	// 	age: 39,
-	// 	address: 'Atlanta No. 40 Peach St',
-	// },
+	{
+		id: 2,
+		name: 'Jim Greens',
+		age: 42,
+		address: 'London No. 1 Lake Park',
+	},
+	{
+		id: 3,
+		name: 'Joe Black',
+		age: 32,
+		address: 'Sydney No. 1 Lake Park',
+	},
+	{
+		id: 4,
+		name: 'Jim Red',
+		age: 28,
+		address: 'London No. 2 Lake Park',
+	},
+	{
+		id: 5,
+		name: 'John Smith',
+		age: 45,
+		address: 'New York No. 5 West Street',
+	},
+	{
+		id: 6,
+		name: 'Joe White',
+		age: 25,
+		address: 'Sydney No. 3 East Road',
+	},
+	{
+		id: 7,
+		name: 'Jim Blue',
+		age: 38,
+		address: 'London No. 4 North Avenue',
+	},
+	{
+		id: 8,
+		name: 'John Wilson',
+		age: 50,
+		address: 'New York No. 7 South Lane',
+	},
+	{
+		id: 9,
+		name: 'Mike Johnson',
+		age: 35,
+		address: 'Chicago No. 10 Main St',
+	},
+	{
+		id: 10,
+		name: 'Sarah Davis',
+		age: 29,
+		address: 'Boston No. 15 Oak Ave',
+	},
+	{
+		id: 11,
+		name: 'Tom Miller',
+		age: 41,
+		address: 'Miami No. 20 Beach Blvd',
+	},
+	{
+		id: 12,
+		name: 'Lisa Garcia',
+		age: 33,
+		address: 'Seattle No. 25 Pine St',
+	},
+	{
+		id: 13,
+		name: 'David Rodriguez',
+		age: 47,
+		address: 'Denver No. 30 Mountain Rd',
+	},
+	{
+		id: 14,
+		name: 'Emily Taylor',
+		age: 26,
+		address: 'Portland No. 35 River Way',
+	},
+	{
+		id: 15,
+		name: 'Chris Martinez',
+		age: 39,
+		address: 'Atlanta No. 40 Peach St',
+	},
 ];
 
 const sampleColumns: ColumnsType<ITablePersonData> = [
@@ -325,12 +306,12 @@ type Story = StoryObj<typeof meta>;
 const TableWithPaginationState = () => {
 	const { pagination, filters, sorter, onChangePagination } = useTable(DEFAULT_PAGINATION_CONFIG);
 
-	const newOnChangePagination = (pagination?: TablePaginationConfig) => {
+	const newOnChangePagination = (pagination?: TablePaginationConfig, filters?: Record<string, FilterValue | null>, sorter?: SorterResult<ITablePersonData> | SorterResult<ITablePersonData>[]) => {
 		onChangePagination(pagination);
 	}
 
 	return (
-		<div className="h-full flex flex-col bg-blue-200 gap-2">
+		<div className="h-full flex flex-col gap-2">
 			<div className="flex flex-col gap-2 border-1 border-gray-500 rounded-md h-auto">
 				<span>Test Current Page: {pagination.current}</span>
 				<span>Page Size: {pagination.pageSize}</span>
@@ -344,7 +325,7 @@ const TableWithPaginationState = () => {
 					bordered={false}
 					showPagination={true}
 					paginationConfig={{ ...pagination, total: sampleData.length }}
-					onChange={newOnChangePagination}
+					onChange={(pagination, filters, sorter) => newOnChangePagination(pagination, filters, sorter)}
 					rowKey={'id'}
 					showColumnActions={true}
 					columnActions={sampleColumnsWithActions}

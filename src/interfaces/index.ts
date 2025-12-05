@@ -60,9 +60,9 @@ export interface IValidateRouteResponse {
 import { EAddressType, EEmailType, EPhoneConnectionType, EPhoneType } from '@/enums';
 import { TDate, TInputOptions, TInputRules } from '@/types';
 import { SelectProps } from 'antd';
-import { FilterValue, SorterResult, TablePaginationConfig } from 'antd/es/table/interface';
+import { ColumnType, FilterValue, SortOrder, SorterResult, TablePaginationConfig } from 'antd/es/table/interface';
 import { Dayjs } from 'dayjs';
-import { ReactNode } from 'react';
+import { Key, ReactNode } from 'react';
 
 export interface IBaseInputProps {
 	name: string;
@@ -329,4 +329,13 @@ export interface DebounceSelectProps<ValueType = any>
 	extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
 	fetchOptions: (search: string) => Promise<ValueType[]>;
 	debounceTimeout?: number;
+}
+
+export interface ITableSorter<T extends object> extends SorterResult<T> {
+	column?: ColumnType<T>;
+	order?: SortOrder;
+	field?: Key | readonly Key[];
+	columnKey?: Key;
+	columnName?: string;
+	newOrder?: 'id' | '-id' | null;
 }
