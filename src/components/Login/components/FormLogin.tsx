@@ -17,7 +17,7 @@ export const FormLogin = <TFieldValues extends LoginFormValuesBase = LoginFormVa
 			<FormInput
 				name={"username" as Path<TFieldValues>}
 				label="Usuario"
-				placeholder="Ej. roberto.giler@tomebamba.com.ec"
+				placeholder="Ej. juan.pérez@unno-csc.ec"
 				control={control}
 				textTransform="none"
 			/>

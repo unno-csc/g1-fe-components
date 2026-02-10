@@ -7,7 +7,7 @@ import { ITableColumnAction, TStrictColumnType, TStrictTableColumnsType } from '
 import { MoreOutlined } from '@ant-design/icons';
 import { Table as AntTable, TableProps as AntTableProps, Button, Dropdown, TablePaginationConfig, Modal } from 'antd';
 import { ColumnsType, FilterValue, SorterResult, TableCurrentDataSource, TableLocale } from 'antd/es/table/interface';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import type { TableProps as RcTableProps } from 'rc-table';
 import { ISorterTable } from '@/interfaces';
 
@@ -31,6 +31,8 @@ export interface ITableProps<T extends object> {
 	scroll?: RcTableProps<T>['scroll'] & {
 		scrollToFirstRowOnChange?: boolean;
 	};
+	/** Controla si la selección debe ser única (radio) o múltiple (checkbox). */
+	selectionMode?: 'single' | 'multiple';
 	showColumnActions?: boolean;
 	columnActions?: ITableColumnAction<T>[];
 	getActionsDisabled?: (record: T) => boolean;
@@ -50,6 +52,7 @@ export const Table = <T extends object>({
 	onChange,
 	bordered = false,
 	rowSelection,
+	selectionMode = 'multiple',
 	showPagination = false,
 	paginationConfig = DEFAULT_PAGINATION_CONFIG,
 	scroll = TABLE_SCROLL,
@@ -67,7 +70,13 @@ export const Table = <T extends object>({
 	const currentAgency = useAppLayoutStore(state => state.currentAgency);
 	const finalPagination = showPagination ? paginationConfig : false;
 
-	const tableRootClassName = ['itsa-table--head-rounded', 'itsa-table-min-h-responsive', rootClassName]
+	const selectionClass = rowSelection
+		? selectionMode === 'single'
+			? 'itsa-radio--default'
+			: 'itsa-checkbox--default'
+		: null;
+
+	const tableRootClassName = ['itsa-table--head-rounded', 'itsa-table-min-h-responsive', selectionClass, rootClassName]
 		.filter(Boolean)
 		.join(' ');
 
@@ -239,6 +248,87 @@ export const Table = <T extends object>({
 
 	const tableColumns = finalColumns();
 
+	const getRowSelection = (): AntTableProps<T>['rowSelection'] => {
+		if (!rowSelection) return undefined;
+
+		const isSingleSelection = selectionMode === 'single';
+
+		const lastSingleSelectionKey =
+			isSingleSelection &&
+			Array.isArray(rowSelection.selectedRowKeys) &&
+			rowSelection.selectedRowKeys.length > 0
+				? rowSelection.selectedRowKeys[rowSelection.selectedRowKeys.length - 1]
+				: undefined;
+
+		const sanitizedSelectedRowKeys =
+			isSingleSelection && lastSingleSelectionKey !== undefined
+				? [lastSingleSelectionKey]
+				: rowSelection.selectedRowKeys;
+
+		const finalRowSelection: NonNullable<AntTableProps<T>['rowSelection']> = {
+			...rowSelection,
+			selectedRowKeys: sanitizedSelectedRowKeys,
+			type: isSingleSelection ? 'radio' : rowSelection.type ?? 'checkbox',
+		};
+
+		if (isSingleSelection && rowSelection.onChange) {
+			const originalOnChange = rowSelection.onChange;
+			finalRowSelection.onChange = (selectedRowKeys, selectedRows, info) => {
+				const lastKey = selectedRowKeys[selectedRowKeys.length - 1];
+				const lastRow = selectedRows[selectedRows.length - 1];
+
+				if (lastKey === undefined || !lastRow) {
+					originalOnChange([], [], info);
+					return;
+				}
+
+				originalOnChange([lastKey], [lastRow], info);
+			};
+		}
+
+		return finalRowSelection;
+	};
+
+	const resolvedRowSelection = getRowSelection();
+
+	const getRecordKey = (record: T): React.Key | undefined => {
+		if (typeof rowKey === 'function') return rowKey(record);
+		return (record as Record<string, React.Key | undefined>)[rowKey];
+	};
+
+	const isSelectionControlClick = (event: MouseEvent<HTMLElement>) => {
+		const target = event.target as HTMLElement | null;
+		if (!target) return false;
+		return !!target.closest('.ant-checkbox') || !!target.closest('.ant-radio');
+	};
+
+	const handleRowClick = (record: T) => (event: MouseEvent<HTMLElement>) => {
+		if (!resolvedRowSelection) return;
+		if (isSelectionControlClick(event)) return;
+
+		const recordKey = getRecordKey(record);
+		if (recordKey === undefined) return;
+
+		const isSingle = selectionMode === 'single';
+		const currentKeys = (resolvedRowSelection.selectedRowKeys as React.Key[] | undefined) ?? [];
+		const exists = currentKeys.includes(recordKey);
+
+		let nextKeys: React.Key[];
+		if (isSingle) {
+			nextKeys = exists ? [] : [recordKey];
+		} else {
+			nextKeys = exists ? currentKeys.filter(k => k !== recordKey) : [...currentKeys, recordKey];
+		}
+
+		const nextRows = data.filter(item => {
+			const key = getRecordKey(item);
+			return key !== undefined && nextKeys.includes(key);
+		});
+
+		resolvedRowSelection.onSelect?.(record, !exists, nextRows, event as unknown as Event);
+		resolvedRowSelection.onChange?.(nextKeys, nextRows, { type: isSingle ? 'single' : 'multiple' });
+	};
+
 	return (
 		<>
 			<AntTable<T>
@@ -247,7 +337,7 @@ export const Table = <T extends object>({
 				loading={loading}
 				size="small"
 				bordered={bordered}
-				rowSelection={rowSelection ? { type: 'checkbox', ...rowSelection } : undefined}
+				rowSelection={resolvedRowSelection}
 				onChange={handleChangePagination}
 				pagination={finalPagination}
 				scroll={getFinalScroll(tableColumns)}
@@ -299,6 +389,9 @@ export const Table = <T extends object>({
 						),
 					},
 				}}
+				onRow={record => ({
+				onClick: handleRowClick(record),
+				})}
 				rowHoverable={rowHoverable}
 			/>
 

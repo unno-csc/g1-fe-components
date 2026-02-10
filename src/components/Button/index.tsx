@@ -2,8 +2,8 @@ import { useControlActions } from '@/hooks';
 import { ButtonAntd } from '../ButtonAntd';
 import { ReactNode } from 'react';
 import { EActionType } from '@/enums';
-import { disabledActionButton } from '@/helpers/functions';
-import { useAppLayoutStore } from '@/store';
+import { isDisabledAction } from '@/helpers/functions';
+import { useAppLayoutStore, useUserActionPermissions } from '@/store';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus/useOnlineStatus';
 
 export interface IButtonProps {
@@ -21,27 +21,30 @@ export interface IButtonProps {
 	validateWithApiAction?: boolean;
 	showBtnDisabled?: boolean;
 	loading?: boolean;
+	allowEnterKey?: boolean;
 }
 
 export const Button = (props: IButtonProps) => {
 	const isOnline = useOnlineStatus();
 	const currentAgency = useAppLayoutStore(state => state.currentAgency);
-	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
-
-	const { width, block = false, actionType, validateWithApiAction = false, showBtnDisabled, loading = false } = props;
-	const { size = 'middle', type = 'primary', htmlType, label, disabled = false, onClick } = props;
-	const validateDisabled = disabled === true || isOnline === false;
+	const { programId, fnApiValidatePermissionAction } = useControlActions();
+	const { userActionPermissions } = useUserActionPermissions();
+	// const { width, block = false, actionType, validateWithApiAction = false, showBtnDisabled, loading = false } = props;
+	const { width, block = false, actionType, validateWithApiAction = false, loading = false } = props;
+	const { size = 'middle', type = 'primary', htmlType, label, disabled = false, onClick, allowEnterKey = false } = props;
+	const isDisabledByState = disabled === true || isOnline === false;
 	const sizeClass = size === 'small' ? 'itsa-btn--sm' : size === 'middle' ? 'itsa-btn--md' : 'itsa-btn--lg';
 	const variantClass = type === 'primary' ? 'itsa-btn--primary' : 'itsa-btn--secondary';
 	const defaultSecondaryClass = type === 'secondary' && props.default ? 'itsa-btn--default' : '';
 	const className = ['itsa-btn', sizeClass, variantClass, defaultSecondaryClass].filter(Boolean).join(' ');
 	const antdType: 'primary' | 'default' = type === 'primary' ? 'primary' : 'default';
 
-	const disabledClass = validateDisabled ? sizeClass + ' itsa-btn--disabled rounded-[12px]' : '';
+	const disabledClass = isDisabledByState ? [className, 'itsa-btn--disabled', 'rounded-[12px]'].join(' ') : '';
 
 	const labelContent = <span className="block w-full overflow-hidden text-ellipsis whitespace-nowrap">{label}</span>;
 
-	const isDisabledAction = validateDisabled === true ? true : disabledActionButton(actionType, actions);
+	const isActionForbidden = actionType ? isDisabledAction(userActionPermissions, actionType) : false;
+	const isDisabledActionButton = isDisabledByState || isActionForbidden;
 
 	const handleClick = async () => {
 		const agencyId = currentAgency?.id;
@@ -55,15 +58,15 @@ export const Button = (props: IButtonProps) => {
 			onClick?.();
 		}
 	};
-	const appliedClassName = isDisabledAction === true ? disabledClass : className;
+	const appliedClassName = isDisabledActionButton === true ? disabledClass : className;
 
-	if (actionType) {
-		if (isOnline === true) {
-			if (showBtnDisabled !== true && isDisabledAction) {
-				return null;
-			}
-		}
-	}
+	// if (actionType) {
+	// 	if (isOnline === true) {
+	// 		if (showBtnDisabled !== true && isActionForbidden) {
+	// 			return null;
+	// 		}
+	// 	}
+	// }
 
 	return (
 		<ButtonAntd
@@ -71,8 +74,14 @@ export const Button = (props: IButtonProps) => {
 			size={size}
 			type={antdType}
 			htmlType={htmlType}
-			disabled={isDisabledAction}
+			disabled={isDisabledActionButton}
 			onClick={handleClick}
+			onKeyDown={e => {
+				if (!allowEnterKey && e.key === 'Enter') {
+					e.preventDefault();
+					e.stopPropagation();
+				}
+			}}
 			block={block}
 			style={{ width: block ? '100%' : width ? `${width}%` : undefined }}
 			loading={loading}

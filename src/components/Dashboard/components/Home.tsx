@@ -132,10 +132,17 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 		});
 	};
 
+	const filterUpdatePrograms = (items: ISubmodule[] = []) => {
+		return items.filter(program => !(program.path ?? '').includes('/update'));
+	};
+
 	const contentSubmodule = (submodule: ISubmodule) => {
 		const query = (searchBySubmoduleId[submodule.id] ?? '').toLowerCase().trim();
-		const basePrograms = submodule.programs ?? [];
-		const baseGroups = submodule.groups ?? [];
+		const basePrograms = filterUpdatePrograms(submodule.programs ?? []);
+		const baseGroups = (submodule.groups ?? []).map(group => ({
+			...group,
+			programs: filterUpdatePrograms(group.programs ?? []),
+		}));
 
 		const visiblePrograms = query
 			? basePrograms.filter(program => program.name.toLowerCase().includes(query))

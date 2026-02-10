@@ -3,7 +3,7 @@ import { Title } from '../Title';
 import { useViewportStore } from '@/store/viewport.store';
 import { useViewportSize } from '@/hooks/useViewportSize/useViewportSize';
 import { FormLogin, LoginFormValuesBase } from './components/FormLogin';
-import { logoTomebambaNegro, login as loginImage } from '@/assets/images';
+import { logoMotor1, login1 as loginImage } from '@/assets/images';
 import type { FormEventHandler } from 'react';
 
 export interface ILogin<TFieldValues extends LoginFormValuesBase = LoginFormValuesBase> {
@@ -29,7 +29,7 @@ export const Login = <TFieldValues extends LoginFormValuesBase = LoginFormValues
 				<div className="flex flex-row rounded-2xl max-h-[481px] max-w-[840px] w-full shadow-xl/20 bg-white-100">
 					<div className="flex flex-col gap-4 justify-center items-center rounded-tl-2xl w-1/2 rounded-bl-2xl bg-transparent border-t border-l border-gray-200 shadow-l-md p-16">
 						<div>
-							<img src={logoTomebambaNegro} alt="logo" className="w-full h-full max-h-[50px] object-cover" />
+							<img src={logoMotor1} alt="logo" className="w-full h-full max-h-[50px] object-cover" />
 						</div>
 						<div>
 							<Title title="Iniciar sesión" level={4} />
@@ -48,7 +48,7 @@ export const Login = <TFieldValues extends LoginFormValuesBase = LoginFormValues
 					</div>
 					<div className="flex-1 flex flex-col gap-4 justify-center items-center rounded-tl-2xl rounded-tr-2xl -mt-5 bg-white relative z-10">
 						<div>
-							<img src={logoTomebambaNegro} alt="logo" className="w-full h-full max-h-[50px] object-cover" />
+							<img src={logoMotor1} alt="logo" className="w-full h-full max-h-[50px] object-cover" />
 						</div>
 						<div>
 							<Title title="Iniciar sesión" level={4} />

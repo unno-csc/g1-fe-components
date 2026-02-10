@@ -64,7 +64,7 @@ export const WithCustomColors: Story = {
 
 export const WithPrimaryColors: Story = {
 	args: {
-		activeBgColor: '#EA3B48',
+		activeBgColor: '#000000',
 		inactiveBgColor: '#D9DFE3',
 	},
 };

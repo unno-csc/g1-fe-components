@@ -1,7 +1,7 @@
 export const defaultTheme = {
 	palette: {
 		primary: {
-			main: '#EA3B48',
+			main: '#000000',
 			contrastText: '#000000',
 		},
 		secondary: {

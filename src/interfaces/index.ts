@@ -75,7 +75,7 @@ export interface IUserInformation {
 //--------------------------------------------------->
 // TODO: clean up this file after implementations starts
 import { EAddressType, EEmailType, EPhoneConnectionType, EPhoneType } from '@/enums';
-import { TDate, TInputOptions, TInputRules } from '@/types';
+import { TDate, TInputOptions, TInputRules, TTextTransform } from '@/types';
 import { SelectProps } from 'antd';
 import { FilterValue, SorterResult, TablePaginationConfig } from 'antd/es/table/interface';
 import { Dayjs } from 'dayjs';
@@ -288,7 +288,14 @@ export interface ILocationSelectorProps {
 	onChangeOtherCountryDescription: (value: string) => void;
 	otherCountryDescription: string;
 	showParish?: boolean;
+	showProvince?: boolean;
+	showCanton?: boolean;
 	aloneEcuador?: boolean;
+	allowClear?: boolean;
+	titleCountry?: string;
+	titleProvince?: string;
+	titleCanton?: string;
+	titleParish?: string;
 }
 
 export interface IUserRole {
@@ -393,22 +400,75 @@ export interface ITableDetailsColumn<T extends object> {
 	title: string;
 	dataIndex: keyof T | string | number;
 	key: string;
-	disabled?: boolean;
-	type?:
-		| 'text'
-		| 'number'
-		| 'percentage'
-		| 'select'
-		| 'money';
-
+	disabled?: boolean | ((record: T, index: number, column: ITableDetailsColumn<T>) => boolean);
+	type?: 'text' | 'number' | 'percentage' | 'select' | 'money';
+	/** Solo se usa en `type: 'select'` cuando el valor viene null/undefined. */
+	defaultValue?: string | number | ((record: T, index: number, column: ITableDetailsColumn<T>) => string | number);
+	textTransform?: TTextTransform;
 	maxDigits?: number;
 	options?: { label: string; value: string | number }[];
-	width?: string;
+	width?: number;
 	minWidth?: number;
 	min?: number;
+	maxWidth?: number;
 	actions?: {
 		onClick: () => void;
 	}[];
 	errorAccessor?: (record: T, column: ITableDetailsColumn<T>) => string | undefined;
 	errorKey?: keyof T | string;
+	display?: 'flex' | 'block';
+	render?: (value: any, record: T, index: number) => ReactNode;
+	fixed?: 'left' | 'right';
+}
+
+//test
+export interface IMapSelectionDetails {
+	principalStreet: string;
+	secondaryStreet: string;
+	streetNumber: string;
+	postalCode: string;
+	province: string;
+	canton: string;
+	parish: string;
+	country: string;
+}
+
+export interface IMapSelectionPlaceObject {
+	[key: string]: { long_name: string; short_name: string } | number | undefined;
+	lat: number;
+	long: number;
+	route?: { long_name: string; short_name: string };
+	intersection?: { long_name: string; short_name: string };
+}
+
+export interface IMapSelection {
+	lat: number;
+	lng: number;
+	address: string;
+	details: IMapSelectionDetails;
+	placeObject: IMapSelectionPlaceObject;
+	addressData: IAddressData;
+}
+
+export interface StackedCardData {
+	id: number | string;
+	content: ReactNode;
+	title?: string;
+	buttonTitle?: string;
+	onButtonClick?: () => void;
+	onRemoveClick?: () => void;
+	emptyMessage?: string;
+}
+export interface IActionsValidatePermission {
+	create: boolean;
+	update: boolean;
+	delete: boolean;
+	read: boolean;
+	allActions: boolean;
+	programId: number;
+	agencyId: number;
+	path: string;
+	pathParent: string;
+	moduleId: number;
+	submoduleId: number;
 }

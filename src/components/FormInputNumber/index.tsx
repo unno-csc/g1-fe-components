@@ -14,6 +14,8 @@ export interface IInputProps<TFieldValues extends FieldValues> extends Omit<Inpu
 	control: Control<TFieldValues>;
 	placeholder?: string;
 	disabled?: boolean;
+	suffix?: string;
+	prefix?: string;
 }
 
 const FormInputComponent = <TFieldValues extends FieldValues>({
@@ -23,6 +25,8 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	control,
 	placeholder,
 	disabled = false,
+	suffix,
+	prefix,
 }: IInputProps<TFieldValues>) => {
 	const id = useId();
 	const errId = `${id}-error`;
@@ -30,7 +34,10 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	const handleValueChange = (value: string, field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>) => {
 		const cleanValue = filterPositiveNumbersOnly(value);
 		if (cleanValue === '' || cleanValue === undefined || cleanValue === null) {
-			field.onChange(undefined);
+			// IMPORTANT:
+			// In react-hook-form, setting `undefined` may fall back to `defaultValues` (e.g. 100),
+			// causing the input to "re-populate" after clearing. Use `null` to keep it cleared.
+			field.onChange(null);
 		} else {
 			const numValue = Number(cleanValue);
 			field.onChange(isNaN(numValue) ? undefined : numValue);
@@ -38,9 +45,10 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	};
 
 	const handleBlur = (value: string, field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>) => {
+		field.onBlur();
 		const cleanValue = filterPositiveNumbersOnly(value);
 		if (cleanValue === '' || cleanValue === undefined || cleanValue === null) {
-			field.onChange(undefined);
+			field.onChange(null);
 		} else {
 			const numValue = Number(cleanValue);
 			field.onChange(isNaN(numValue) ? undefined : numValue);
@@ -96,7 +104,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 			render={({ field, fieldState }) => {
 				const errorMsg = fieldState.error?.message as string | undefined;
 				return (
-					<div className="flex flex-col gap-1">
+					<div className="flex flex-col gap-0.5">
 						<FormLabel label={label} htmlFor={id} />
 						<Input
 							id={id as string}
@@ -115,6 +123,8 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 							step="any"
 							placeholder={placeholderUppercase}
 							disabled={disabled}
+							prefix={prefix}
+							suffix={suffix}
 						/>
 						{errorMsg && <FormLabelError label={errorMsg} id={errId} />}
 					</div>

@@ -50,26 +50,26 @@ const sampleData: ITableDetailsData[] = [
 ];
 
 const sampleColumns: ITableDetailsColumn<ITableDetailsData>[] = [
-	{
-		title: 'Name',
-		dataIndex: 'name',
-		key: 'name',
-		type: 'text',
-	},
-	{
-		title: 'Age',
-		dataIndex: 'age',
-		key: 'age',
-		type: 'number',
-		maxDigits: 3,
-	},
+	// {
+	// 	title: 'Name',
+	// 	dataIndex: 'name',
+	// 	key: 'name',
+	// 	type: 'text',
+	// },
+	// {
+	// 	title: 'Age',
+	// 	dataIndex: 'age',
+	// 	key: 'age',
+	// 	type: 'number',
+	// 	maxDigits: 3,
+	// },
 	{
 		title: 'Discount',
 		dataIndex: 'discount',
 		key: 'discount',
 		type: 'percentage',
 		maxDigits: 3,
-		width: '140px',
+		width: 140,
 	},
 	{
 		title: 'Salary',
@@ -77,25 +77,25 @@ const sampleColumns: ITableDetailsColumn<ITableDetailsData>[] = [
 		key: 'salary',
 		type: 'money',
 		maxDigits: 6,
-		width: '160px',
+		width: 160,
 	},
-	{
-		title: 'Email',
-		dataIndex: 'email',
-		key: 'email',
-		type: 'text',
-		disabled: true,
-	},
-	{
-		title: 'Status',
-		dataIndex: 'status',
-		key: 'status',
-		type: 'select',
-		options: [
-			{ label: 'Activo', value: 'active' },
-			{ label: 'Inactivo', value: 'inactive' },
-		],
-	},
+	// {
+	// 	title: 'Email',
+	// 	dataIndex: 'email',
+	// 	key: 'email',
+	// 	type: 'text',
+	// 	disabled: record => record.status === 'inactive',
+	// },
+	// {
+	// 	title: 'Status',
+	// 	dataIndex: 'status',
+	// 	key: 'status',
+	// 	type: 'select',
+	// 	options: [
+	// 		{ label: 'Activo', value: 'active' },
+	// 		{ label: 'Inactivo', value: 'inactive' },
+	// 	],
+	// },
 ];
 
 const meta: Meta<typeof TableDetails> = {

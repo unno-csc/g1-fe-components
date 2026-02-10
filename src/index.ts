@@ -1,3 +1,4 @@
+export { PdfMaintenance } from './components/PdfMaintenance';
 export { Alert } from './components/Alert/Alert';
 export { AppLayout } from './components/AppLayout';
 export { Avatar } from './components/Avatar/Avatar';
@@ -5,17 +6,23 @@ export { Badge } from './components/Badge/Badge';
 export { Button } from './components/Button/';
 export { ButtonAddItem } from './components/ButtonAddItem/';
 export { ButtonAntd } from './components/ButtonAntd/';
+export { ButtonIcon } from './components/ButtonIcon/';
 export { BreadcrumbCustom } from './components/BreadcrumbCustom';
 export { Card } from './components/Card/Card';
 export { Carousel } from './components/Carousel';
 export { Checkbox } from './components/Checkbox/Checkbox';
 export { Collapse } from './components/Collapse/Collapse';
 export { CustomFooterModal } from './components/CustomFooterModal';
+export { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
+export type { IConfirmDeleteModalProps, IConfirmDeleteDetailItem } from './components/ConfirmDeleteModal';
 export { Divider } from './components/Divider/Divider';
+export { Descriptions } from './components/Descriptions';
 export { Drawer } from './components/Drawer/Drawer';
 export { DropdownCustomLabel } from './components/DropdownCustomLabel';
 export { Dashboard } from './components/Dashboard';
+export { DetailView, createDetailSchema } from './components/DetailView';
 export { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+export { Empty } from './components/Empty';
 export { ErrorPage } from './components/ErrorPage/ErrorPage';
 export { Fade } from './components/Fade/Fade';
 export { FilterSearchContainer } from './components/FilterSearchContainer/FilterSearchContainer';
@@ -59,7 +66,10 @@ export { Redirect } from './components/Redirect/Redirect';
 export { Radio } from './components/Radio/Radio';
 export { Select } from './components/Select';
 export { Skeleton } from './components/Skeleton/Skeleton';
+export { Spin } from './components/Spin';
+export { StackedCards } from './components/StackedCards';
 export { Switch } from './components/Switch/Switch';
+export { SelectorButtonList } from './components/SelectorButtonList';
 export { Tag } from './components/Tag';
 export { TagStatus } from './components/TagStatus';
 export { Table } from './components/Table';
@@ -73,12 +83,23 @@ export { Tooltip } from './components/Tooltip/Tooltip';
 export { TreeNode } from './components/TreeNode';
 export { UserProfileDrawer } from './components/UserProfileDrawer';
 export { WithoutInformation } from './components/WithoutInformation';
+export { WizardSteps } from './components/WizardSteps/WizardSteps';
+export type { IWizardStepsProps } from './components/WizardSteps/WizardSteps';
 export { ErrorsProvider } from './routing/components/ErrorsProvider';
 export { LayoutComponent } from './routing/components/LayoutComponent';
 export { Iconos } from './components/IconSelector';
 export { IconSelectAntd } from './components/IconSelectAntd';
 
 export type { ProtectedProps, ProtectedRouteProps, PublicRouteProps, TLocation } from './routing/types';
+export type {
+	DetailViewProps,
+	DetailSchema,
+	SectionConfig,
+	FieldConfig,
+	ColumnConfig as DetailColumnConfig,
+	FieldType,
+	TableColumnConfig as DetailTableColumnConfig,
+} from './components/DetailView';
 
 export { UIProvider } from './HOC/UIProvider';
 export { ControlActionsProvider } from './HOC/ControlActions';

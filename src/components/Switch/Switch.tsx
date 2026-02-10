@@ -11,7 +11,7 @@ export interface SwitchCustomProps extends SwitchProps {
 export const Switch = ({
 	checkedLabel,
 	uncheckedLabel,
-	activeBgColor = '#EA3B48',
+	activeBgColor = '#000000',
 	inactiveBgColor,
 	className,
 	style,

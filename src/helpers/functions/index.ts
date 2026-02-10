@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ELocalStorageKeys } from '@/enums';
 import { EOptionsFilterStatus, EActionType } from '@/enums';
-import { IActions, IAgency, IModule, IProgramActions, ISorterTable, ISubmodule } from '@/interfaces';
+import { IActions, IActionsValidatePermission, IAgency, IModule, IProgramActions, ISorterTable, ISubmodule } from '@/interfaces';
 import { TNotificationProps, TExtendedMenuItem } from '@/types';
 import { notification } from 'antd';
 import { dataFromLocalStorage } from '../objects';
 import { SorterResult } from 'antd/es/table/interface';
 import { useAppLayoutStore } from '@/store';
+// import { act } from 'react';
 
 export const openNotificationWithIcon = ({ type, message, description }: TNotificationProps) => {
 	notification[type]({
@@ -129,8 +130,6 @@ export const getProgramActionsbyPath = (path: string, module: IModule): IProgram
 			}
 		}
 	}
-
-	console.log('getProgramActionsbyPath: NO se encontró ningún programa que coincida');
 	return undefined;
 };
 
@@ -154,6 +153,29 @@ export const disabledActionButton = (actionExecute?: EActionType, actions?: IAct
 	}
 	return true;
 };
+
+export const isDisabledAction = (actionsPermissions?: IActionsValidatePermission, operation?: EActionType) => {
+
+	if (!operation || !actionsPermissions) {
+		return false;
+	}
+	if (actionsPermissions.allActions === true) {
+		return false;
+	}
+	if (operation === EActionType.create && actionsPermissions.create === true) {
+		return false;
+	}
+	if (operation === EActionType.read && actionsPermissions.read === true) {
+		return false;
+	}
+	if (operation === EActionType.update && actionsPermissions.update === true) {
+		return false;
+	}
+	if (operation === EActionType.delete && actionsPermissions.delete === true) {
+		return false;
+	}
+	return true;
+}
 
 export const uppercaseStrings = <T>(obj: T): T => {
 	if (obj === null || obj === undefined) return obj;
@@ -352,4 +374,19 @@ export const getOriginFromUrl = (url: string): string | undefined => {
 		console.error('Error al procesar la URL:', e);
 		return undefined;
 	}
+};
+
+
+export const formatMoneyIfValid = (val: string | number | undefined | null): string => {
+	if (val === undefined || val === null) return '';
+	const raw = `${val}`.trim();
+	const normalized = raw.replace(/,/g, '');
+	// Only format when it's a "complete" numeric value: -123, 123, 123.45
+	// (If user is mid-typing like "-", "1.", ".5" we leave it as-is.)
+	const isValidNumber = /^-?\d+(\.\d+)?$/.test(normalized);
+	if (!isValidNumber) return raw;
+
+	const [intPart = '', decPart] = normalized.split('.');
+	const groupedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	return decPart !== undefined ? `${groupedInt}.${decPart}` : groupedInt;
 };

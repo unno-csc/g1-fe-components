@@ -11,9 +11,9 @@ export default {
 			'primary-400': '#DE6A6A',
 			'primary-500': '#f88792',
 			'primary-600': '#f25162',
-			'primary-700': '#ea3d48',
-			'primary-800': '#EA3B48',
-			'primary-900': '#D90022',
+			'primary-700': '#000000',
+			'primary-800': '#000000',
+			'primary-900': '#6b6b6b',
 
 			'black-100': '#000000',
 			'white-100': '#FFFFFF',

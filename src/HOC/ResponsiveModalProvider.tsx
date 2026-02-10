@@ -1,20 +1,21 @@
-import { ModalResponsive } from '@/components/ModalResponsive';
+import { ModalResponsive, HeaderButton } from '@/components/ModalResponsive';
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
 export interface ResponsiveModalContextType {
-	openModal: (params: {
-		content: ReactNode;
-		title?: string;
-		footer?: ReactNode;
-		onOk?: () => void;
-		onCancel?: () => void;
-		height?: string;
-		width?: string;
-		closable?: boolean;
-		afterClose?: () => void;
-	}) => void;
-	closeModal: () => void;
-	setBeforeClose: Dispatch<SetStateAction<(() => void) | undefined>>;
+    openModal: (params: {
+        content: ReactNode;
+        title?: string;
+        footer?: ReactNode;
+        onOk?: () => void;
+        onCancel?: () => void;
+        height?: string;
+        width?: string;
+        closable?: boolean;
+        afterClose?: () => void;
+        extraHeaderButtons?: HeaderButton[];
+    }) => void;
+    closeModal: () => void;
+    setBeforeClose: Dispatch<SetStateAction<(() => void) | undefined>>;
 }
 
 export const ResponsiveModalContext = createContext<ResponsiveModalContextType | undefined>(undefined);
@@ -32,6 +33,7 @@ export const ResponsiveModalProvider = ({ children }: { children: ReactNode }) =
         afterClose?: () => void;
         isOpen: boolean;
         closable?: boolean;
+        extraHeaderButtons?: HeaderButton[];
     };
 
     const [modals, setModals] = useState<ModalEntry[]>([]);
@@ -47,6 +49,7 @@ export const ResponsiveModalProvider = ({ children }: { children: ReactNode }) =
         width,
         closable,
         afterClose,
+        extraHeaderButtons,
     }) => {
         const newEntry: ModalEntry = {
             id: nextId,
@@ -59,6 +62,7 @@ export const ResponsiveModalProvider = ({ children }: { children: ReactNode }) =
             width: width ?? '',
             closable,
             afterClose,
+            extraHeaderButtons,
             isOpen: true,
         };
         setModals(prev => [...prev, newEntry]);
@@ -124,11 +128,11 @@ export const ResponsiveModalProvider = ({ children }: { children: ReactNode }) =
             });
         });
     };
-    
+
     return (
         <ResponsiveModalContext.Provider value={{ openModal, closeModal, setBeforeClose }}>
             {children}
-            {modals.map(({ id, title, content, footer, height, width, afterClose, isOpen, closable }) => (
+            {modals.map(({ id, title, content, footer, height, width, afterClose, isOpen, closable, extraHeaderButtons }) => (
                 <ModalResponsive
                     key={id}
                     title={title}
@@ -144,6 +148,7 @@ export const ResponsiveModalProvider = ({ children }: { children: ReactNode }) =
                         removeById(id);
                     }}
                     closable={closable}
+                    extraHeaderButtons={extraHeaderButtons}
                 />
             ))}
         </ResponsiveModalContext.Provider>

@@ -59,21 +59,54 @@ export const SidebarLayout = ({ children, width = 245, loadingAppLayout, onClick
 		return filterResult;
 	}, [searchTerm, menuData]);
 
-	useEffect(() => {
+	const menuDataFilteredForMenu = useMemo(() => {
 		if (!menuDataFiltered.length) {
+			return [];
+		}
+
+		const filterRecursive = (items: TExtendedMenuItem[]): TExtendedMenuItem[] => {
+			return items
+				.map(item => {
+					const hasChildren = 'children' in item && item.children?.length;
+					const filteredChildren = hasChildren ? filterRecursive(item.children as TExtendedMenuItem[]) : undefined;
+					const path = item.data?.path;
+					const isUpdatePath = typeof path === 'string' && path.includes('/update');
+
+					if (isUpdatePath) {
+						return null;
+					}
+
+					if (hasChildren && (!filteredChildren || filteredChildren.length === 0)) {
+						return null;
+					}
+
+					if (filteredChildren) {
+						return { ...item, children: filteredChildren };
+					}
+
+					return item;
+				})
+				.filter(Boolean) as TExtendedMenuItem[];
+		};
+
+		return filterRecursive(menuDataFiltered);
+	}, [menuDataFiltered]);
+
+	useEffect(() => {
+		if (!menuDataFilteredForMenu.length) {
 			setOpenKeys([]);
 			return;
 		}
 
-		const selectedItem = findMenuItemByRoute(menuDataFiltered, currentPath);
+		const selectedItem = findMenuItemByRoute(menuDataFilteredForMenu, currentPath);
 		if (selectedItem?.key) {
-			const parentKeys = getParentKeys(menuDataFiltered, String(selectedItem.key)) ?? [];
+			const parentKeys = getParentKeys(menuDataFilteredForMenu, String(selectedItem.key)) ?? [];
 			setOpenKeys(parentKeys);
 			return;
 		}
 
 		setOpenKeys([]);
-	}, [menuDataFiltered, setOpenKeys, currentPath]);
+	}, [menuDataFilteredForMenu, setOpenKeys, currentPath]);
 
 	return (
 		<>
@@ -109,7 +142,7 @@ export const SidebarLayout = ({ children, width = 245, loadingAppLayout, onClick
 								loadingAppLayout={loadingAppLayout}
 								onClickOptionMenu={onClickOptionMenu}
 								openKeysMenuOptions={openKeys}
-								items={menuDataFiltered}
+								items={menuDataFilteredForMenu}
 								onOpenKeysChange={setOpenKeys}
 							/>
 						</div>

@@ -2,7 +2,7 @@ import { Button, Dropdown, MenuProps } from 'antd';
 import { MenuUnfoldOutlined } from '@ant-design/icons';
 import { useSidebarStore } from '@/hooks';
 import { useAppLayoutStore } from '@/store';
-import { imageItsaLogo } from '@/assets/images';
+import { logoMotorsBlanco } from '@/assets/images';
 import { DropdownIcon } from '@/components/DropdownIcon';
 import { ActiveNotificationIcon, NotificationIcon, PinIcon, UserIcon } from '@/assets/icons';
 import { SettingOutlined } from '@ant-design/icons';
@@ -157,7 +157,7 @@ export const HeaderLayout = ({
 						/>
 					)}
 					<div className="hidden md:block">
-						<img src={imageItsaLogo} alt="logo" className="h-full max-h-12 max-w-[150px] object-cover" />
+						<img src={logoMotorsBlanco} alt="logo" className="h-full max-h-12 max-w-[150px] object-cover" />
 					</div>
 				</div>
 				<div className="block md:hidden">
@@ -182,7 +182,7 @@ export const HeaderLayout = ({
 							defaultValue={currentModule?.id?.toString()}
 							options={modulesData}
 							loading={loadingAppLayout}
-							icon={<SettingOutlined className="text-white-100 w-4 h-4" />}
+							icon={<SettingOutlined className="text-yellow-500 w-4 h-4" />}
 							emptyLabel="Sin módulos asignados"
 							onChange={handleSetCurrentModule}
 						/>
@@ -190,7 +190,7 @@ export const HeaderLayout = ({
 							defaultValue={currentAgency?.id?.toString()}
 							options={agenciesData}
 							loading={loadingAppLayout}
-							icon={<PinIcon className="text-white-100 w-4 h-4" />}
+							icon={<PinIcon style={{ stroke: '#EAB308' }} className="w-4 h-4" />}
 							emptyLabel="Sin agencias asignadas"
 							onChange={handleSetCurrentAgency}
 						/>
@@ -204,14 +204,14 @@ export const HeaderLayout = ({
 				</div>
 				<div className="flex flex-row pl-4">
 					<Dropdown menu={userActions} placement="bottomRight" disabled={!isActiveUserActions}>
-						<Button type="text" icon={<UserIcon className="text-white-100 w-6 h-6" />} />
+						<Button type="text" icon={<UserIcon className="text-black-100 w-6 h-6" />} />
 					</Dropdown>
 					<Dropdown menu={notifications} placement="bottomRight" disabled={!isActiveNotifications}>
 						<Button
 							type="text"
 							icon={
 								isActiveNotifications ? (
-									<ActiveNotificationIcon className="fill-white-100 w-6 h-6" />
+									<ActiveNotificationIcon className="text-white-100 w-6 h-6" />
 								) : (
 									<NotificationIcon className="text-white-100 w-6 h-6" />
 								)

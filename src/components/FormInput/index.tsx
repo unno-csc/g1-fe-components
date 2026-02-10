@@ -49,21 +49,6 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 					return undefined;
 				}, [errorMsg, errorIdentificationExists]);
 
-				// const normalizedValueUppercase = useMemo(() => {
-				// 	const newValue = String(field.value);
-				// 	if (newValue === undefined || newValue === null || newValue === '') {
-				// 		return '';
-				// 	}
-
-				// 	if (textTransform === 'none') {
-				// 		return newValue;
-				// 	}
-				// 	if (textTransform === 'lowercase') {
-				// 		return newValue.toLowerCase();
-				// 	}
-				// 	return newValue.toUpperCase();
-				// }, [textTransform, field.value]);
-
 				const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 					const inputValue = e.target.value ?? '';
 					let transformedValue = inputValue;

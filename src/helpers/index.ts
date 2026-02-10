@@ -41,6 +41,14 @@ import { transformModuleToMenuData } from './menu/menuDataTransformer';
 import { clearLocalStorage } from './session';
 import { codeUserInputValidation } from './codeUserInputValidation';
 import {
+	isLikelyGibberishWord,
+	isValidArgument,
+	normalizeArgumentText,
+	validateArgument,
+	validateArgumentUnified,
+	validateArgumentWithIA,
+} from './validateArgument';
+import {
 	capitalize,
 	isRouteActive,
 	toTitleCase,
@@ -69,6 +77,7 @@ import {
 	generateUuid,
 	findContainedPaths,
 	getOriginFromUrl,
+	formatMoneyIfValid,
 } from './functions';
 import {
 	handleAddChildTreeNode,
@@ -97,6 +106,7 @@ export {
 	findProgramIdByPath,
 	findProgramIdByPathFromAgencies,
 	findContainedPaths,
+	formatMoneyIfValid,
 	getOriginFromUrl,
 	generateUuid,
 	getNumberFromStorage,
@@ -144,4 +154,10 @@ export {
 	addChildByParentId,
 	addChildrenByParentId,
 	updateChildUnderParent,
+	isValidArgument,
+	isLikelyGibberishWord,
+	normalizeArgumentText,
+	validateArgument,
+	validateArgumentUnified,
+	validateArgumentWithIA,
 };

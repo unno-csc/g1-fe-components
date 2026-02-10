@@ -66,9 +66,9 @@ export const DropdownCustomLabel = ({
 			buttonsRender={([left, right]) => [
 				React.cloneElement(left as React.ReactElement<{ className?: string; children?: React.ReactNode }>, {
 					className:
-						'rounded-l-[8px] max-w-[220px] min-h-[40px] truncate !bg-primary-600 text-white-100 !border-primary-700 !shadow-none',
+						'rounded-l-[8px] max-w-[220px] min-h-[40px] truncate !bg-white-100 text-white-100 !border-primary-700 !shadow-none',
 					children: (
-						<div key=" item-label" className="text-white-100 max-w-[180px] truncate text-ellipsis">
+						<div key=" item-label" className="text-black-100 max-w-[180px] truncate text-ellipsis">
 							{selectedLabel}
 						</div>
 					),
@@ -76,7 +76,7 @@ export const DropdownCustomLabel = ({
 				React.cloneElement(right as React.ReactElement<{ 'aria-label'?: string; className?: string }>, {
 					'aria-label': 'Abrir opciones',
 					className:
-						'w-[32] min-h-[40px] flex items-center justify-center rounded-r-[8px] !bg-primary-600 !border-primary-700 !shadow-none',
+						'w-[32] min-h-[40px] flex items-center justify-center rounded-r-[8px] !bg-white-100 !border-primary-700 !shadow-none',
 				}),
 			]}
 			icon={icon}
