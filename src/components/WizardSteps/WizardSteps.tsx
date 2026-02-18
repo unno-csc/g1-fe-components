@@ -1,5 +1,6 @@
 import { Steps, type StepsProps } from 'antd';
 import { getWizardStepsStyles } from './WizardSteps.styles';
+import { getWizardStepsDefaultStyles } from './WizardSteps.default.styles';
 
 export interface IWizardStepsProps {
 	current: number;
@@ -10,6 +11,8 @@ export interface IWizardStepsProps {
 	height?: number;
 	arrowWidth?: number;
 	withContainer?: boolean;
+	containerPadding?: string;
+	labelPlacement?: 'horizontal' | 'vertical';
 }
 
 export const WizardSteps = ({ 
@@ -20,7 +23,9 @@ export const WizardSteps = ({
 	type = 'default',
 	height = 48, 
 	arrowWidth = 24,
-	withContainer = true
+	withContainer = true,
+	containerPadding = 'p-2',
+	labelPlacement = 'horizontal'
 }: IWizardStepsProps) => {
 	const containerId = `wizard-steps-${Math.random().toString(36).substr(2, 9)}`;
 	const isItsaPanel = type === 'itsa-panel';
@@ -32,9 +37,19 @@ export const WizardSteps = ({
 
 	if (!isItsaPanel) {
 		return (
-			<div className={className}>
-				<Steps type={type} current={current} items={items} onChange={onChange} />
-			</div>
+			<>
+				<style>{getWizardStepsDefaultStyles()}</style>
+				<div className={withContainer ? `bg-white ${containerPadding} rounded-lg shadow-sm ${className}` : className}>
+					<Steps 
+						className="itsa-wizard-steps" 
+						type={type} 
+						current={current} 
+						items={items} 
+						onChange={onChange}
+						labelPlacement={labelPlacement}
+					/>
+				</div>
+			</>
 		);
 	}
 
@@ -43,7 +58,7 @@ export const WizardSteps = ({
 			<style>{getWizardStepsStyles(containerId, arrowWidth)}</style>
 			<div 
 				id={containerId} 
-				className={withContainer ? `bg-white p-2 rounded-lg shadow-sm ${className}` : className}
+				className={withContainer ? `bg-white ${containerPadding} rounded-lg shadow-sm ${className}` : className}
 				style={containerStyles}
 			>
 				<Steps className="wizard-steps" current={current} items={items} onChange={onChange} />

@@ -219,5 +219,16 @@ export default {
 			'3xl': '1920px',
 		},
 	},
-	plugins: [],
+	plugins: [
+		function ({ addComponents }) {
+			addComponents({
+				'.itsa-table-details-fixed-height .ant-table-body': {
+					minHeight: 'var(--itsa-table-body-height) !important',
+					maxHeight: 'var(--itsa-table-body-height) !important',
+					height: 'var(--itsa-table-body-height) !important',
+				},
+			});
+		},
+	],
+	safelist: ['itsa-table-details-fixed-height', 'ant-table-body'],
 };

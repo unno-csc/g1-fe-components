@@ -42,6 +42,7 @@ export class SectionBuilder<TData = Record<string, unknown>> {
 			tableConfig: options?.tableConfig,
 			galleryConfig: options?.galleryConfig,
 			customRenderer: options?.customRenderer,
+			badgeLabels: options?.badgeLabels,
 			emptyText: options?.emptyText,
 			copyable: options?.copyable,
 			showTooltip: options?.showTooltip,
@@ -93,8 +94,17 @@ export class SectionBuilder<TData = Record<string, unknown>> {
 		});
 	}
 
-	badge(key: keyof TData & string, label: string, options?: Omit<FieldBuilderOptions<TData>, 'type'>): this {
-		return this.field(key, label, { ...options, type: 'badge' });
+	badge(
+		key: keyof TData & string, 
+		label: string, 
+		labels?: { true: string; false: string },
+		options?: Omit<FieldBuilderOptions<TData>, 'type' | 'badgeLabels'>
+	): this {
+		return this.field(key, label, { 
+			...options, 
+			type: 'badge',
+			badgeLabels: labels 
+		});
 	}
 
 	link(key: keyof TData & string, label: string, options?: Omit<FieldBuilderOptions<TData>, 'type'>): this {

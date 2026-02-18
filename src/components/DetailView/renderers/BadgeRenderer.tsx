@@ -34,7 +34,11 @@ export const BadgeRenderer = ({ value, data, config }: BadgeRendererProps) => {
 
 	return (
 		<div className="flex items-start">
-			<TagStatus status={booleanValue} />
+			<TagStatus 
+				status={booleanValue} 
+				labelTrue={config.badgeLabels?.true}
+				labelFalse={config.badgeLabels?.false}
+			/>
 		</div>
 	);
 };

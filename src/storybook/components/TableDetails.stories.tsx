@@ -10,6 +10,7 @@ export type ITableDetailsData = {
 	discount: number;
 	salary: number;
 	email: string;
+	description: string;
 	status: 'active' | 'inactive';
 	keyObjectError?: Record<string, string>;
 };
@@ -22,6 +23,8 @@ const sampleData: ITableDetailsData[] = [
 		discount: 10,
 		salary: 1250,
 		email: 'john.doe@example.com',
+		description:
+			'Seguro de transporte - gastos no sujetos a IVA con detalle largo para mostrar el tooltip completo.',
 		status: 'active',
 	},
 	{
@@ -31,6 +34,8 @@ const sampleData: ITableDetailsData[] = [
 		discount: 20,
 		salary: 980,
 		email: 'jane.smith@example.com',
+		description:
+			'Seguro de transporte - gastos gravados con IVA y texto extendido para ver el truncado y el popup.',
 		status: 'inactive',
 	},
 	{
@@ -40,6 +45,8 @@ const sampleData: ITableDetailsData[] = [
 		discount: 30,
 		salary: 1575,
 		email: 'bob.johnson@example.com',
+		description:
+			'Seguro de transporte - prima neta (grava IVA) con una descripción suficientemente larga.',
 		status: 'active',
 		keyObjectError: {
 			age: 'Error de prueba',
@@ -70,6 +77,12 @@ const sampleColumns: ITableDetailsColumn<ITableDetailsData>[] = [
 		type: 'percentage',
 		maxDigits: 3,
 		width: 140,
+	},
+	{
+		title: 'Descripción',
+		dataIndex: 'description',
+		key: 'description',
+		width: 220,
 	},
 	{
 		title: 'Salary',
@@ -198,13 +211,18 @@ export const WithData: Story = {
 		};
 
 		return (
-			<div>
+			<div className='bg-primary-300 p-2'>
 				<TableDetails
 					{...args}
 					data={rows}
 					onDelete={handleDelete}
 					onChangeData={handleChangeData}
 					rowKey={args.rowKey || 'id'}
+					footer={<div className='flex min-h-0 w-full justify-end items-center p-2'>
+						Total
+					</div>}
+					scroll={{ x: 'max-content', y: 320 }}
+					showHeader={false}
 				/>
 			</div>
 		);
@@ -220,6 +238,74 @@ export const WithData: Story = {
 			description: {
 				story:
 					'Variación con scroll personalizado para demostrar edición, eliminación y columnas de tipo porcentaje, dinero y select.',
+			},
+		},
+	},
+};
+
+const HEIGHT_PRESETS = [200, 280, 360, 400, 500] as const;
+
+export const FixedHeight: Story = {
+	render: args => {
+		const [rows, setRows] = useState<ITableDetailsData[]>(args.data);
+		const [height, setHeight] = useState<number>(280);
+
+		const handleChangeData: NonNullable<ITableDetailsProps<ITableDetailsData>['onChangeData']> = ({
+			record,
+			dataIndex,
+			value,
+		}) => {
+			setRows(prev =>
+				prev.map(item => (item.id === record.id ? { ...record, [dataIndex as keyof ITableDetailsData]: value } : item)),
+			);
+		};
+
+		const handleDelete = (_value: any, record: ITableDetailsData) => {
+			setRows(prev => prev.filter(item => item.id !== record.id));
+		};
+
+		return (
+			<div className='space-y-4'>
+				<div className='flex flex-wrap items-center gap-2'>
+					<span className='text-sm text-gray-600'>Alto:</span>
+					{HEIGHT_PRESETS.map(h => (
+						<button
+							key={h}
+							type='button'
+							onClick={() => setHeight(h)}
+							className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
+								height === h ? 'bg-primary-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+							}`}
+						>
+							{h}px
+						</button>
+					))}
+				</div>
+				<TableDetails
+					{...args}
+					data={rows}
+					onDelete={handleDelete}
+					onChangeData={handleChangeData}
+					rowKey={args.rowKey || 'id'}
+					height={height}
+					footer={
+						<div className='flex min-h-0 w-full justify-end items-center p-2'>
+							Total
+						</div>
+					}
+				/>
+			</div>
+		);
+	},
+	args: {
+		data: sampleData,
+		columns: sampleColumns,
+		rowKey: 'id',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Tabla con alto fijo mediante la prop `height`. Mantiene el mismo tamaño con o sin datos. Usa los botones de eliminar para vaciar la tabla y ver que el contenedor conserva su altura.',
 			},
 		},
 	},

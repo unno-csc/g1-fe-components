@@ -227,6 +227,7 @@ export const TypeDefault: Story = {
 	args: {
 		current: 1,
 		type: 'default',
+		labelPlacement: "vertical",
 		items: [
 			{ title: 'Información', status: 'finish', description: 'Datos básicos' },
 			{ title: 'Validación', status: 'process', description: 'Revisión' },

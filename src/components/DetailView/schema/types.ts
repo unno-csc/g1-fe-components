@@ -65,6 +65,7 @@ export interface FieldConfig<TData = Record<string, unknown>> {
 	tableConfig?: TableConfig;
 	galleryConfig?: GalleryConfig;
 	customRenderer?: CustomRenderer<unknown, TData>;
+	badgeLabels?: { true: string; false: string };
 	emptyText?: string;
 	copyable?: boolean;
 	showTooltip?: boolean;
