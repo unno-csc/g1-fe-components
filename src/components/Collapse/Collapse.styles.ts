@@ -1,13 +1,13 @@
 export const getCollapseCardStyles = (): string => `
 	:root {
-		--collapse-primary: #EA3B48;
-		--collapse-gradient-start: #fff0f1;
+		--collapse-primary: #F9A825;
+		--collapse-gradient-start: #FFF8E1;
 		--collapse-gradient-end: white;
-		--collapse-border-active: #ffc2c6;
+		--collapse-border-active: #FCE082;
 		--collapse-border-inactive: #e0e0e0;
-		--collapse-text-active: #EA3B48;
+		--collapse-text-active: #F9A825;
 		--collapse-text-inactive: #000000;
-		--collapse-badge-bg-active: #EA3B48;
+		--collapse-badge-bg-active: #F9A825;
 		--collapse-badge-text-active: #FFFFFF;
 		--collapse-badge-bg-inactive: #F4F8FB;
 		--collapse-badge-text-inactive: #4A5565;

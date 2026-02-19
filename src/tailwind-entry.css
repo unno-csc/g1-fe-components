@@ -46,11 +46,30 @@ body,
 	padding-left: 38px !important;
 }
 
-
-
 .menu-options .ant-menu-submenu .ant-menu-submenu>.ant-menu .ant-menu-item {
 	padding-left: 50px !important;
 	font-size: 12px !important;
+}
+
+.menu-options .ant-menu .ant-menu-item-selected {
+	background-color: #ffffff !important;
+	color: #000000 !important;
+	font-weight: 700 !important;
+}
+
+.menu-options .ant-menu .ant-menu-item-selected .ant-menu-title-content,
+.menu-options .ant-menu .ant-menu-item-selected .ant-menu-item-icon {
+	color: #000000 !important;
+	font-weight: 700 !important;
+}
+
+.menu-options .ant-menu .ant-menu-submenu-selected > .ant-menu-submenu-title {
+	color: #000000 !important;
+	font-weight: 700 !important;
+}
+
+.menu-options .ant-menu-inline .ant-menu-item-selected::after {
+	border-inline-end-color: #F9A825 !important;
 }
 
 .scrollbar-none {
@@ -180,10 +199,10 @@ body,
 		@apply !bg-primary-900;
 	}
 
-	/* Fallback para cuando no es AntD */
-	.itsa-btn--primary:active {
-		background-color: #CF0021;
-	}
+		/* Fallback para cuando no es AntD */
+		.itsa-btn--primary:active {
+			background-color: #F9A825;
+		}
 
 	.itsa-btn--secondary {
 		@apply text-primary-800 bg-white-100 border border-primary-800;
@@ -216,15 +235,16 @@ body,
 		background-color: #ffffff;
 	}
 
-	.itsa-btn--secondary:hover {
-		@apply bg-primary-50 text-primary-800;
-	}
+		.itsa-btn--secondary:hover {
+			background-color: #FFF8E1;
+			color: #000000;
+		}
 
 	/* Fallback para cuando no es AntD */
-	.itsa-btn--secondary:active {
-		color: #CF0021;
-		border-color: #CF0021;
-	}
+		.itsa-btn--secondary:active {
+			color: #F9A825;
+			border-color: #F9A825;
+		}
 
 	/* Tamaños */
 	.itsa-btn--sm {
@@ -249,12 +269,12 @@ body,
 	}
 
 	/* Reglas específicas para Ant Design (mayor especificidad) */
-	.ant-btn.itsa-btn--secondary:hover,
-	.ant-btn.itsa-btn--secondary:focus {
-		color: var(--itsa-primary) !important;
-		background-color: #FCEEEE !important;
-		border-color: var(--itsa-primary) !important;
-	}
+		.ant-btn.itsa-btn--secondary:hover,
+		.ant-btn.itsa-btn--secondary:focus {
+			color: #F9A825 !important;
+			background-color: #FFF8E1 !important;
+			border-color: #F9A825 !important;
+		}
 
 	/* AntD overrides para secundario default gris */
 	.ant-btn.itsa-btn--secondary.itsa-btn--default,
@@ -302,17 +322,17 @@ body,
 		background-color: #ffffff !important;
 	}
 
-	.ant-btn.itsa-btn--secondary:active {
-		color: #CF0021 !important;
-		border-color: #CF0021 !important;
-	}
+		.ant-btn.itsa-btn--secondary:active {
+			color: #F9A825 !important;
+			border-color: #F9A825 !important;
+		}
 
 	/* Primario AntD: usa tokens CSS para hover/active (reduce duplicación) */
-	.ant-btn.itsa-btn--primary {
-		--ant-colorPrimary: var(--itsa-primary);
-		--ant-colorPrimaryHover: #D90022;
-		--ant-colorPrimaryActive: #CF0021;
-		color: #FFFFFF !important;
+		.ant-btn.itsa-btn--primary {
+			--ant-colorPrimary: #F9A825;
+			--ant-colorPrimaryHover: #FBC02D;
+			--ant-colorPrimaryActive: #F9A825;
+			color: #FFFFFF !important;
 
 	}
 
@@ -407,29 +427,29 @@ body,
 
 /* Selection checkbox colors scoped to table */
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox .ant-checkbox-inner {
-	border-color: var(--itsa-primary) !important;
+	border-color: #F9A825 !important;
 }
 
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox:hover .ant-checkbox-inner,
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-input:focus + .ant-checkbox-inner {
-	border-color: var(--itsa-primary) !important;
-	box-shadow: 0 0 0 3px #EA3B48 !important;
+	border-color: #F9A825 !important;
+	box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
 }
 
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-checked .ant-checkbox-inner {
-	background-color: var(--itsa-primary) !important;
-	border-color: var(--itsa-primary) !important;
+	background-color: #F9A825 !important;
+	border-color: #F9A825 !important;
 }
 
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-checked::after {
-	border-color: var(--itsa-primary) !important;
+	border-color: #F9A825 !important;
 }
 
 /* Header checkbox indeterminate (when some rows are selected) */
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-indeterminate .ant-checkbox-inner {
-	background-color: var(--itsa-primary) !important;
-	border-color: var(--itsa-primary) !important;
+	background-color: #F9A825 !important;
+	border-color: #F9A825 !important;
 }
 
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-indeterminate .ant-checkbox-inner::after {
@@ -451,12 +471,12 @@ body,
 
 /* Focus ring only when checked */
 .itsa-table--head-rounded .ant-table-selection-column .ant-checkbox-checked .ant-checkbox-input:focus + .ant-checkbox-inner {
-	box-shadow: 0 0 0 3px #EA3B48 !important;
+	box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
 }
 
 /* ===== Pagination customizations ===== */
 .itsa-table--head-rounded {
-	--itsa-pagination-active-bg: var(--itsa-primary);
+	--itsa-pagination-active-bg: #F9A825;
 	--itsa-pagination-active-text: #ffffff;
 	--itsa-pagination-item-size: 26px;
 	--itsa-pagination-font-size: 12px;
@@ -478,7 +498,7 @@ body,
 }
 
 .itsa-table--head-rounded .ant-table-pagination .ant-pagination-item-active:hover {
-	background-color: rgba(234, 59, 72, 0.06) !important; /* subtle hover */
+	background-color: rgba(249, 168, 37, 0.12) !important; /* subtle hover */
 }
 
 /* Compact pagination buttons */
@@ -616,4 +636,5 @@ body,
 	background: rgba(234, 59, 72, 0.06) !important;
 	font-weight: 400 !important;
 }
+
 

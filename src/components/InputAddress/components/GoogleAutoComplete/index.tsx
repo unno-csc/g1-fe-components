@@ -1,4 +1,4 @@
-import { GOOGLE_API_KEY, GOOGLE_MAP_ADDRESS_KEYS } from '@/utils/constants';
+﻿import { GOOGLE_API_KEY, GOOGLE_MAP_ADDRESS_KEYS } from '@/utils/constants';
 import { Loader } from '@googlemaps/js-api-loader';
 import { useEffect, useRef, useState } from 'react';
 import { IInputAddressProps } from '../..';
@@ -176,10 +176,10 @@ export const GoogleAutoComplete = (props: IInputAddressProps['googleAutoComplete
 							onClick={() => {
 								onMapClick?.();
 							}}
-							className="!h-8 !w-atuo !border-tl-0 !rounded-tl-none !rounded-bl-none !border-primary-500 hover:!bg-primary-50"
+							className="itsa-map-button group !h-8 !w-atuo !border-tl-0 !rounded-tl-none !rounded-bl-none"
 						>
-							<Pin2Icon className="w-4 h-4 font-bold text-primary-500" />
-							<small className="text-xs font-bold text-primary-500">Mapa</small>
+							<Pin2Icon className="itsa-map-button__icon w-4 h-4 font-bold" />
+							<small className="itsa-map-button__text text-xs font-bold">Mapa</small>
 						</AntButton>
 					</div>
 				</div>

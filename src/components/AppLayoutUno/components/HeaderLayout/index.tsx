@@ -67,13 +67,14 @@ export const HeaderLayout = ({
 		<header className="h-16">
 			<div className="flex flex-row text-white-100 items-center justify-between w-full rounded-xl h-16 pr-4 pl-6 bg-primary-700">
 				<div className="w-full flex flex-row items-center justify-start gap-4">
-					{collapsed && (
-						<Button
-							type="text"
-							icon={<MenuUnfoldOutlined className="text-white-100" />}
-							onClick={() => setCollapsed(!collapsed)}
-						/>
-					)}
+						{collapsed && (
+							<Button
+								type="text"
+								className="!bg-white-100 hover:!bg-white-100 !border-0 !shadow-none"
+								icon={<MenuUnfoldOutlined className="text-white-100" />}
+								onClick={() => setCollapsed(!collapsed)}
+							/>
+						)}
 					{width > 768 && (
 						<img
 							src={imageItsaLogo}
@@ -84,20 +85,20 @@ export const HeaderLayout = ({
 				</div>
 				<div className="flex flex-row w-auto items-center gap-4">
 					{/* Vista Móvil (solo iconos) */}
-					<div className="flex tablet:hidden flex-row items-center gap-4">
-						<DropdownIcon
-							options={modulesData}
-							loading={loadingHeader}
-							icon={<SettingOutlined className="text-white-100 w-4 h-4" />}
-							onChange={handleSetCurrentModule}
-						/>
-						<DropdownIcon
-							options={agenciesData}
-							loading={loadingHeader}
-							icon={<PinIcon className="text-white-100 w-4 h-4" />}
-							onChange={handleSetCurrentAgency}
-						/>
-					</div>
+						<div className="flex tablet:hidden flex-row items-center gap-4">
+							<DropdownIcon
+								options={modulesData}
+								loading={loadingHeader}
+								icon={<SettingOutlined className="text-yellow-500 w-4 h-4" />}
+								onChange={handleSetCurrentModule}
+							/>
+							<DropdownIcon
+								options={agenciesData}
+								loading={loadingHeader}
+								icon={<PinIcon style={{ stroke: '#EAB308' }} className="w-4 h-4" />}
+								onChange={handleSetCurrentAgency}
+							/>
+						</div>
 
 					{/* Vista Desktop (custom labels) */}
 					<div className="hidden tablet:flex flex-row items-center gap-4">

@@ -35,7 +35,7 @@ export const DropdownIcon = ({ options, loading = false, icon, onChange }: IDrop
 			<Button
 				type="default"
 				className="flex items-center justify-center w-[42px] min-h-[40px] 
-                 !bg-primary-600 !border-primary-700 !shadow-none p-0"
+                 !bg-white-100 !border-white-100 hover:!bg-white-100 hover:!border-white-100 !shadow-none p-0"
 				loading={loading}
 			>
 				{icon}

@@ -57,6 +57,7 @@ import {
 	isNumericOnly,
 	filterNumericOnly,
 	filterPositiveNumbersOnly,
+	splitDelimitedValues,
 } from './strings';
 import {
 	addOrderParamIfMissing,
@@ -102,6 +103,7 @@ export {
 	filterMenuTree,
 	filterNumericOnly,
 	filterPositiveNumbersOnly,
+	splitDelimitedValues,
 	findLastChild,
 	findProgramIdByPath,
 	findProgramIdByPathFromAgencies,

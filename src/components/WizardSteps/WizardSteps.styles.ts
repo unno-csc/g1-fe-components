@@ -1,4 +1,4 @@
-export const getWizardStepsStyles = (containerId: string, arrowWidth: number): string => `
+﻿export const getWizardStepsStyles = (containerId: string, arrowWidth: number): string => `
 	#${containerId} {
 		--wizard-arrow-width: ${arrowWidth}px;
 		--wizard-height: 48px;
@@ -6,8 +6,8 @@ export const getWizardStepsStyles = (containerId: string, arrowWidth: number): s
 		--wizard-border-width: 2px;
 		--wizard-color-wait: #F4F8FB;
 		--wizard-color-active: #d9dfe3;
-		--wizard-color-error: #F5423E;
-		--itsa-primary: #EA3B48;
+		--wizard-color-error: #F9A825;
+		--itsa-primary: #F9A825;
 		--wizard-text-wait: #78909C;
 		--wizard-text-active: #263238;
 		--wizard-text-error: #FFFFFF;
@@ -210,3 +210,4 @@ export const getWizardStepsStyles = (containerId: string, arrowWidth: number): s
 		}
 	}
 `;
+

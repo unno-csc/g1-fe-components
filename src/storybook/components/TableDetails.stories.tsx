@@ -210,9 +210,9 @@ export const WithData: Story = {
 			setRows(prev => prev.filter(item => item.id !== record.id));
 		};
 
-		return (
-			<div className='bg-primary-300 p-2'>
-				<TableDetails
+			return (
+				<div className='itsa-table-details--with-data p-2' style={{ backgroundColor: '#FFF8E1' }}>
+					<TableDetails
 					{...args}
 					data={rows}
 					onDelete={handleDelete}
@@ -273,9 +273,12 @@ export const FixedHeight: Story = {
 							key={h}
 							type='button'
 							onClick={() => setHeight(h)}
-							className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
-								height === h ? 'bg-primary-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-							}`}
+							className='rounded px-3 py-1.5 text-sm font-medium transition-colors'
+							style={
+								height === h
+									? { backgroundColor: '#F9A825', color: '#ffffff' }
+									: { backgroundColor: '#E5E7EB', color: '#374151' }
+							}
 						>
 							{h}px
 						</button>

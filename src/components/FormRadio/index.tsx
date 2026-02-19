@@ -17,27 +17,29 @@ const FormRadioComponent = <TFieldValues extends FieldValues>({
 	...rest
 }: IFormRadioProps<TFieldValues>) => {
 	return (
-		<Controller
-			name={name}
-			control={control}
-			render={({ field, fieldState }) => {
-				const errorMsg = fieldState.error?.message as string | undefined;
-				return (
-					<div className="flex flex-col gap-1">
-						<Radio
-							{...rest}
-							variant="default"
-							label={label}
-							value={field.value}
-							onChange={field.onChange}
-							onBlur={field.onBlur}
-						/>
-						{errorMsg && <FormLabelError label={errorMsg} />}
-					</div>
-				);
-			}}
-		/>
-	);
+			<Controller
+				name={name}
+				control={control}
+				render={({ field, fieldState }) => {
+					const errorMsg = fieldState.error?.message as string | undefined;
+					const mergedRootClassName = [rest.rootClassName, 'itsa-radio--warning'].filter(Boolean).join(' ');
+					return (
+						<div className="flex flex-col gap-1">
+							<Radio
+								{...rest}
+								rootClassName={mergedRootClassName}
+								variant="default"
+								label={label}
+								value={field.value}
+								onChange={field.onChange}
+								onBlur={field.onBlur}
+							/>
+							{errorMsg && <FormLabelError label={errorMsg} />}
+						</div>
+					);
+				}}
+			/>
+		);
 };
 
 export const FormRadio = memo(FormRadioComponent) as typeof FormRadioComponent & {

@@ -1,5 +1,5 @@
 import { Badge as AntBadge, BadgeProps } from 'antd';
 
-export const Badge = ({ ...rest }: BadgeProps) => {
-	return <AntBadge {...rest} />;
+export const Badge = ({ color = '#FACC15', ...rest }: BadgeProps) => {
+	return <AntBadge color={color} {...rest} />;
 };

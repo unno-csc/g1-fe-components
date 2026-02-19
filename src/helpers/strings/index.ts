@@ -53,3 +53,14 @@ export const filterPositiveNumbersOnly = (value: string): string => {
 	
 	return cleanValue;
 };
+
+export const splitDelimitedValues = (
+	value: string | null | undefined,
+	delimiter = '/',
+): string[] => {
+	if (!value || typeof value !== 'string') return [];
+	return value
+		.split(delimiter)
+		.map(item => item.trim())
+		.filter(item => item.length > 0);
+};

@@ -23,6 +23,9 @@ export interface ITableDetailsProps<T extends object> {
 	disabledColumnActions?: boolean;
 	footer?: ReactNode;
 	showHeader?: boolean;
+	showActions?: boolean;
+	/** Alto fijo del cuerpo de la tabla (ej: 400, '400px', '50vh'). Se aplica con o sin datos. */
+	height?: number | string;
 }
 
 export const TableDetails = <T extends object>({
@@ -35,6 +38,8 @@ export const TableDetails = <T extends object>({
 	disabledColumnActions = false,
 	footer,
 	showHeader = true,
+	showActions = true,
+	height,
 }: ITableDetailsProps<T>) => {
 	const handleChangeData = useCallback(
 		(record: T, dataIndex: keyof T | string | number, value: any, index: number) => {
@@ -293,17 +298,33 @@ export const TableDetails = <T extends object>({
 		[antColumns, handleDelete],
 	);
 
+	const bodyHeight = height != null ? (typeof height === 'number' ? `${height}px` : height) : undefined;
+
+	const scrollConfig = useMemo(
+		() => ({
+			y: bodyHeight ?? scroll?.y ?? 'calc(80dvh - 310px)',
+			x: scroll?.x ?? 'max-content',
+			...(scroll?.scrollToFirstRowOnChange != null && { scrollToFirstRowOnChange: scroll.scrollToFirstRowOnChange }),
+		}),
+		[bodyHeight, scroll],
+	);
+
 	return (
-		<Table
-			columns={disabledColumnActions ? antColumns : antdWithActions}
-			dataSource={data}
-			rowKey={rowKey}
-			pagination={false}
-			tableLayout="fixed"
-			scroll={scroll || { y: 'calc(80dvh - 310px)', x: 'max-content' }}
-			bordered={true}
-			footer={footer ? () => footer : undefined}
-			showHeader={showHeader}
-		/>
+		<div
+			className={bodyHeight ? 'itsa-table-details-fixed-height' : undefined}
+			style={bodyHeight ? ({ '--itsa-table-body-height': bodyHeight } as React.CSSProperties) : undefined}
+		>
+			<Table
+				columns={disabledColumnActions || !showActions ? antColumns : antdWithActions}
+				dataSource={data}
+				rowKey={rowKey}
+				pagination={false}
+				tableLayout="fixed"
+				scroll={scrollConfig}
+				bordered={true}
+				footer={footer ? () => footer : undefined}
+				showHeader={showHeader}
+			/>
+		</div>
 	);
 };

@@ -24,19 +24,21 @@ const FormCheckBoxComponent = <TFieldValues extends FieldValues>({
 			control={control}
 			render={({ field, fieldState }) => {
 				const errorMsg = fieldState.error?.message as string | undefined;
+				const mergedRootClassName = [rest.rootClassName, 'itsa-checkbox--warning'].filter(Boolean).join(' ');
 				return (
 					<div className="flex flex-col gap-1">
 						<Checkbox
 							{...rest}
-							variant="default"
-							checked={field.value}
-							onChange={e => {
-								const newValue = e.target.checked;
-								field.onChange(newValue);
-								onChange?.();
-							}}
-							onBlur={field.onBlur}
-						>
+							rootClassName={mergedRootClassName}
+								variant="default"
+								checked={field.value}
+								onChange={e => {
+									const newValue = e.target.checked;
+									field.onChange(newValue);
+									onChange?.();
+								}}
+								onBlur={field.onBlur}
+							>
 							{label}
 						</Checkbox>
 						{errorMsg && <FormLabelError label={errorMsg} />}
