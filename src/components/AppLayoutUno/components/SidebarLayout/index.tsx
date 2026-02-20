@@ -1,6 +1,6 @@
 import MenuOptions from '@/components/AppLayoutUno/components/MenuOptions';
 import { getAllMenuKeys, transformModuleToMenuData } from '@/helpers';
-import { getStoredCollapsedSidebar, setStoredCollapsedSidebar } from '@/helpers/functions';
+import { findMenuItemByRoute, getStoredCollapsedSidebar, setStoredCollapsedSidebar } from '@/helpers/functions';
 import { filterMenuItems } from '@/helpers/menu/menuDataTransformer';
 import { useSidebarStore } from '@/hooks';
 import { useAppLayoutStore } from '@/store/appLayout.store';
@@ -52,9 +52,36 @@ export const SidebarLayout = ({
 			const allKeys = getAllMenuKeys(menuData);
 			setOpenKeys(allKeys);
 		} else {
-			setOpenKeys([]);
+			const getParentKeys = (
+				menuItems: TExtendedMenuItem[],
+				targetKey: string,
+				parents: string[] = [],
+			): string[] | null => {
+				for (const item of menuItems) {
+					const itemKey = item?.key !== undefined ? String(item.key) : undefined;
+					const nextParents = itemKey ? [...parents, itemKey] : parents;
+
+					if (itemKey === targetKey) {
+						return parents;
+					}
+
+					if ('children' in item && item.children?.length) {
+						const found = getParentKeys(item.children as TExtendedMenuItem[], targetKey, nextParents);
+						if (found) return found;
+					}
+				}
+				return null;
+			};
+
+			const selectedItem = findMenuItemByRoute(menuData, currentPath || '');
+			if (selectedItem?.key) {
+				const parentKeys = getParentKeys(menuData, String(selectedItem.key)) ?? [];
+				setOpenKeys(parentKeys);
+			} else {
+				setOpenKeys([]);
+			}
 		}
-	}, [searchTerm, menuData, setOpenKeys]);
+	}, [searchTerm, menuData, setOpenKeys, currentPath]);
 
 	// Initialize collapsed from persisted preference on mount
 	useEffect(() => {

@@ -1,0 +1,92 @@
+<style>
+    .container-figures {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    .figure-left {
+        width: 90%;
+        height: 100px;
+        background-color: #b20600;
+        /* Los 4 puntos: Superior-Izquierda, Superior-Derecha, Inferior-Derecha, Inferior-Izquierda */
+        clip-path: polygon(0% 20%, 70% 20%, 100% 100%, 0% 100%);
+        position: relative;
+        z-index: 0;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .figure-right {
+        width: 62.5%;
+        height: 100px;
+        background-color: black;
+        /* Los 4 puntos: Superior-Izquierda, Superior-Derecha, Inferior-Derecha, Inferior-Izquierda */
+        clip-path: polygon(0% 20%, 100% 20%, 100% 100%, 42% 100%);
+        position: relative;
+        z-index: 1;
+        margin-left: -18%;
+    }
+
+    .text-right {
+        display: flex;
+        color: white;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        padding-right: 12px;
+    }
+
+    .text-left {
+        display: flex;
+        color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 12px;
+    }
+
+    .two-columns {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .two-columns>div {
+        flex: 1;
+    }
+</style>
+
+<header class="header">
+    <div class="container-figures">
+        <div class="figure-left text-left">
+            <small>Documento de identidad: {{customerIdentification}}</small>
+            <small>Nombre: {{customerName}}</small>
+            <small>Teléfono: {{customerPhone}}</small>
+        </div>
+        <div class="figure-right text-right">
+            <small>Agencia {{agencyName}}</small>
+            <small>Fecha proforma: {{fecha}}</small>
+            <small>Nº proforma: {{numeroProforma}}</small>
+        </div>
+    </div>
+    <div class="two-columns">
+        <div>
+            <div style="width: 100%; height: auto; background-color: #dddddd;">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <strong>Entrada: </strong>
+                    <span>01/01/2026</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            Columna derecha
+        </div>
+    </div>
+</header>

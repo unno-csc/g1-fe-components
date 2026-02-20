@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+            max-height: 297mm;
+            margin: 0;
+            padding: 0;
+            font-family: "Arial", sans-serif;
+            background-color: white;
+            border: 1px solid #c6c6c6;
+        }
+
+        body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        main {
+            flex: 1 1 auto;
+        }
+
+        footer {
+            margin-top: auto;
+            border-top: 1px solid #000;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    {{REPORT_HEADER}}
+    <main>
+        <div>Este valor es un ejemplo valorUno: {{ valor_uno }}</div>
+    </main>
+    <footer>
+        <div>esto es el pie de página</div>
+    </footer>
+</body>
+
+</html>

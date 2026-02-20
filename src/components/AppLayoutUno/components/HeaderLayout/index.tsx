@@ -70,7 +70,7 @@ export const HeaderLayout = ({
 						{collapsed && (
 							<Button
 								type="text"
-								className="!bg-white-100 hover:!bg-white-100 !border-0 !shadow-none"
+								className="!bg-black-100 hover:!bg-black-100 !border-0 !shadow-none"
 								icon={<MenuUnfoldOutlined className="text-white-100" />}
 								onClick={() => setCollapsed(!collapsed)}
 							/>
