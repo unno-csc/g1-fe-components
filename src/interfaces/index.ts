@@ -296,6 +296,10 @@ export interface ILocationSelectorProps {
 	titleProvince?: string;
 	titleCanton?: string;
 	titleParish?: string;
+	errorCountry?: string;
+	errorProvince?: string;
+	errorCanton?: string;
+	errorParish?: string;
 }
 
 export interface IUserRole {
@@ -453,8 +457,8 @@ export interface IMapSelection {
 export interface StackedCardData {
 	id: number | string;
 	content: ReactNode;
-	title?: string;
-	buttonTitle?: string;
+	title?: ReactNode;
+	buttonTitle?: ReactNode;
 	onButtonClick?: () => void;
 	onRemoveClick?: () => void;
 	emptyMessage?: string;
