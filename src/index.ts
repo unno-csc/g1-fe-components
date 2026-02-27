@@ -18,6 +18,8 @@ export type { IConfirmDeleteModalProps, IConfirmDeleteDetailItem } from './compo
 export { Divider } from './components/Divider/Divider';
 export { Descriptions } from './components/Descriptions';
 export { Drawer } from './components/Drawer/Drawer';
+export { DropdownButton } from './components/DropdownButton/DropdownButton';
+export type { IDropdownButtonProps, IDropdownButtonItem } from './components/DropdownButton/DropdownButton';
 export { DropdownCustomLabel } from './components/DropdownCustomLabel';
 export { Dashboard } from './components/Dashboard';
 export { DetailView, createDetailSchema } from './components/DetailView';
@@ -124,4 +126,4 @@ export * from './utils/errors/errorMessages';
 
 export * from './store';
 
-import "./index.css";
+import './index.css';

@@ -79,6 +79,7 @@ import {
 	findContainedPaths,
 	getOriginFromUrl,
 	formatMoneyIfValid,
+	roundUpDecimal,
 } from './functions';
 import {
 	handleAddChildTreeNode,
@@ -147,6 +148,7 @@ export {
 	joinUrl,
 	mapPermissionsToMenuFormat,
 	normalizeStatus,
+	roundUpDecimal,
 	securityApi,
 	toTitleCase,
 	transformModuleToMenuData,

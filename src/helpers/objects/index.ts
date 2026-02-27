@@ -20,7 +20,7 @@ export const cleanObject = (obj: any) => {
 
 		if (typeof value === 'object' && value !== null) {
 			const nested = cleanObject(value);
-			if (!isEmpty(nested)) {
+			if (Array.isArray(nested) || !isEmpty(nested)) {
 				result[key] = nested;
 			}
 		} else if (!isEmpty(value)) {

@@ -353,8 +353,10 @@ export interface FlattenOptionData<OptionType> {
 	group?: boolean;
 }
 
-export interface DebounceSelectProps<ValueType = any>
-	extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
+export interface DebounceSelectProps<ValueType = any> extends Omit<
+	SelectProps<ValueType | ValueType[]>,
+	'options' | 'children'
+> {
 	fetchOptions: (search: string) => Promise<ValueType[]>;
 	debounceTimeout?: number;
 }
@@ -421,6 +423,7 @@ export interface ITableDetailsColumn<T extends object> {
 	errorAccessor?: (record: T, column: ITableDetailsColumn<T>) => string | undefined;
 	errorKey?: keyof T | string;
 	display?: 'flex' | 'block';
+	align?: 'left' | 'center' | 'right';
 	render?: (value: any, record: T, index: number) => ReactNode;
 	fixed?: 'left' | 'right';
 }
