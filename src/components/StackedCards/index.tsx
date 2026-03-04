@@ -17,6 +17,7 @@ export interface IStackedCardsProps {
 	width?: number | string;
 	/** alto mínimo cuando está vacío (px o string css) */
 	emptyMinHeight?: number | string;
+	disableButtonActions?: boolean;
 }
 
 function cssSize(value: number | string | undefined) {
@@ -34,6 +35,7 @@ export const StackedCards = (props: IStackedCardsProps) => {
 		maxWidth = 340,
 		width,
 		emptyMinHeight = 144,
+		disableButtonActions = false,
 	} = props
 	const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -173,22 +175,23 @@ export const StackedCards = (props: IStackedCardsProps) => {
 							}}
 						>
 							<div className="flex items-start justify-between gap-0">
-								<div className="flex items-center gap-1">
+								<div className="flex min-w-0 items-center gap-1">
 									<span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-gray-100 text-xs font-medium text-gray-600">
 										{card.id}
 									</span>
-									<small className="text-sm font-medium text-gray-900">
+									<small className="block min-w-0 flex-1 truncate text-sm font-medium text-gray-900">
 										{card.title}
 									</small>
 								</div>
 								<div className="flex items-center gap-1">
 									<Button size="small" type="secondary" 
-									label={card.buttonTitle} onClick={card.onButtonClick} allowEnterKey={true} />
+									label={card.buttonTitle} onClick={card.onButtonClick} allowEnterKey={true} disabled={disableButtonActions} />
 									<Button
 										onClick={() => handleDelete(card)}
 										size="small"
 										type="text"
 										label={<CloseOutlined />}
+										disabled={disableButtonActions}
 									/>
 								</div>
 							</div>

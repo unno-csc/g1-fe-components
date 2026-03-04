@@ -1,132 +1,74 @@
 import { LOCATION_DEFAULT } from '@/constants';
 import { EMapZoom } from '@/enums';
-import { IMapLocation, IMapPoint, IPlaceObject } from '@/interfaces';
-import { AdvancedMarker, APIProvider, Map as MapComponent, MapMouseEvent, useMap, InfoWindow, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
-import { EnvironmentOutlined } from '@ant-design/icons';
-import { CSSProperties, useEffect, useState } from 'react';
-import { useGeolocation } from '@/hooks';
+import {
+	IAddressData,
+	IMapLocation,
+	IMapSelection,
+	IMapSelectionDetails,
+	IMapSelectionPlaceObject,
+} from '@/interfaces';
 import { GOOGLE_API_KEY, GOOGLE_MAP_ADDRESS_KEYS, GOOGLE_MAP_ID } from '@/utils/constants';
-import { Button } from '../Button';
+import { APIProvider, Map as MapComponent, MapMouseEvent, Marker } from '@vis.gl/react-google-maps';
+import { useEffect, useState } from 'react';
 import { InputSearchAddress } from './components/InputSearchAddress';
 
 export interface IMapProps {
 	location?: IMapLocation;
-	zoom?: EMapZoom;
-	useUserLocation?: boolean;
-	defaultMarker?: IMapLocation;
 	googleMapsApiKey?: string;
-	mapId?: string;
-	className?: string;
-	containerStyle?: CSSProperties;
-	style?: CSSProperties;
-	onLocationChange?: (mapPoint: IMapPoint | null) => void;
-	loading?: boolean;
+    zoom?: EMapZoom;
+    mapId?: string;
+	onLocationChange?: (mapPoint: IMapSelection | null) => void;
 }
 
 export const Map = ({
 	location = LOCATION_DEFAULT,
-	zoom = EMapZoom.zoom14,
-	useUserLocation = false,
-	defaultMarker,
 	googleMapsApiKey = GOOGLE_API_KEY,
+	zoom = EMapZoom.zoom14,
 	mapId = GOOGLE_MAP_ID,
-	className,
-	containerStyle,
-	style,
 	onLocationChange,
 }: IMapProps) => {
-	const [geoState, requestLocation] = useGeolocation();
 	const [center, setCenter] = useState<IMapLocation>(location);
-	const [clickedPosition, setClickedPosition] = useState<IMapLocation | null>(null);
-	const [markerInfo, setMarkerInfo] = useState<{ address: string; coords: IMapLocation } | null>(null);
-
-	const MapCamera = ({ target }: { target?: IMapLocation }) => {
-		const mapInstance = useMap();
-		useEffect(() => {
-			if (mapInstance && target) {
-				(mapInstance as any).panTo(target);
-				(mapInstance as any).setZoom(EMapZoom.zoom17);
-			}
-		}, [mapInstance, target]);
-		return null;
-	};
-
-	const UserLocationMarker = ({ position, markerInfo }: { position: IMapLocation; markerInfo: { address: string; coords: IMapLocation } | null }) => {
-		const [markerRef, marker] = useAdvancedMarkerRef();
-		const [infoWindowShown, setInfoWindowShown] = useState(true);
-
-		useEffect(() => {
-			// Mostrar el popup cuando cambia el marcador
-			if (markerInfo && markerInfo.coords.lat === position.lat && markerInfo.coords.lng === position.lng) {
-				setInfoWindowShown(true);
-			}
-		}, [markerInfo, position]);
-
-		const handleClose = () => {
-			setInfoWindowShown(false);
-		};
-
-		return (
-			<>
-				<AdvancedMarker
-					ref={markerRef}
-					position={position}
-					title="Ubicación actual"
-				/>
-				{infoWindowShown && markerInfo && markerInfo.coords.lat === position.lat && markerInfo.coords.lng === position.lng && (
-					<InfoWindow anchor={marker} onClose={handleClose}>
-						<div style={{ padding: '4px' }}>
-							<h3 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: 'bold' }}>Ubicación actual</h3>
-							<p style={{ margin: '0 0 4px 0', fontSize: '12px' }}>{markerInfo.address}</p>
-							<p style={{ margin: '0', fontSize: '11px', color: '#666' }}>
-								{markerInfo.coords.lat.toFixed(6)}, {markerInfo.coords.lng.toFixed(6)}
-							</p>
-						</div>
-					</InfoWindow>
-				)}
-			</>
-		);
-	};
-
-	const ClickedMarker = ({ position }: { position: IMapLocation; markerInfo: { address: string; coords: IMapLocation } | null; showInfoWindow?: boolean }) => {
-		const [markerRef ] = useAdvancedMarkerRef();
-
-		return (
-			<AdvancedMarker
-				ref={markerRef}
-				position={position}
-				title="Marcador"
-			/>
-		);
-	};
+	const [markerPosition, setMarkerPosition] = useState<IMapLocation>(location);
+	const [isMapReady, setIsMapReady] = useState(false);
 
 	useEffect(() => {
 		setCenter(location);
-	}, [location]);
+		setMarkerPosition(location);
+		// Emitir cambio si el prop location cambia externamente y el mapa está listo
+		if (isMapReady && typeof location.lat === 'number' && typeof location.lng === 'number') {
+			void reverseGeocode(location.lat, location.lng);
+		}
+	}, [location, isMapReady]);
 
 	useEffect(() => {
-		if (useUserLocation) {
-			requestLocation();
-		}
-	}, [useUserLocation, requestLocation]);
+		const checkGoogleReady = () => {
+			const g = (window as any)?.google;
+			if (g?.maps?.Geocoder) {
+				setIsMapReady(true);
+				return true;
+			}
+			return false;
+		};
 
-	useEffect(() => {
-		if (geoState.coords) {
-			const coords = { lat: geoState.coords.latitude, lng: geoState.coords.longitude };
-			setCenter(coords);
-			// Actualizar información del marcador cuando cambia la ubicación del usuario
-			reverseGeocode(coords.lat, coords.lng);
-		}
-	}, [geoState.coords]);
+		if (checkGoogleReady()) return;
 
-	// Efecto para manejar el marcador por defecto
-	useEffect(() => {
-		if (defaultMarker && !clickedPosition) {
-			setCenter(defaultMarker);
-			// Obtener información de la dirección del marcador por defecto
-			reverseGeocode(defaultMarker.lat, defaultMarker.lng);
-		}
-	}, [defaultMarker]);
+		let timeoutId: number;
+		const intervalId = window.setInterval(() => {
+			if (checkGoogleReady()) {
+				window.clearInterval(intervalId);
+				window.clearTimeout(timeoutId);
+			}
+		}, 200);
+
+		timeoutId = window.setTimeout(() => {
+			window.clearInterval(intervalId);
+		}, 10000);
+
+		return () => {
+			window.clearInterval(intervalId);
+			window.clearTimeout(timeoutId);
+		};
+	}, []);
 
 	const getLongName = (value: unknown): string | undefined => {
 		if (typeof value === 'object' && value !== null && 'long_name' in value) {
@@ -135,43 +77,79 @@ export const Map = ({
 		return undefined;
 	};
 
-	const emitLocationChange = (placeObject?: unknown, addressData?: any) => {
-		const lat = typeof (placeObject as any)?.lat === 'number' ? (placeObject as any).lat : addressData?.latitude;
-		const lng = typeof (placeObject as any)?.long === 'number' ? (placeObject as any).long : addressData?.longitude;
+	// Extrae primaria/secundaria separando por " y " o "&" (primer ocurrencia)
+	const splitStreet = (street?: string) => {
+		if (!street) return null;
+		const match = street.match(/^(.*?)\s*(?:&|y)\s*(.+)$/i);
+		if (match && match[1] && match[2]) {
+			return {
+				primary: match[1].trim(),
+				secondary: match[2].trim(),
+			};
+		}
+		return null;
+	};
 
-		if (typeof lat === 'number' && typeof lng === 'number') {
-			const pos = { lat, lng } as IMapLocation;
-			setClickedPosition(pos);
-			setCenter(pos);
+	const normalizePlaceObject = (placeObject: Record<string, unknown>) => {
+		const clone = { ...(placeObject ?? {}) };
+		// Si sólo existe intersection, úsalo también como route
+		if (!clone[GOOGLE_MAP_ADDRESS_KEYS.route] && clone[GOOGLE_MAP_ADDRESS_KEYS.intersection]) {
+			clone[GOOGLE_MAP_ADDRESS_KEYS.route] = clone[GOOGLE_MAP_ADDRESS_KEYS.intersection];
+		}
+		// Si sólo existe route, úsalo también como intersection para mantener consistencia
+		if (!clone[GOOGLE_MAP_ADDRESS_KEYS.intersection] && clone[GOOGLE_MAP_ADDRESS_KEYS.route]) {
+			clone[GOOGLE_MAP_ADDRESS_KEYS.intersection] = clone[GOOGLE_MAP_ADDRESS_KEYS.route];
+		}
+		return clone;
+	};
 
-			// Actualizar información del marcador si tenemos addressData
-			if (addressData) {
-				const addressParts = [
-					addressData.principalStreet,
-					addressData.streetNumber,
-				].filter(Boolean);
-				const addressSummary = addressParts.length > 0 
-					? addressParts.join(', ') 
-					: `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+	const buildAddressDetails = (placeObject: Record<string, unknown>, lat: number, lng: number) => {
+		const normalized = normalizePlaceObject(placeObject);
 
-				setMarkerInfo({
-					address: addressSummary,
-					coords: { lat, lng },
-				});
+		const streetNumberRaw = getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.streetNumber]) || '';
+		const streetNumber = streetNumberRaw && streetNumberRaw.trim() !== '&' ? streetNumberRaw : '';
+		let principalStreet =
+			getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.route]) ||
+			getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.intersection]) ||
+			'';
+		let secondaryStreet = getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.intersection]) || '';
+
+		// Si no vino secundaria, o es igual a la primaria, la derivamos de la primaria usando conectores
+		if ((!secondaryStreet || secondaryStreet === principalStreet) && principalStreet) {
+			const split = splitStreet(principalStreet);
+			if (split) {
+				principalStreet = split.primary;
+				secondaryStreet = split.secondary;
 			}
 		}
+		// Si siguen iguales, mejor dejar secundaria vacía para evitar duplicados
+		if (secondaryStreet === principalStreet) {
+			secondaryStreet = '';
+		}
 
-		const mapPoint: IMapPoint = {
-			placeObject: placeObject as IPlaceObject,
-			addressData,
+		const postalCode = getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.postalCode]) || '';
+		const province = getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.province]) || '';
+		const canton = getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.canton]) || '';
+		const parish = getLongName(normalized[GOOGLE_MAP_ADDRESS_KEYS.parish]) || '';
+		const country = getLongName(normalized.country) || '';
+
+		const addressParts = [principalStreet, streetNumber, canton, province, country].filter(Boolean);
+		const addressSummary = addressParts.length > 0 ? addressParts.join(', ') : `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+		return {
+			details: { principalStreet, secondaryStreet, streetNumber, postalCode, province, canton, parish, country },
+			addressSummary,
 		};
-		onLocationChange?.(mapPoint);
+	};
+
+	const emitLocationChange = (payload?: IMapSelection) => {
+		onLocationChange?.(payload ?? null);
 	};
 
 	const reverseGeocode = async (lat: number, lng: number) => {
 		const g = (window as any)?.google;
 		if (!g?.maps?.Geocoder) {
-			console.warn('Google Geocoder no disponible');
+			console.info('Mapa todavía no listo para geocoding inverso');
 			return;
 		}
 		const geocoder = new g.maps.Geocoder();
@@ -179,19 +157,11 @@ export const Map = ({
 			const response = await geocoder.geocode({ location: { lat, lng } });
 			const result = response?.results?.[0];
 			if (!result) {
-				console.warn('Sin resultados de geocodificación inversa', { lat, lng });
-				onLocationChange?.(null);
+				console.log('Sin resultados de geocoding inverso. Coordenadas:', { lat, lng });
 				return;
 			}
-			const placeObject: {
-				[key: string]:
-					| {
-							long_name: string;
-							short_name: string;
-					  }
-					| number
-					| undefined;
-			} = {};
+
+			const placeObject: Record<string, unknown> = {};
 			result.address_components?.forEach((item: any) => {
 				const type = item.types?.[0];
 				if (type) {
@@ -201,138 +171,116 @@ export const Map = ({
 					};
 				}
 			});
+
 			placeObject.lat = lat;
 			placeObject.long = lng;
 
-			const addressData = {
-				principalStreet:
-					getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.route]) ||
-					getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.intersection]) ||
-					'',
+			const normalizedPlaceObject = normalizePlaceObject(placeObject);
+
+			const { details, addressSummary } = buildAddressDetails(normalizedPlaceObject, lat, lng);
+			const addressData: IAddressData = {
+				principalStreet: details.principalStreet,
 				latitude: lat,
 				longitude: lng,
-				streetNumber: getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.streetNumber]) || '',
-				postalCode: getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.postalCode]) || '',
+				streetNumber: details.streetNumber,
+				postalCode: details.postalCode,
 				isManualAddress: false,
 			};
 
-			// Construir resumen de dirección para el popup
-			const addressParts = [
-				addressData.principalStreet,
-				addressData.streetNumber,
-				getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.canton]),
-				getLongName(placeObject[GOOGLE_MAP_ADDRESS_KEYS.province]),
-			].filter(Boolean);
-			const addressSummary = addressParts.length > 0 
-				? addressParts.join(', ') 
-				: result.formatted_address || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-
-			// Actualizar información del marcador para mostrar en el popup
-			setMarkerInfo({
+			emitLocationChange({
+				lat,
+				lng,
 				address: addressSummary,
-				coords: { lat, lng },
+				details: details as IMapSelectionDetails,
+				placeObject: normalizedPlaceObject as IMapSelectionPlaceObject,
+				addressData,
 			});
 
-			// console.log('Map click -> reverseGeocode:', { placeObject, addressData });
-			const mapPoint: IMapPoint = {
-				placeObject: placeObject as unknown as IPlaceObject,
-				addressData,
-			};
-			emitLocationChange(mapPoint.placeObject, mapPoint.addressData);
-		} catch (e) {
-			console.error('Error en geocodificación inversa', e);
-			onLocationChange?.(null);
+			
+		} catch (error) {
+			console.warn('Error al hacer geocoding inverso', error);
+			console.log('Coordenadas seleccionadas (con error):', { lat, lng });
 		}
 	};
 
 	const onClick = (event: MapMouseEvent) => {
-		// @vis.gl react-google-maps envuelve el evento; la latLng viene en detail.latLng
-		const latLngAny = (event as any)?.detail?.latLng;
-		if (!latLngAny) return;
-		const lat = typeof latLngAny.lat === 'function' ? latLngAny.lat() : latLngAny.lat;
-		const lng = typeof latLngAny.lng === 'function' ? latLngAny.lng() : latLngAny.lng;
+		const latLng = event.detail.latLng;
+		if (!latLng) return;
+
+		const latValue = typeof latLng.lat === 'function' ? latLng.lat() : latLng.lat;
+		const lngValue = typeof latLng.lng === 'function' ? latLng.lng() : latLng.lng;
+		if (latValue == null || lngValue == null) return;
+
+		const nextPosition = { lat: latValue, lng: lngValue };
+		setCenter(nextPosition);
+		setMarkerPosition(nextPosition);
+
+		void reverseGeocode(latValue, lngValue);
+	};
+
+	const onCameraChanged = (ev: any) => {
+		const centerAny = ev?.detail?.center;
+		if (!centerAny) return;
+		const lat = typeof centerAny.lat === 'function' ? centerAny.lat() : centerAny.lat;
+		const lng = typeof centerAny.lng === 'function' ? centerAny.lng() : centerAny.lng;
 		if (typeof lat === 'number' && typeof lng === 'number') {
-			const pos = { lat, lng } as IMapLocation;
-			setClickedPosition(pos);
-			// Opcional: recentrar el mapa en el marcador nuevo
-			setCenter(pos);
-			// console.log('Map click -> coords:', pos);
-			// Obtener información del punto clickeado
-			reverseGeocode(lat, lng);
+			setCenter({ lat, lng });
 		}
 	};
 
-	const openInGoogleMaps = () => {
-		const position = clickedPosition || defaultMarker;
-		if (!position) return;
-		const { lat, lng } = position;
-		const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-		window.open(url, '_blank', 'noopener');
-	};
+    const handleLocationChangeBySearch = (placeObject?: any, addressData?: any) => {
+        const lat = typeof placeObject?.lat === 'number' ? placeObject.lat : addressData?.latitude;
+        const lng = typeof placeObject?.long === 'number' ? placeObject.long : addressData?.longitude;
 
-	// Si no hay API key, mostramos un estado de ayuda
-	if (!googleMapsApiKey) {
-		return (
-			<div className={`relative flex-1 min-h-[350px] ${className ?? ''}`} style={containerStyle}>
-				<div className="absolute inset-0 flex items-center justify-center text-sm text-gray-500">
-					Google Maps API key no configurada
-				</div>
-			</div>
-		);
-	}
+        if (typeof lat === 'number' && typeof lng === 'number') {
+            const normalizedPlaceObject = normalizePlaceObject({ ...(placeObject ?? {}), lat, long: lng });
+            const { details, addressSummary } = buildAddressDetails(normalizedPlaceObject, lat, lng);
 
-	const handleLocationChangeBySearch = (placeObject?: any, addressData?: any) => {
-		const lat = typeof placeObject?.lat === 'number' ? placeObject.lat : addressData?.latitude;
-		const lng = typeof placeObject?.long === 'number' ? placeObject.long : addressData?.longitude;
+            const nextPosition = { lat, lng };
+            setCenter(nextPosition);
+            setMarkerPosition(nextPosition);
 
-		if (typeof lat === 'number' && typeof lng === 'number') {
-			// Si ya tenemos addressData desde el Autocomplete, reenviamos;
-			// en casocleanObject contrario, geocodificación inversa para obtener placeObject/addressData
-			if (addressData) {
-				emitLocationChange(placeObject, addressData);
-			} else {
-				reverseGeocode(lat, lng);
-			}
-		} else {
-			// Si no hay coordenadas claras, reenvía lo que venga o null
-			emitLocationChange(placeObject, addressData);
-		}
-	};
-	//AIzaSyAcS-M2oOvXHEtjeSi41jzuZal6JZn66sw
-	//82446f60eba4a 92316dbec8c
+			const normalizedAddressData: IAddressData = {
+				principalStreet: details.principalStreet,
+				latitude: lat,
+				longitude: lng,
+				streetNumber: details.streetNumber,
+				postalCode: details.postalCode,
+				isManualAddress: false,
+			};
+			emitLocationChange({
+				lat,
+				lng,
+				address: addressSummary,
+				details: details as IMapSelectionDetails,
+				placeObject: normalizedPlaceObject as IMapSelectionPlaceObject,
+				addressData: normalizedAddressData,
+			});
+        } else {
+            console.log('Búsqueda -> ubicación sin coordenadas claras:', { placeObject, addressData });
+			emitLocationChange();
+        }
+    };
 	return (
-		<div className={`relative flex-1 bg-red-300 h-full w-full ${className ?? ''}`} style={containerStyle}>
+		<div className="relative flex-1 bg-red-300 h-full w-full">
+			{!isMapReady && (
+				<div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 text-gray-700 text-sm">
+					Cargando mapa...
+				</div>
+			)}
 			<APIProvider apiKey={googleMapsApiKey} libraries={['places']}>
 				<MapComponent
-					style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, ...(style || {}) }}
+					style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
 					defaultCenter={center}
+					center={center}
 					defaultZoom={zoom}
 					gestureHandling="greedy"
 					disableDefaultUI
 					onClick={onClick}
+					onCameraChanged={onCameraChanged}
 					mapId={mapId}
 				>
-					{useUserLocation && geoState.coords && (
-						<UserLocationMarker 
-							position={{ lat: geoState.coords.latitude, lng: geoState.coords.longitude }}
-							markerInfo={markerInfo}
-						/>
-					)}
-					{clickedPosition && (
-						<ClickedMarker 
-							position={clickedPosition} 
-							markerInfo={markerInfo}
-							showInfoWindow={false}
-						/>
-					)}
-					{defaultMarker && !clickedPosition && (
-						<ClickedMarker 
-							position={defaultMarker} 
-							markerInfo={markerInfo}
-							showInfoWindow={false}
-						/>
-					)}
-					<MapCamera target={center} />
+					{markerPosition && <Marker position={markerPosition} />}
 				</MapComponent>
 				<InputSearchAddress
 					floatingInputPlaceholder={'Buscar ubicación'}
@@ -340,11 +288,6 @@ export const Map = ({
 					onLocationChange={handleLocationChangeBySearch}
 				/>
 			</APIProvider>
-			{(clickedPosition || defaultMarker) && (
-				<div className="absolute right-3 bottom-16 z-10">
-					<Button type="secondary" onClick={openInGoogleMaps} size="middle" label={<EnvironmentOutlined />} />
-				</div>
-			)}
 		</div>
 	);
 };
