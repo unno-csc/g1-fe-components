@@ -103,7 +103,7 @@ export type TStrictTableColumnsType<T> = TStrictColumnType<T>[];
 export interface ITableColumnAction<T = any> {
 	key: string;
 	title: string;
-	icon?: ReactNode;
+	icon?: ReactNode | ((record: T) => ReactNode);
 	action: (record: T) => void;
     disabled?: boolean | ((record: T) => boolean);
 	danger?: boolean;

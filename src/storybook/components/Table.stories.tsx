@@ -357,6 +357,28 @@ const TableWithPaginationState = () => {
 	);
 };
 
+const TableWithSingleSelection = () => {
+	const [selectedRowKeys, setSelectedRowKeys] = React.useState<React.Key[]>([]);
+
+	return (
+		<Table
+			columns={sampleColumns}
+			data={sampleData}
+			loading={false}
+			bordered={false}
+			showPagination={false}
+			rowSelection={{
+				selectedRowKeys,
+				hideSelectAll: false,
+				onChange: keys => setSelectedRowKeys(keys),
+			}}
+			selectionMode="multiple"
+			onChange={() => {}}
+			rowKey={'id'}
+		/>
+	);
+};
+
 export const WithPaginationAndPageSizeChange: Story = {
 	render: () => (
 		<div className="h-full flex flex-col">
@@ -368,6 +390,18 @@ export const WithPaginationAndPageSizeChange: Story = {
 		docs: {
 			description: {
 				story: 'Tabla con paginación habilitada que detecta cambios en el tamaño de página y navegación entre páginas.',
+			},
+		},
+	},
+};
+
+export const WithSingleSelectionMode: Story = {
+	render: () => <TableWithSingleSelection />,
+	parameters: {
+		docs: {
+			description: {
+				story:
+					'Muestra la tabla usando selección única (radio). La tabla normaliza el comportamiento y solo mantiene el último elemento seleccionado.',
 			},
 		},
 	},

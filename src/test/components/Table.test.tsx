@@ -1,8 +1,10 @@
+import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { ITableColumnAction, ITableProps, Table } from '../../components/Table';
-import { TStrictTableColumnsType } from '../../types';
+import { ITableProps, Table } from '../../components/Table';
+import { ITableColumnAction, TStrictTableColumnsType } from '../../types';
 
 beforeAll(() => {
 	Object.defineProperty(window, 'matchMedia', {
@@ -165,6 +167,13 @@ describe('Table component', () => {
 		const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 		expect(checkboxes.length).toBeGreaterThan(0);
 		expect(container).toMatchSnapshot();
+	});
+
+	it('supports single selection mode (radio)', () => {
+		const { container } = render(<Table {...defaultProps} rowSelection={{}} selectionMode="single" />);
+
+		const radios = container.querySelectorAll('input[type="radio"]');
+		expect(radios.length).toBeGreaterThan(0);
 	});
 
 	it('calls onChange handler when provided', () => {

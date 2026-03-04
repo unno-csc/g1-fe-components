@@ -155,15 +155,15 @@ export const Table = <T extends object>({
 						menu={{
 							items: (columnActions || [])
 								.filter(action => {
-									const hasPermission = disabledActionButton(action.actionType, actions);
+									// const hasPermission = false;//! disabledActionButton(action.actionType, actions);
 									const actionDisabled =
 										typeof action.disabled === 'function' ? action.disabled(record) : !!action.disabled;
-									return !hasPermission && !actionDisabled;
+									return !actionDisabled;
 								})
 								.map((action, index) => ({
 									label: action.title,
 									key: action.key || `action-${index}`,
-									icon: action.icon,
+									icon: typeof action.icon === 'function' ? action.icon(record) : action.icon,
 									onClick: () => clickAction(action, record),
 									danger: action.danger,
 								})),
