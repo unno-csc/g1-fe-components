@@ -50,14 +50,11 @@ export const TableDetails = <T extends object>({
 				[dataIndex]: value,
 			};
 
-			onChangeData?.(
-				{
-					record: updatedRecord,
-					dataIndex,
-					value,
-				},
-				index,
-			);
+			onChangeData?.({
+				record: updatedRecord,
+				dataIndex,
+				value,
+			}, index);
 		},
 		[onChangeData],
 	);
@@ -65,7 +62,6 @@ export const TableDetails = <T extends object>({
 	const antColumns = useMemo(
 		() =>
 			columns.map(column => {
-				// Allow min/max to drive sizing when width is not set.
 				const width = column.width;
 				const minWidth = column.minWidth ?? column.width ?? column.maxWidth ?? 150;
 				const maxWidth = column.maxWidth ?? column.width;
@@ -122,6 +118,7 @@ export const TableDetails = <T extends object>({
 						};
 					},
 					render: (value: any, record: T, index: number) => {
+
 						if (column.render) {
 							return column.render(value, record, index);
 						}
@@ -221,7 +218,7 @@ export const TableDetails = <T extends object>({
 										onCommit={val => handleChangeData(record, column.dataIndex, val, index)}
 										min={column.min ?? 0}
 										disabled={isDisabled || disabledColumnActions}
-										suffix="USD"
+										// suffix="USD"
 										precision={2}
 										prefix="$"
 										maxDigits={column.maxDigits}
