@@ -6,5 +6,6 @@ import pageNotFound from './page-not-found.png';
 import unauthorizedPage from './unauthorized-page.png'
 import noPictures from './no-pictures.png';
 import imageItsaLogo from './image-itsa-logo.png';
+import logoCreditsa from './logo-creditsa.png';
 
-export { logoTomebambaNegro, logoMotor1, logoMotorsBlanco,login1, pageNotFound, unauthorizedPage, noPictures, imageItsaLogo };
+export { logoTomebambaNegro, logoMotor1, logoMotorsBlanco,login1, pageNotFound, unauthorizedPage, noPictures, imageItsaLogo, logoCreditsa };
