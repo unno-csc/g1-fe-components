@@ -5,6 +5,7 @@ import { AliasOptions, defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import viteSvgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 //@ts-ignore
 const root = path.resolve(__dirname, 'src');
@@ -15,6 +16,7 @@ export default defineConfig({
 		viteSvgr(),
 		viteTsconfigPaths(),
 		dts({ insertTypesEntry: true, exclude: ['src/storybook/**/*.stories.{ts,tsx}', 'src/test/**/*.test.{ts,tsx}'] }),
+		cssInjectedByJsPlugin(),
 	],
 	resolve: {
 		alias: {

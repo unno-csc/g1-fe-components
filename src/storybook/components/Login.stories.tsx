@@ -8,7 +8,11 @@ const RHFWrapper: React.FC<{ children: (props: any) => React.ReactNode }> = ({ c
 	const methods = useForm({ mode: 'onSubmit' });
 	return (
 		<FormProvider {...methods}>
-			{children({ control: methods.control, onSubmit: (data: any) => console.log('login submit', data) })}
+			{children({
+				control: methods.control,
+				onSubmit: (data: any) => console.log('login submit', data),
+				logo: 'QUOTER',
+			})}
 		</FormProvider>
 	);
 };
@@ -27,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: args => (
 		<RHFWrapper>
-			{({ control, onSubmit }) => <Login {...args} control={control} onSubmit={onSubmit} />}
+			{({ control, onSubmit }) => <Login {...args} control={control} onSubmit={onSubmit} logo="QUOTER" />}
 		</RHFWrapper>
 	),
 	args: {},

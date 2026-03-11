@@ -3,19 +3,22 @@ import { Title } from '../Title';
 import { useViewportStore } from '@/store/viewport.store';
 import { useViewportSize } from '@/hooks/useViewportSize/useViewportSize';
 import { FormLogin, LoginFormValuesBase } from './components/FormLogin';
-import { logoMotor1, login1 as loginImage } from '@/assets/images';
+import { logoMotor1, login1 as loginImage, logoCreditsa } from '@/assets/images';
 import type { FormEventHandler } from 'react';
+import { useMemo } from 'react';
 
 export interface ILogin<TFieldValues extends LoginFormValuesBase = LoginFormValuesBase> {
 	control: Control<TFieldValues>;
 	onSubmit?: FormEventHandler<HTMLFormElement>;
 	loading?: boolean;
+	logo?: 'ERP' | 'QUOTER';
 }
 
 export const Login = <TFieldValues extends LoginFormValuesBase = LoginFormValuesBase>({
 	control,
 	onSubmit,
 	loading,
+	logo = 'ERP',
 }: ILogin<TFieldValues>) => {
 	useViewportSize(0);
 	const { width } = useViewportStore();
@@ -23,6 +26,13 @@ export const Login = <TFieldValues extends LoginFormValuesBase = LoginFormValues
 		e.preventDefault();
 		onSubmit?.(e);
 	};
+
+	const logoImage = useMemo(() => {
+		if (logo === 'QUOTER') {
+			return logoCreditsa;
+		}
+		return logoMotor1;
+	}, [logo]);
 	return (
 		<div className="w-full h-[100dvh] bg-gray-75 flex items-center justify-center">
 			{width >= 650 && (

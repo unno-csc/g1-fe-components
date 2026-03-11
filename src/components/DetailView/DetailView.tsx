@@ -22,7 +22,7 @@ export const DetailView = <T extends object = object>({
 
 	if (isLoading) {
 		return (
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-2">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-2">
 				{Array.from({ length: schema.sections.length || 3 }).map((_, index) => (
 					<Card key={index} loading className="bg-gray-50" />
 				))}
@@ -66,11 +66,11 @@ export const DetailView = <T extends object = object>({
 			{visibleSections.length === 0 ? (
 				<Empty description="No hay secciones para mostrar" />
 			) : (
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{visibleSections.map((section, index) => (
 						<div
 							key={`${section.title}-${index}`}
-							className={section.fullWidth ? 'lg:col-span-2' : ''}
+							className={`h-full ${section.fullWidth ? 'md:col-span-2' : ''}`}
 						>
 							<DetailSection
 								section={section}

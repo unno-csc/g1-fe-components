@@ -152,7 +152,8 @@ export const DetailSection = <TData extends object = object>({
 		<Card
 			title={<span className="text-sm font-normal">{section.title}</span>}
 			extra={section.extra}
-			className={`bg-gray-50 ${section.className || ''}`}
+			className={`bg-gray-50 h-full ${section.className || ''}`}
+			style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
 			styles={{
 				header: {
 					borderTop: '1px solid #E5E7EB',
@@ -160,13 +161,14 @@ export const DetailSection = <TData extends object = object>({
 					borderRight: '1px solid #E5E7EB',
 					borderBottom: 'none',
 				},
-				body: { 
-                    paddingTop: '0px', 
-                    borderTop: 'none',
+				body: {
+					flex: 1,
+					paddingTop: '0px',
+					borderTop: 'none',
 					borderLeft: '1px solid #E5E7EB',
 					borderRight: '1px solid #E5E7EB',
-					borderBottom: '1px solid #E5E7EB', 
-                },
+					borderBottom: '1px solid #E5E7EB',
+				},
 			}}
 		>
 			{content}
