@@ -6,13 +6,14 @@ export interface ITabsMaintenance {
 	onChange: (key: string) => void;
 	defaultActiveKey: string;
 	activeKey?: string;
+	centered?: boolean;
 }
 
-export const TabsMaintenance = ({ items, onChange, defaultActiveKey, activeKey }: ITabsMaintenance) => {
+export const TabsMaintenance = ({ items, onChange, defaultActiveKey, activeKey, centered = true }: ITabsMaintenance) => {
 	return (
 		<Tabs
 			className="tabs-maintenance"
-			centered
+			centered={centered}
 			defaultActiveKey={defaultActiveKey}
 			items={items}
 			onChange={onChange}

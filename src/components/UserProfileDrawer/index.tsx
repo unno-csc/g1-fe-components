@@ -1,11 +1,14 @@
 import { MailOutlined, IdcardOutlined, TagOutlined, UserOutlined } from '@ant-design/icons';
 import { Skeleton as AntSkeleton } from 'antd';
+import { Switch } from '../Switch/Switch';
 
 import type { IUserInformation, IUserRole } from '@/interfaces';
 import { Avatar } from '../Avatar/Avatar';
 import { Divider } from '../Divider/Divider';
 import { Drawer } from '../Drawer/Drawer';
 import { Tag } from '../Tag';
+import { useUserLocalConfig } from '@/hooks/useUserLocalConfig';
+import { FormLabel } from '../FormLabel';
 
 export interface IUserProfileDrawerProps {
 	open: boolean;
@@ -22,6 +25,7 @@ export const UserProfileDrawer = ({
 	isLoading,
 	currentModuleId,
 }: IUserProfileDrawerProps) => {
+	const { showHelpButton, setShowHelpButton } = useUserLocalConfig();
 	const currentRole = userInformation?.roles?.find(
 		(role: IUserRole) => role.moduleId === currentModuleId
 	);
@@ -89,7 +93,7 @@ export const UserProfileDrawer = ({
 					<Divider className="my-2" />
 
 					<div className="flex flex-col gap-3">
-						<h3 className="text-base font-medium text-gray-700 m-0">Roles Asignados</h3>
+						<h3 className="text-base font-medium text-gray-700 m-0">Roles Asignadossss</h3>
 
 						<div className="flex flex-wrap gap-2">
 							{userInformation?.roles && userInformation.roles.length > 0 ? (
@@ -105,6 +109,23 @@ export const UserProfileDrawer = ({
 							) : (
 								<span className="text-sm text-gray-500">Sin roles asignados</span>
 							)}
+						</div>
+					</div>
+					<Divider className="my-2" />
+
+					<div className='flex flex-col gap-0.5'>
+						<h3 className="text-base font-medium text-gray-700 m-0">Configuraciones generales</h3>
+
+						<div className="flex flex-col w-full">
+							<div className='flex flex-col gap-0.5 border border-gray-250 p-2'>
+								<FormLabel label='Mostrar boton de ayuda para el usuario' />
+								<Switch
+									checkedLabel="Si"
+									uncheckedLabel="No"
+									checked={showHelpButton}
+									onChange={() => setShowHelpButton(!showHelpButton)}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -61,6 +61,22 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 
 					field.onChange(transformedValue);
 				};
+
+
+				const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+					field.onBlur();
+					const inputValue = e.target.value ?? '';
+					let transformedValue = inputValue;
+					
+					if (textTransform === 'uppercase') {
+						transformedValue = inputValue.toUpperCase();
+					} else if (textTransform === 'lowercase') {
+						transformedValue = inputValue.toLowerCase();
+					}
+
+					field.onChange(transformedValue);
+				};
+
 				return (
 					<div className="flex flex-col gap-0.5">
 						<FormLabel label={label} htmlFor={id} />
@@ -69,7 +85,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 							type={EInput.text}
 							value={field.value}
 							onChange={handleChange}
-							onBlur={field.onBlur}
+							onBlur={handleOnBlur}
 							ref={field.ref}
 							name={field.name}
 							status={validatMsg ? 'error' : undefined}

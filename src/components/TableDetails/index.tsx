@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useMemo } from 'react';
 import { Table, Tooltip } from 'antd';
-import { ColumnsType } from 'antd/es/table';
+import type { ColumnsType, TableProps } from 'antd/es/table';
 import { Select } from '@/components/Select';
 import { Button } from '../Button';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -27,6 +27,7 @@ export interface ITableDetailsProps<T extends object> {
 	/** Alto fijo del cuerpo de la tabla (ej: 400, '400px', '50vh'). Se aplica con o sin datos. */
 	height?: number | string;
 	loading?: boolean;
+	expandable?: TableProps<T>['expandable'];
 }
 
 export const TableDetails = <T extends object>({
@@ -42,6 +43,7 @@ export const TableDetails = <T extends object>({
 	showActions = true,
 	height,
 	loading = false,
+	expandable,
 }: ITableDetailsProps<T>) => {
 	const handleChangeData = useCallback(
 		(record: T, dataIndex: keyof T | string | number, value: any, index: number) => {
@@ -327,6 +329,7 @@ export const TableDetails = <T extends object>({
 				footer={footer ? () => footer : undefined}
 				showHeader={showHeader}
 				loading={loading}
+				expandable={expandable}
 			/>
 		</div>
 	);

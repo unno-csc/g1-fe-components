@@ -17,6 +17,12 @@ export { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
 export type { IConfirmDeleteModalProps, IConfirmDeleteDetailItem } from './components/ConfirmDeleteModal';
 export { Divider } from './components/Divider/Divider';
 export { Descriptions } from './components/Descriptions';
+export { DocumentationGuide } from './components/DocumentationGuide';
+export type {
+	IDocumentationGuideProps,
+	IDocumentationGuideSection,
+	IDocumentationGuideSections,
+} from './components/DocumentationGuide';
 export { Drawer } from './components/Drawer/Drawer';
 export { DropdownButton } from './components/DropdownButton/DropdownButton';
 export type { IDropdownButtonProps, IDropdownButtonItem } from './components/DropdownButton/DropdownButton';

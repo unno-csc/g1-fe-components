@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DetailView, createDetailSchema } from '../../components/DetailView';
-import { _mockModelData } from '../../constants/modelPreviewData.ts';
+import { _mockModelData } from '../../constants/modelPreviewData';
 import { IVehicleModel } from '../../interfaces/modelInterface';
 
 

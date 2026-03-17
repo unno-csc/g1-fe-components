@@ -11,12 +11,18 @@ export interface SwitchCustomProps extends SwitchProps {
 export const Switch = ({
 	checkedLabel,
 	uncheckedLabel,
-	activeBgColor = '#000000',
+	activeBgColor = '#EA3B48',
 	inactiveBgColor,
 	className,
 	style,
 	...rest
 }: SwitchCustomProps) => {
+	const longestLabel = useMemo(() => {
+		const labels = [checkedLabel, uncheckedLabel].filter((label): label is string => Boolean(label));
+
+		return labels.reduce((longest, current) => (current.length > longest.length ? current : longest), '');
+	}, [checkedLabel, uncheckedLabel]);
+
 	const wrapperStyle = useMemo(() => {
 		const styles: Record<string, string> = {};
 		if (activeBgColor) {
@@ -28,6 +34,19 @@ export const Switch = ({
 		return styles as CSSProperties;
 	}, [activeBgColor, inactiveBgColor]);
 
+	const switchStyle = useMemo(() => {
+		if (!longestLabel) {
+			return style;
+		}
+
+		const dynamicMinWidth = Math.max(44, longestLabel.length * 7 + 52);
+
+		return {
+			minWidth: dynamicMinWidth,
+			...style,
+		} as CSSProperties;
+	}, [longestLabel, style]);
+
 	const hasCustomColors = activeBgColor || inactiveBgColor;
 	const wrapperClassName = hasCustomColors ? 'itsa-switch-custom' : '';
 
@@ -36,9 +55,9 @@ export const Switch = ({
 			<AntSwitch
 				{...rest}
 				className={className}
-				style={style}
-				checkedChildren={checkedLabel}
-				unCheckedChildren={uncheckedLabel}
+				style={switchStyle}
+				checkedChildren={checkedLabel ? <span style={{ color: '#fff' }}>{checkedLabel}</span> : undefined}
+				unCheckedChildren={uncheckedLabel ? <span style={{ color: '#fff' }}>{uncheckedLabel}</span> : undefined}
 			/>
 		</span>
 	);

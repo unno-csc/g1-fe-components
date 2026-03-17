@@ -10,7 +10,8 @@ const meta: Meta<typeof BreadcrumbCustom> = {
 		layout: 'centered',
 		docs: {
 			description: {
-				component: 'Componente de breadcrumb personalizado con botón de retroceso y información de título y descripción.',
+				component:
+					'Componente de breadcrumb personalizado con botón de retroceso y información de título y descripción.',
 			},
 		},
 	},
@@ -27,6 +28,10 @@ const meta: Meta<typeof BreadcrumbCustom> = {
 			action: 'clicked',
 			description: 'Función que se ejecuta al hacer clic en el botón de retroceso',
 		},
+		actionButtonDocumentation: {
+			action: 'clicked',
+			description: 'Función que se ejecuta al hacer clic en el botón de documentación',
+		},
 	},
 };
 
@@ -40,6 +45,7 @@ export const Default: Story = {
 		title: 'Mi Sección',
 		description: 'Detalle del contenido',
 		action: () => console.log('Navegando hacia atrás'),
+		actionButtonDocumentation: () => console.log('Mostrando documentación'),
 	},
 };
 
