@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TableDetails, ITableDetailsProps } from '../../components/TableDetails';
-import { ITableDetailsColumn } from '../../interfaces';
+import { ITableDetailsColumn  } from '../../interfaces';
 
 export type ITableDetailsData = {
 	id: number;
@@ -23,7 +23,8 @@ const sampleData: ITableDetailsData[] = [
 		discount: 10,
 		salary: 1250,
 		email: 'john.doe@example.com',
-		description: 'Seguro de transporte - gastos no sujetos a IVA con detalle largo para mostrar el tooltip completo.',
+		description:
+			'Seguro de transporte - gastos no sujetos a IVA con detalle largo para mostrar el tooltip completo.',
 		status: 'active',
 	},
 	{
@@ -33,7 +34,8 @@ const sampleData: ITableDetailsData[] = [
 		discount: 20,
 		salary: 980,
 		email: 'jane.smith@example.com',
-		description: 'Seguro de transporte - gastos gravados con IVA y texto extendido para ver el truncado y el popup.',
+		description:
+			'Seguro de transporte - gastos gravados con IVA y texto extendido para ver el truncado y el popup.',
 		status: 'inactive',
 	},
 	{
@@ -43,7 +45,8 @@ const sampleData: ITableDetailsData[] = [
 		discount: 30,
 		salary: 1575,
 		email: 'bob.johnson@example.com',
-		description: 'Seguro de transporte - prima neta (grava IVA) con una descripción suficientemente larga.',
+		description:
+			'Seguro de transporte - prima neta (grava IVA) con una descripción suficientemente larga.',
 		status: 'active',
 		keyObjectError: {
 			age: 'Error de prueba',
@@ -208,14 +211,16 @@ export const WithData: Story = {
 		};
 
 		return (
-			<div className="bg-primary-300 p-2">
+			<div className='bg-primary-300 p-2'>
 				<TableDetails
 					{...args}
 					data={rows}
 					onDelete={handleDelete}
 					onChangeData={handleChangeData}
 					rowKey={args.rowKey || 'id'}
-					footer={<div className="flex min-h-0 w-full justify-end items-center p-2">Total</div>}
+					footer={<div className='flex min-h-0 w-full justify-end items-center p-2'>
+						Total
+					</div>}
 					scroll={{ x: 'max-content', y: 320 }}
 					showHeader={false}
 				/>
@@ -261,13 +266,13 @@ export const FixedHeight: Story = {
 		};
 
 		return (
-			<div className="space-y-4">
-				<div className="flex flex-wrap items-center gap-2">
-					<span className="text-sm text-gray-600">Alto:</span>
+			<div className='space-y-4'>
+				<div className='flex flex-wrap items-center gap-2'>
+					<span className='text-sm text-gray-600'>Alto:</span>
 					{HEIGHT_PRESETS.map(h => (
 						<button
 							key={h}
-							type="button"
+							type='button'
 							onClick={() => setHeight(h)}
 							className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
 								height === h ? 'bg-primary-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -284,7 +289,11 @@ export const FixedHeight: Story = {
 					onChangeData={handleChangeData}
 					rowKey={args.rowKey || 'id'}
 					height={height}
-					footer={<div className="flex min-h-0 w-full justify-end items-center p-2">Total</div>}
+					footer={
+						<div className='flex min-h-0 w-full justify-end items-center p-2'>
+							Total
+						</div>
+					}
 				/>
 			</div>
 		);
@@ -297,8 +306,7 @@ export const FixedHeight: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story:
-					'Tabla con alto fijo mediante la prop `height`. Mantiene el mismo tamaño con o sin datos. Usa los botones de eliminar para vaciar la tabla y ver que el contenedor conserva su altura.',
+				story: 'Tabla con alto fijo mediante la prop `height`. Mantiene el mismo tamaño con o sin datos. Usa los botones de eliminar para vaciar la tabla y ver que el contenedor conserva su altura.',
 			},
 		},
 	},
@@ -324,13 +332,13 @@ export const ExpandableColumnWidth: Story = {
 		};
 
 		return (
-			<div className="space-y-4">
-				<div className="flex flex-wrap items-center gap-2">
-					<span className="text-sm text-gray-600">Ancho expand:</span>
+			<div className='space-y-4'>
+				<div className='flex flex-wrap items-center gap-2'>
+					<span className='text-sm text-gray-600'>Ancho expand:</span>
 					{EXPAND_WIDTH_PRESETS.map(width => (
 						<button
 							key={width}
-							type="button"
+							type='button'
 							onClick={() => setExpandWidth(width)}
 							className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
 								expandWidth === width ? 'bg-primary-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -351,7 +359,7 @@ export const ExpandableColumnWidth: Story = {
 						indentSize: 8,
 						defaultExpandedRowKeys: [1],
 						expandedRowRender: record => (
-							<div className="px-3 py-2 text-sm text-gray-700">
+							<div className='px-3 py-2 text-sm text-gray-700'>
 								<strong>Detalle:</strong> {record.name} - {record.description}
 							</div>
 						),
@@ -374,3 +382,4 @@ export const ExpandableColumnWidth: Story = {
 		},
 	},
 };
+
