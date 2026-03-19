@@ -4,7 +4,7 @@ import { disabledActionButton, parseSorter } from '@/helpers/functions';
 import { useControlActions } from '@/hooks';
 import { useAppLayoutStore } from '@/store';
 import { ITableColumnAction, TStrictColumnType, TStrictTableColumnsType } from '@/types';
-import { MoreOutlined } from '@ant-design/icons';
+import { MoreOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Table as AntTable, TableProps as AntTableProps, Button, Dropdown, TablePaginationConfig, Modal } from 'antd';
 import { ColumnsType, FilterValue, SorterResult, TableCurrentDataSource, TableLocale } from 'antd/es/table/interface';
 import { MouseEvent, useState } from 'react';
@@ -61,25 +61,16 @@ export const Table = <T extends object>({
 	columnActions,
 	getActionsDisabled,
 	getActionsTriggerDisabled,
-	rootClassName,
+
 	locale = {
 		emptyText: 'No hay datos',
 	},
 	rowHoverable = true,
+	refreshDataFunction,
 }: ITableProps<T>) => {
 	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
 	const currentAgency = useAppLayoutStore(state => state.currentAgency);
 	const finalPagination = showPagination ? paginationConfig : false;
-
-	const selectionClass = rowSelection
-		? selectionMode === 'single'
-			? 'itsa-radio--default'
-			: 'itsa-checkbox--default'
-		: null;
-
-	const tableRootClassName = ['itsa-table--head-rounded', 'itsa-table-min-h-responsive', selectionClass, rootClassName]
-		.filter(Boolean)
-		.join(' ');
 
 	const [confirmModalState, setConfirmModalState] = useState<{
 		open: boolean;
@@ -255,9 +246,7 @@ export const Table = <T extends object>({
 		const isSingleSelection = selectionMode === 'single';
 
 		const lastSingleSelectionKey =
-			isSingleSelection &&
-			Array.isArray(rowSelection.selectedRowKeys) &&
-			rowSelection.selectedRowKeys.length > 0
+			isSingleSelection && Array.isArray(rowSelection.selectedRowKeys) && rowSelection.selectedRowKeys.length > 0
 				? rowSelection.selectedRowKeys[rowSelection.selectedRowKeys.length - 1]
 				: undefined;
 
@@ -269,7 +258,7 @@ export const Table = <T extends object>({
 		const finalRowSelection: NonNullable<AntTableProps<T>['rowSelection']> = {
 			...rowSelection,
 			selectedRowKeys: sanitizedSelectedRowKeys,
-			type: isSingleSelection ? 'radio' : rowSelection.type ?? 'checkbox',
+			type: isSingleSelection ? 'radio' : (rowSelection.type ?? 'checkbox'),
 		};
 
 		if (isSingleSelection && rowSelection.onChange) {
@@ -330,10 +319,36 @@ export const Table = <T extends object>({
 		resolvedRowSelection.onChange?.(nextKeys, nextRows, { type: isSingle ? 'single' : 'multiple' });
 	};
 
+	const newTableHeaderTable: ColumnsType<T> = [
+		{
+			title: (
+				<div className="flex w-full justify-start desktop:justify-end">
+					<Button
+						style={{ color: 'gray', border: 'none' }}
+						type="text"
+						loading={loading}
+						onClick={() => refreshDataFunction?.()}
+						icon={<ReloadOutlined />}
+					>
+						Refrescar
+					</Button>
+				</div>
+			),
+			children: [...(tableColumns as ColumnsType<T>)],
+		},
+	];
+
+	const validateRefreshDataFunction = (): ColumnsType<T> => {
+		if (!refreshDataFunction) {
+			return tableColumns as ColumnsType<T>;
+		}
+		return newTableHeaderTable;
+	};
+
 	return (
 		<>
 			<AntTable<T>
-				columns={tableColumns as ColumnsType<T>}
+				columns={validateRefreshDataFunction()}
 				dataSource={data}
 				loading={loading}
 				size="small"
@@ -344,7 +359,6 @@ export const Table = <T extends object>({
 				scroll={getFinalScroll(tableColumns)}
 				locale={locale}
 				rowKey={rowKey}
-				rootClassName={tableRootClassName}
 				components={{
 					header: {
 						wrapper: (props: any) => (
@@ -391,7 +405,7 @@ export const Table = <T extends object>({
 					},
 				}}
 				onRow={record => ({
-				onClick: handleRowClick(record),
+					onClick: handleRowClick(record),
 				})}
 				rowHoverable={rowHoverable}
 			/>
