@@ -38,32 +38,32 @@ export const getDropdownButtonStyles = (): string => `
 	}
 
 	.itsa-dropdown-btn--primary {
-		background-color: #EA3B48;
+		background-color: #000000;
 		color: #FFFFFF;
 	}
 
 	.itsa-dropdown-btn--primary:hover {
-		background-color: #D90022;
+		background-color: #6B6B6B;
 	}
 
 	.itsa-dropdown-btn--primary:active {
-		background-color: #CF0021;
+		background-color: #000000;
 	}
 
 	.itsa-dropdown-btn--secondary {
-		border: 1px solid #EA3B48;
+		border: 1px solid #000000;
 		background-color: #FFFFFF;
-		color: #EA3B48;
+		color: #000000;
 	}
 
 	.itsa-dropdown-btn--secondary:hover {
-		background-color: #FCEEEE;
-		color: #EA3B48;
+		background-color: #EEF1F3;
+		color: #000000;
 	}
 
 	.itsa-dropdown-btn--secondary:active {
-		color: #CF0021;
-		border-color: #CF0021;
+		color: #6B6B6B;
+		border-color: #6B6B6B;
 	}
 
 	.itsa-dropdown-btn--disabled {

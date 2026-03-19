@@ -42,6 +42,7 @@ export interface ITableProps<T extends object> {
 	rowClassName?: AntTableProps<T>['rowClassName'];
 	locale?: TableLocale;
 	rowHoverable?: boolean;
+	refreshDataFunction?: () => void;
 }
 
 export const Table = <T extends object>({

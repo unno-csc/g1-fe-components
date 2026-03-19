@@ -1,3 +1,4 @@
+import React from 'react';
 import type { StoryObj } from '@storybook/react';
 import { AppLayout } from '../../components/AppLayout';
 
@@ -21,5 +22,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {},
+	args: {
+		children: <div>Hello World</div>,
+		navigateApp: () => {},
+		loadingAppLayout: false,
+		onClickOptionMenu: () => {},
+	},
 };

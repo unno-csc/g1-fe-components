@@ -10,8 +10,7 @@ const meta: Meta<typeof BreadcrumbCustom> = {
 		layout: 'centered',
 		docs: {
 			description: {
-				component:
-					'Componente de breadcrumb personalizado con botón de retroceso y información de título y descripción.',
+				component: 'Componente de breadcrumb personalizado con botón de retroceso y información de título y descripción.',
 			},
 		},
 	},
