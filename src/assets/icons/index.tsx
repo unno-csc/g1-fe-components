@@ -1,4 +1,7 @@
 import ActiveNotificationIcon from './icon-active-notifications.svg?react';
+import AccountingOutlineIcon from './icon-accounting-outline.svg?react';
+import AccountingBlackIcon from './icon-accounting-black.svg?react';
+import AccountingRedIcon from './icon-accounting-red.svg?react';
 import AddListIcon from './icon-add-list.svg?react';
 import AddProductIcon from './icon-add-product.svg?react';
 import AddToCartIcon from './icon-add-to-cart.svg?react';
@@ -40,6 +43,9 @@ import HeartIcon from './icon-heart.svg?react';
 import HistoryIcon from './icon-history.svg?react';
 import HomeIcon from './icon-home.svg?react';
 import IdIcon from './icon-id.svg?react';
+import ImportsOutlineIcon from './icon-imports-outline.svg?react';
+import ImportsBlackIcon from './icon-imports-black.svg?react';
+import ImportsRedIcon from './icon-imports-red.svg?react';
 import InfoIcon from './icon-info.svg?react';
 import InvoiceIcon from './icon-invoice.svg?react';
 import KeyIcon from './icon-key.svg?react';
@@ -47,7 +53,13 @@ import LimpiarNotificacionesIcon from './icon-limpiar-notificaciones.svg?react';
 import ListIcon from './icon-list.svg?react';
 import LoaderIcon from './icon-loader.svg?react';
 import LockIcon from './icon-lock.svg?react';
+import LogisticsOutlineIcon from './icon-logistics-outline.svg?react';
+import LogisticsBlackIcon from './icon-logistics-black.svg?react';
+import LogisticsRedIcon from './icon-logistics-red.svg?react';
 import LogoutIcon from './icon-logout.svg?react';
+import LphOutlineIcon from './icon-lph-outline.svg?react';
+import LphBlackIcon from './icon-lph-black.svg?react';
+import LphRedIcon from './icon-lph-red.svg?react';
 import MenuIcon from './icon-menu.svg?react';
 import MenuActiveIcon from './icon-menu-active.svg?react';
 import MenuDotsIcon from './icon-menu-dots.svg?react';
@@ -56,6 +68,9 @@ import MicIcon from './icon-mic.svg?react';
 import Mic1Icon from './icon-mic-1.svg?react';
 import MinusProductIcon from './icon-minus-product.svg?react';
 import MotitoIcon from './icon-motito.svg?react';
+import MotorcyclesOutlineIcon from './icon-motorcycles-outline.svg?react';
+import MotorcyclesBlackIcon from './icon-motorcycles-black.svg?react';
+import MotorcyclesRedIcon from './icon-motorcycles-red.svg?react';
 import NegociosIcon from './icon-negocios.svg?react';
 import NotificationIcon from './icon-notifications.svg?react';
 import OfacIcon from './icon-ofac.svg?react';
@@ -70,6 +85,9 @@ import PigIcon from './icon-pig.svg?react';
 import PinIcon from './icon-pin.svg?react';
 import Pin2Icon from './icon-pin-2.svg?react';
 import PlusIcon from './icon-plus.svg?react';
+import PortfolioOutlineIcon from './icon-portfolio-outline.svg?react';
+import PortfolioBlackIcon from './icon-portfolio-black.svg?react';
+import PortfolioRedIcon from './icon-portfolio-red.svg?react';
 import PreparacionIcon from './icon-preparacion.svg?react';
 import PresupuestoIcon from './icon-presupuesto.svg?react';
 import PromoIcon from './icon-promo.svg?react';
@@ -79,6 +97,12 @@ import PuntosIcon from './icon-puntos.svg?react';
 import ReclamosIcon from './icon-reclamos.svg?react';
 import RegalosIcon from './icon-regalos.svg?react';
 import RemoveItemIcon from './icon-remove-item.svg?react';
+import RrhhOutlineIcon from './icon-rrhh-outline.svg?react';
+import RrhhBlackIcon from './icon-rrhh-black.svg?react';
+import RrhhRedIcon from './icon-rrhh-red.svg?react';
+import SafetyOutlineIcon from './icon-safety-outline.svg?react';
+import SafetyBlackIcon from './icon-safety-black.svg?react';
+import SafetyRedIcon from './icon-safety-red.svg?react';
 import ScanQrIcon from './icon-scan-qr.svg?react';
 import SearchIcon from './icon-search.svg?react';
 import SecurityIcon from './icon-security.svg?react';
@@ -92,25 +116,39 @@ import ShoppingCartIcon from './icon-shopping-cart.svg?react';
 import ShoppingCart2Icon from './icon-shopping-cart-2.svg?react';
 import ShoppingCartActiveIcon from './icon-shopping-cart-active.svg?react';
 import SmartphoneIcon from './icon-smartphone.svg?react';
+import SpareOutlineIcon from './icon-spare-outline.svg?react';
+import SpareBlackIcon from './icon-spare-black.svg?react';
+import SpareRedIcon from './icon-spare-red.svg?react';
 import SquareCheckIcon from './icon-square-check.svg?react';
 import SquareRoundedPlusIcon from './icon-square-rounded-plus.svg?react';
 import StarIcon from './icon-star.svg?react';
 import StoreIcon from './icon-store.svg?react';
+import TiresOutlineIcon from './icon-tires-outline.svg?react';
+import TiresBlackIcon from './icon-tires-black.svg?react';
+import TiresRedIcon from './icon-tires-red.svg?react';
 import TransportistasIcon from './icon-transportistas.svg?react';
 import TrashIcon from './icon-trash.svg?react';
+import TreasuryOutlineIcon from './icon-treasury-outline.svg?react';
+import TreasuryBlackIcon from './icon-treasury-black.svg?react';
+import TreasuryRedIcon from './icon-treasury-red.svg?react';
 import TrophyIcon from './icon-trophy.svg?react';
 import UploadIcon from './icon-upload.svg?react';
 import UserIcon from './icon-user.svg?react';
 import User2Icon from './icon-user2.svg?react';
 import UserActiveIcon from './icon-user-active.svg?react';
 import UserRoundedSquareIcon from './icon-user-rounded-square.svg?react';
-import VehicleIcon from './icon-vehicle.svg?react';
-import VehicleIcon2 from './icon-vehicle2.svg?react';
+import VehicleOutlineIcon from './icon-vehicle-outline.svg?react';
+import VehicleBlackIcon from './icon-vehicle-black.svg?react';
+import VehicleRedIcon from './icon-vehicle-red.svg?react';
 import WalletIcon from './icon-wallet.svg?react';
 import WalletIcon2 from './icon-wallet-2.svg?react';
+import WarehouseStock from './icon-warehouse-stock.svg?react';
 import WhatsappIcon from './icon-whatsapp.svg?react';
 import WithoutInformationIcon from './icon-without-information.svg?react';
 import WorkshopIcon from './icon-workshop.svg?react';
+import WorkshopOutlineIcon from './icon-workshop-outline.svg?react';
+import WorkshopBlackIcon from './icon-workshop-black.svg?react';
+import WorkshopRedIcon from './icon-workshop-red.svg?react';
 import XIcon from './icon-x.svg?react';
 import XCircleIcon from './icon-x-circle.svg?react';
 import HouseholdIcon from './icon-household.svg?react';
@@ -118,6 +156,9 @@ import HouseholdIcon from './icon-household.svg?react';
 
 export {
   ActiveNotificationIcon,
+  AccountingOutlineIcon,
+  AccountingBlackIcon,
+  AccountingRedIcon,
   AddListIcon,
   AddProductIcon,
   AddToCartIcon,
@@ -159,6 +200,9 @@ export {
   HistoryIcon,
   HomeIcon,
   IdIcon,
+  ImportsOutlineIcon,
+  ImportsBlackIcon,
+  ImportsRedIcon,
   InfoIcon,
   InvoiceIcon,
   KeyIcon,
@@ -166,7 +210,13 @@ export {
   ListIcon,
   LoaderIcon,
   LockIcon,
+  LogisticsOutlineIcon,
+  LogisticsBlackIcon,
+  LogisticsRedIcon,
   LogoutIcon,
+  LphOutlineIcon,
+  LphBlackIcon,
+  LphRedIcon,
   MenuIcon,
   MenuActiveIcon,
   MenuDotsIcon,
@@ -175,6 +225,9 @@ export {
   Mic1Icon,
   MinusProductIcon,
   MotitoIcon,
+  MotorcyclesOutlineIcon,
+  MotorcyclesBlackIcon,
+  MotorcyclesRedIcon,
   NegociosIcon,
   NotificationIcon,
   OfacIcon,
@@ -189,6 +242,9 @@ export {
   PinIcon,
   Pin2Icon,
   PlusIcon,
+  PortfolioOutlineIcon,
+  PortfolioBlackIcon,
+  PortfolioRedIcon,
   PreparacionIcon,
   PresupuestoIcon,
   PromoIcon,
@@ -198,6 +254,12 @@ export {
   ReclamosIcon,
   RegalosIcon,
   RemoveItemIcon,
+  RrhhOutlineIcon,
+  RrhhBlackIcon,
+  RrhhRedIcon,
+  SafetyOutlineIcon,
+  SafetyBlackIcon,
+  SafetyRedIcon,
   ScanQrIcon,
   SearchIcon,
   SendIcon,
@@ -211,25 +273,39 @@ export {
   ShoppingCart2Icon,
   ShoppingCartActiveIcon,
   SmartphoneIcon,
+  SpareOutlineIcon,
+  SpareBlackIcon,
+  SpareRedIcon,
   SquareCheckIcon,
   SquareRoundedPlusIcon,
   StarIcon,
   StoreIcon,
+  TiresOutlineIcon,
+  TiresBlackIcon,
+  TiresRedIcon,
   TransportistasIcon,
   TrashIcon,
+  TreasuryOutlineIcon,
+  TreasuryBlackIcon,
+  TreasuryRedIcon,
   TrophyIcon,
   UploadIcon,
   UserIcon,
   User2Icon,
   UserActiveIcon,
   UserRoundedSquareIcon,
-  VehicleIcon,
-  VehicleIcon2,
+  VehicleOutlineIcon,
+  VehicleBlackIcon,
+  VehicleRedIcon,
   WalletIcon,
   WalletIcon2,
   WhatsappIcon,
   WithoutInformationIcon,
   WorkshopIcon,
+  WorkshopOutlineIcon,
+  WorkshopBlackIcon,
+  WorkshopRedIcon,
+  WarehouseStock,
   XIcon,
   XCircleIcon,
   HouseholdIcon,
