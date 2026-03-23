@@ -377,34 +377,30 @@ export const getOriginFromUrl = (url: string): string | undefined => {
 };
 
 
-export const roundUpDecimal = (value: unknown): string => {
-	if (value === undefined || value === null) return '0.00';
-	const normalizedValue =
-		typeof value === 'string'
-			? Number(value.trim().replace(/,/g, ''))
-			: Number(value);
-	if (!Number.isFinite(normalizedValue)) return '0.00';
-
-	// Limitamos a 8 decimales para eliminar ruido de punto flotante (ej: 48.60000000000002).
-	const fixedToEight = normalizedValue.toFixed(8);
-	const isNegative = fixedToEight.startsWith('-');
-	const absoluteValue = isNegative ? fixedToEight.slice(1) : fixedToEight;
-	const [intPart = '0', decPart = ''] = absoluteValue.split('.');
-	const eightDecimals = decPart.padEnd(8, '0').slice(0, 8);
-	const firstTwoDecimals = eightDecimals.slice(0, 2);
-	const hasExtraDecimals = /[1-9]/.test(eightDecimals.slice(2));
-
-	let cents = Number(intPart) * 100 + Number(firstTwoDecimals);
-	// "Elevar al inmediato superior" solo aplica para positivos.
-	if (!isNegative && hasExtraDecimals) {
-		cents += 1;
-	}
-
-	const integerPart = Math.floor(cents / 100);
-	const decimalPart = String(cents % 100).padStart(2, '0');
-	const sign = isNegative && cents > 0 ? '-' : '';
-	return `${sign}${integerPart}.${decimalPart}`;
-};
+// export const roundUpDecimal = (value: unknown): number => {
+// 	if (value === undefined || value === null) return 0.00;
+// 	const normalizedValue =
+// 		typeof value === 'string'
+// 			? Number(value.trim().replace(/,/g, ''))
+// 			: Number(value);
+// 	if (!Number.isFinite(normalizedValue)) return 0.00;
+// 	const fixedToEight = normalizedValue.toFixed(8);
+// 	const isNegative = fixedToEight.startsWith('-');
+// 	const absoluteValue = isNegative ? fixedToEight.slice(1) : fixedToEight;
+// 	const [intPart = '0', decPart = ''] = absoluteValue.split('.');
+// 	const eightDecimals = decPart.padEnd(8, '0').slice(0, 8);
+// 	const firstTwoDecimals = eightDecimals.slice(0, 2);
+// 	const hasExtraDecimals = /[1-9]/.test(eightDecimals.slice(2));
+// 	let cents = Number(intPart) * 100 + Number(firstTwoDecimals);
+// 	if (!isNegative && hasExtraDecimals) {
+// 		cents += 1;
+// 	}
+// 	const integerPart = Math.floor(cents / 100);
+// 	const decimalPart = String(cents % 100).padStart(2, '0');
+// 	const sign = isNegative && cents > 0 ? '-' : '';
+// 	const refNumber = `${sign}${integerPart}.${decimalPart}`;
+// 	return Number(refNumber);
+// };
 
 export const roundStandardDecimal = (value: unknown): string => {
 	if (value === undefined || value === null) return '0.00';
@@ -423,8 +419,6 @@ export const roundStandardDecimal = (value: unknown): string => {
 	let intPart = Number(rawIntPart);
 	let twoDecimals = Number(decEight.slice(0, 2));
 	const thirdDecimal = Number(decEight[2] ?? '0');
-
-	// Regla estándar: redondear según el tercer decimal.
 	if (thirdDecimal >= 5) {
 		twoDecimals += 1;
 		if (twoDecimals === 100) {
@@ -441,15 +435,20 @@ export const formatMoneyIfValid = (val: string | number | undefined | null): str
 	if (val === undefined || val === null) return '';
 	const raw = `${val}`.trim();
 	const normalized = raw.replace(/,/g, '');
-	// Only format when it's a "complete" numeric value: -123, 123, 123.45
-	// (If user is mid-typing like "-", "1.", ".5" we leave it as-is.)
 	const isValidNumber = /^-?\d+(\.\d+)?$/.test(normalized);
 	if (!isValidNumber) return raw;
-
 	const rounded = roundStandardDecimal(normalized);
 	const [intPart = '0', decPart = '00'] = rounded.split('.');
 	const groupedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	return `${groupedInt}.${decPart}`;
 };
 
-
+export const roundUpDecimal = (value: unknown): number => {
+	try {
+		const normalized = roundStandardDecimal(value);
+		return Number(normalized);
+	} catch (error) {
+		console.error('Error al procesar el valor:', error);
+		return 0.00;
+	}
+}
