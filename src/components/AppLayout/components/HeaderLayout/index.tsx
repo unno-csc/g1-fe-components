@@ -186,29 +186,21 @@ export const HeaderLayout = ({
 				<div className="block md:hidden">
 					<div className="flex flex-row items-center gap-4">
 						<DropdownIcon
-							options={modulesData}
-							loading={loadingAppLayout}
-							icon={<SettingOutlined className="text-yellow-500 w-4 h-4" />}
-							onChange={handleSetCurrentModule}
-						/>
-						<DropdownIcon
 							options={agenciesData}
 							loading={loadingAppLayout}
 							icon={<PinIcon style={{ stroke: '#EAB308' }} className="w-4 h-4" />}
 							onChange={handleSetCurrentAgency}
 						/>
+						<DropdownIcon
+							options={modulesData}
+							loading={loadingAppLayout}
+							icon={<SettingOutlined className="text-yellow-500 w-4 h-4" />}
+							onChange={handleSetCurrentModule}
+						/>
 					</div>
 				</div>
 				<div className="hidden md:block">
 					<div className="flex flex-row items-center gap-4">
-						<DropdownCustomLabel
-							defaultValue={currentModule?.id?.toString()}
-							options={modulesData}
-							loading={loadingAppLayout}
-							icon={<SettingOutlined className="text-yellow-500 w-4 h-4" />}
-							emptyLabel="Sin módulos asignados"
-							onChange={handleSetCurrentModule}
-						/>
 						<DropdownCustomLabel
 							defaultValue={currentAgency?.id?.toString()}
 							options={agenciesData}
@@ -216,6 +208,14 @@ export const HeaderLayout = ({
 							icon={<PinIcon style={{ stroke: '#EAB308' }} className="w-4 h-4" />}
 							emptyLabel="Sin agencias asignadas"
 							onChange={handleSetCurrentAgency}
+						/>
+						<DropdownCustomLabel
+							defaultValue={currentModule?.id?.toString()}
+							options={modulesData}
+							loading={loadingAppLayout}
+							icon={<SettingOutlined className="text-yellow-500 w-4 h-4" />}
+							emptyLabel="Sin módulos asignados"
+							onChange={handleSetCurrentModule}
 						/>
 						<div className="flex flex-col">
 							<span className="text-4 whitespace-nowrap">{userName ?? ''}</span>
