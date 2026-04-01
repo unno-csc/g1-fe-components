@@ -17,7 +17,7 @@ export interface IModalResponsiveProps {
 	content: ReactNode;
 	height?: string;
 	hideScroll?: boolean;
-	width?: string;
+	width?: string | number; // Soporta valores CSS modernos: "min(900px, 75vw)", "clamp(...)", etc.
 	afterClose?: () => void;
 	closable?: boolean;
 	extraHeaderButtons?: HeaderButton[];
@@ -38,7 +38,7 @@ export const ModalResponsive = ({
 	extraHeaderButtons,
 }: IModalResponsiveProps) => {
 	const screens = Grid.useBreakpoint();
-	const computedWidth = screens.xxl
+	const defaultWidth = screens.xxl
 		? '40%'
 		: screens.xl
 			? '50%'
@@ -50,13 +50,17 @@ export const ModalResponsive = ({
 						? '80%'
 						: '90%';
 
+	// Si se proporciona width con valores CSS modernos (min, clamp, calc, etc.),
+	// úsalo directamente; de lo contrario, usa el width responsivo por defecto
+	const computedWidth = width || defaultWidth;
+
 	const hasExtraButtons = extraHeaderButtons && extraHeaderButtons.length > 0;
 
 	return (
 		<Modal
 			title={
 				<div className="flex items-center justify-between md: w-full mt-[-11px] md:mt-[-13px]">
-					<span>{title}</span>
+					<span className="text-sm sm:text-base md:text-lg font-semibold">{title}</span>
 					{hasExtraButtons && (
 						<div className="flex items-center self-start gap-0">
 							{extraHeaderButtons.map((button, index) => (
@@ -87,7 +91,7 @@ export const ModalResponsive = ({
 			onOk={onOk}
 			onCancel={onCancel}
 			destroyOnHidden
-			width={width || computedWidth}
+			width={computedWidth}
 			styles={{ 
 				body: { height, maxHeight: height, overflowY: hideScroll ? 'hidden' : 'auto' },
 				content: { padding: screens.md ? '24px' : '22px 12px 22px 12px' }

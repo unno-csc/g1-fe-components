@@ -152,6 +152,7 @@ import WorkshopRedIcon from './icon-workshop-red.svg?react';
 import XIcon from './icon-x.svg?react';
 import XCircleIcon from './icon-x-circle.svg?react';
 import HouseholdIcon from './icon-household.svg?react';
+import Infonactional from './icon-national-composition.svg?react';
 
 
 export {
@@ -309,4 +310,5 @@ export {
   XIcon,
   XCircleIcon,
   HouseholdIcon,
+  Infonactional
 };

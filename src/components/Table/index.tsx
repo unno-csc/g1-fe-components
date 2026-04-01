@@ -43,6 +43,8 @@ export interface ITableProps<T extends object> {
 	locale?: TableLocale;
 	rowHoverable?: boolean;
 	refreshDataFunction?: () => void;
+	/** Tamaño compacto: 'small' (compacto) | 'default' (espaciado normal) */
+	compact?: 'small' | 'default';
 }
 
 export const Table = <T extends object>({
@@ -67,6 +69,7 @@ export const Table = <T extends object>({
 	},
 	rowHoverable = true,
 	refreshDataFunction,
+	compact = 'default',
 }: ITableProps<T>) => {
 	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
 	const currentAgency = useAppLayoutStore(state => state.currentAgency);
@@ -281,6 +284,15 @@ export const Table = <T extends object>({
 
 	const resolvedRowSelection = getRowSelection();
 
+	// Estilos según el tamaño compacto
+	const headerHeight = compact === 'small' ? '36px' : '42px';
+	const headerPadding = compact === 'small' ? '3px 6px' : '4px 8px';
+	const headerFontSize = compact === 'small' ? '11px' : '12px';
+	const headerBg = '#F4F4F4'; // zinc-100
+	const rowHeight = compact === 'small' ? '28px' : '30px';
+	const rowPadding = compact === 'small' ? '3px 6px' : '4px 8px';
+	const rowFontSize = compact === 'small' ? '11px' : '12px';
+
 	const getRecordKey = (record: T): React.Key | undefined => {
 		if (typeof rowKey === 'function') return rowKey(record);
 		return (record as Record<string, React.Key | undefined>)[rowKey];
@@ -378,11 +390,14 @@ export const Table = <T extends object>({
 									{...props}
 									style={{
 										...props?.style,
-										background: '#EEF1F3',
-										color: 'black',
-										fontSize: '12px',
-										height: '42px',
-										padding: '4px 8px',
+										background: headerBg,
+										color: '#525252',
+										fontSize: headerFontSize,
+										fontWeight: 600,
+										height: headerHeight,
+										padding: headerPadding,
+										border: 'none',
+										borderBottom: '1px solid #e5e5e5',
 									}}
 								/>
 							);
@@ -394,11 +409,13 @@ export const Table = <T extends object>({
 								{...props}
 								style={{
 									...props?.style,
-									color: 'black',
-									fontSize: '12px',
-									height: '30px',
-									lineHeight: '18px',
-									padding: '4px 8px',
+									color: '#333',
+									fontSize: rowFontSize,
+									height: rowHeight,
+									lineHeight: '1.4',
+									padding: rowPadding,
+									border: 'none',
+									borderBottom: '1px solid #f5f5f5',
 								}}
 							/>
 						),

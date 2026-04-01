@@ -70,6 +70,8 @@ export { LocationSelector } from './components/LocationSelector';
 export { Map } from './components/Map';
 export { Modal } from './components/Modal/Modal';
 export { ModalResponsive } from './components/ModalResponsive';
+export { ModalDetailLayout } from './components/Modals/ModalDetailLayout';
+export { ModalField } from './components/Modals/ModalField';
 export { Notification } from './components/Notification';
 export { Progress } from './components/Progress/Progress';
 export { Redirect } from './components/Redirect/Redirect';
