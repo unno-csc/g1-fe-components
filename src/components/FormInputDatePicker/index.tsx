@@ -3,6 +3,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { memo, useId } from 'react';
+import dayjs from 'dayjs';
 
 export interface IInputProps<TFieldValues extends FieldValues> extends Omit<InputProps, 'form' | 'name'> {
 	name: Path<TFieldValues>;
@@ -30,16 +31,23 @@ const FormInputDatePickerComponent = <TFieldValues extends FieldValues>({
 			control={control}
 			render={({ field, fieldState }) => {
 				const errorMsg = fieldState.error?.message as string | undefined;
+				const parsedValue = field.value
+					? dayjs.isDayjs(field.value)
+						? field.value
+						: dayjs(field.value)
+					: null;
 				return (
 					<div className="flex flex-col gap-1">
 						<FormLabel label={label} htmlFor={id} optional={optional} />
 						<DatePicker
+							id={id}
+							value={parsedValue}
 							format={{
 								format: format,
 								type: 'mask',
 							}}
 							onChange={(value)=> {
-								const formattedValue = value?.format(format);
+								const formattedValue = value ? value.format(format) : '';
 								field.onChange(formattedValue);
 							}}
 							onBlur={field.onBlur}
