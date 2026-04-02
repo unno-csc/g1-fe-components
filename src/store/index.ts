@@ -4,4 +4,5 @@ import { useViewportStore } from './viewport.store'
 import { useTreesNodeStore } from './treesNode.store';
 import { useMenuDataStore } from './menuData.store';
 import { useUserActionPermissions } from './useUserActionPermissions';
-export { useAppLayoutStore, useScrollStore, useViewportStore, useTreesNodeStore, useMenuDataStore, useUserActionPermissions };
+import { useUploadImages } from './useUploadImages';
+export { useAppLayoutStore, useScrollStore, useViewportStore, useTreesNodeStore, useMenuDataStore, useUserActionPermissions, useUploadImages };

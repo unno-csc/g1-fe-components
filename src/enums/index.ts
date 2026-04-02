@@ -88,6 +88,8 @@ export enum EDateMaskFormat {
 	DDMMYYYY = 'DD/MM/YYYY',
 	MMDDYYYY = 'MM/DD/YYYY',
 	YYYYMMDD = 'YYYY-MM-DD',
+	YYYYMMDD_HHMM = 'YYYY-MM-DD HH:mm',
+	YYYYMMDD_HHMMSS = 'YYYY-MM-DD HH:mm:ss',
 	DDMMYY = 'DD/MM/YY',
 	MMDDYY = 'MM/DD/YY',
 	YYYY = 'YYYY',

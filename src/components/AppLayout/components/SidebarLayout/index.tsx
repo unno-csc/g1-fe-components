@@ -18,7 +18,7 @@ export interface SidebarLayoutProps {
 	onClickOptionMenu: (info: { key: string; item: TExtendedMenuItem }) => void;
 }
 
-export const SidebarLayout = ({ children, width = 245, loadingAppLayout, onClickOptionMenu }: SidebarLayoutProps) => {
+export const SidebarLayout = ({ children, width = 266, loadingAppLayout, onClickOptionMenu }: SidebarLayoutProps) => {
 	const { collapsed, searchTerm, openKeys } = useSidebarStore();
 	const { setSearchTerm, setCollapsed, setOpenKeys } = useSidebarStore();
 	const menuData = useMenuDataStore(state => state.menuData);

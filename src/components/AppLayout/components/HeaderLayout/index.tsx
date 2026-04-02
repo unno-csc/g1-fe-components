@@ -173,8 +173,8 @@ export const HeaderLayout = ({
 						/>
 					)}
 					{environment !== 'PRODUCCION' && (
-						<div className="flex justify-center items-center bg-white-100 rounded-full p-2">
-							<strong className="text-black-100">{environment}</strong>
+						<div className="flex justify-center items-center rounded-full p-2" style={{ border: '1px solid #f0f0f0' }}>
+							<strong className="text-white-100">{environment}</strong>
 						</div>
 					)}
 					{environment === 'PRODUCCION' && (

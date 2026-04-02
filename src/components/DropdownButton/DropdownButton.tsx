@@ -91,7 +91,7 @@ export const DropdownButton = ({
 		<>
 			<style>{getDropdownButtonStyles()}</style>
 			<Dropdown menu={menuProps} trigger={trigger} placement={placement} disabled={isDisabled}>
-				<button className={className} type="button" disabled={isDisabled}>
+				<button className={className} type="button" disabled={isDisabled} style={{ height: 32 }}>
 					{loading && <LoadingOutlined className="itsa-dropdown-btn__icon" spin />}
 					{!loading && icon && <span className="itsa-dropdown-btn__icon">{icon}</span>}
 					<span className="itsa-dropdown-btn__label">{label}</span>

@@ -1,148 +1,143 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { FilterInputDatePicker, FilterInputDatePickerProps } from '../../components/FilterInputDatePicker';
+import { Button, Space } from 'antd';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import dayjs from 'dayjs';
+import { FormInputDatePicker, IInputProps } from '../../components/FormInputDatePicker';
+import { EDateMaskFormat } from '../../enums';
 
-const meta: Meta<FilterInputDatePickerProps> = {
-	title: 'components/FilterInputDatePicker',
-	component: FilterInputDatePicker,
-	parameters: { layout: 'padded' },
-	argTypes: {
-		title: { control: 'text' },
-		placeholder: { control: 'text' },
-		format: { control: 'text' },
-		disabled: { control: 'boolean' },
-	},
+// ---------- Schema y tipos ----------
+const schema = z.object({
+	date: z.any().refine(v => !!v, { message: 'Seleccione una fecha' }),
+});
+type FormValues = z.infer<typeof schema>;
+
+// Wrapper que obtiene el control del contexto del formulario
+const BoundFormInputDatePicker = (props: Omit<IInputProps<FormValues>, 'control'>) => {
+	const { control, watch } = useFormContext<FormValues>();
+	const date = watch('date');
+	return <FormInputDatePicker {...props} control={control as any} />;
 };
 
+// ---------- Wrapper con RHF ----------
+const RHFForm: React.FC<{
+	children: React.ReactNode;
+	defaultValues?: Partial<FormValues>;
+	mode?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+	onSubmitLogLabel?: string;
+}> = ({ children, defaultValues, mode = 'onBlur', onSubmitLogLabel = 'submit' }) => {
+	const methods = useForm<FormValues>({
+		resolver: zodResolver(schema),
+		defaultValues: { date: undefined, ...defaultValues },
+		mode,
+	});
+
+	return (
+		<FormProvider {...methods}>
+			<form
+				onSubmit={methods.handleSubmit(data => {
+					// eslint-disable-next-line no-console
+					console.log(onSubmitLogLabel, data);
+				})}
+				style={{ width: 360 }}
+			>
+				<Space direction="vertical" style={{ width: '100%' }} size="middle">
+					{children}
+					<Button htmlType="submit" type="primary">
+						Enviar
+					</Button>
+				</Space>
+			</form>
+		</FormProvider>
+	);
+};
+
+// ---------- Meta ----------
+const meta: Meta<typeof BoundFormInputDatePicker> = {
+	title: 'components/Form/FormInputDatePicker',
+	component: BoundFormInputDatePicker,
+	parameters: { layout: 'centered' },
+	argTypes: {
+		label: { control: 'text' },
+		disabled: { control: 'boolean' },
+		placeholder: { control: 'text' },
+	},
+};
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof BoundFormInputDatePicker>;
 
+// ---------- Historias ----------
 export const Default: Story = {
 	name: 'Default',
 	args: {
-		title: 'Fecha',
-		placeholder: 'Seleccione una fecha',
+		name: 'date',
+		label: 'Fecha',
+		placeholder: 'DD-MM-YYYY',
 	},
-	render: (args) => {
-		const [value, setValue] = useState<string>('');
-		return (
-			<div style={{ width: 360 }}>
-				<FilterInputDatePicker 
-					{...args} 
-					value={value}
-					onChange={(date) => {
-						console.log('Fecha seleccionada (formato YYYY-MM-DD):', date);
-						setValue(date);
-					}}
-				/>
-				<div style={{ marginTop: '16px', fontSize: '12px', color: '#666' }}>
-					<strong>Formato por defecto:</strong> YYYY-MM-DD (ej: {value || '2025-12-23'})
-				</div>
-			</div>
-		);
-	},
+	render: args => (
+		<RHFForm defaultValues={{ date: undefined }}>
+			<BoundFormInputDatePicker {...args} optional />
+		</RHFForm>
+	),
 };
 
 export const WithInitialValue: Story = {
 	name: 'Con valor inicial',
-	render: () => {
-		const [value, setValue] = useState<string>('2024-01-15');
-		return (
-			<div style={{ width: 360 }}>
-				<FilterInputDatePicker 
-					title="Fecha de inicio"
-					value={value}
-					onChange={(date) => {
-						console.log('Fecha seleccionada:', date);
-						setValue(date);
-					}}
-				/>
-			</div>
-		);
+	args: {
+		name: 'date',
+		label: 'Fecha',
+		placeholder: 'DD-MM-YYYY',
 	},
-};
-
-export const CustomFormat: Story = {
-	name: 'Formato personalizado',
-	render: () => {
-		const [value, setValue] = useState<string>('');
-		return (
-			<div style={{ width: 360 }}>
-				<FilterInputDatePicker 
-					title="Fecha de nacimiento"
-					placeholder="DD/MM/YYYY"
-					format="DD/MM/YYYY"
-					value={value}
-					onChange={(date) => {
-						console.log('Fecha seleccionada:', date);
-						setValue(date);
-					}}
-				/>
-			</div>
-		);
-	},
+	render: args => (
+		<RHFForm defaultValues={{ date: dayjs('15-12-2024') }}>
+			<BoundFormInputDatePicker {...args} />
+		</RHFForm>
+	),
 };
 
 export const Disabled: Story = {
 	name: 'Deshabilitado',
-	render: () => (
-		<div style={{ width: 360 }}>
-			<FilterInputDatePicker 
-				title="Fecha"
-				value="2024-01-15"
-				disabled
-				onChange={() => {}}
-			/>
-		</div>
+	args: {
+		name: 'date',
+		label: 'Fecha',
+		disabled: true,
+	},
+	render: args => (
+		<RHFForm defaultValues={{ date: undefined }}>
+			<BoundFormInputDatePicker {...args} />
+		</RHFForm>
 	),
 };
 
-export const WithoutTitle: Story = {
-	name: 'Sin título',
-	render: () => {
-		const [value, setValue] = useState<string>('');
-		return (
-			<div style={{ width: 360 }}>
-				<FilterInputDatePicker 
-					placeholder="Seleccione fecha"
-					value={value}
-					onChange={(date) => {
-						console.log('Fecha seleccionada:', date);
-						setValue(date);
-					}}
-				/>
-			</div>
-		);
+export const WithTimeAndMinutes: Story = {
+	name: 'Con hora y minutos',
+	args: {
+		name: 'date',
+		label: 'Fecha y hora',
+		placeholder: 'YYYY-MM-DD HH:mm',
+		format: EDateMaskFormat.YYYYMMDD_HHMM,
 	},
+	render: args => (
+		<RHFForm defaultValues={{ date: '2026-03-21 00:00' }}>
+			<BoundFormInputDatePicker {...args} />
+		</RHFForm>
+	),
 };
 
-export const MultipleFilters: Story = {
-	name: 'Múltiples filtros de fecha',
-	render: () => {
-		const [startDate, setStartDate] = useState<string>('');
-		const [endDate, setEndDate] = useState<string>('');
-		return (
-			<div style={{ width: 360, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-				<FilterInputDatePicker 
-					title="Fecha desde"
-					placeholder="Fecha de inicio"
-					value={startDate}
-					onChange={(date) => {
-						console.log('Fecha inicio:', date);
-						setStartDate(date);
-					}}
-				/>
-				<FilterInputDatePicker 
-					title="Fecha hasta"
-					placeholder="Fecha de fin"
-					value={endDate}
-					onChange={(date) => {
-						console.log('Fecha fin:', date);
-						setEndDate(date);
-					}}
-				/>
-			</div>
-		);
+export const ShowErrorOnSubmit: Story = {
+	name: 'Error al enviar (validación Zod)',
+	args: {
+		name: 'date',
+		label: 'Seleccione una fecha',
 	},
+	render: args => (
+		<RHFForm mode="onSubmit" onSubmitLogLabel="submit-invalid">
+			<BoundFormInputDatePicker {...args} />
+		</RHFForm>
+	),
 };
+
+

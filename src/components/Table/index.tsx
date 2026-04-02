@@ -69,6 +69,8 @@ export const Table = <T extends object>({
 	},
 	rowHoverable = true,
 	refreshDataFunction,
+	rowClassName,
+	rootClassName,
 	compact = 'default',
 }: ITableProps<T>) => {
 	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
@@ -370,6 +372,8 @@ export const Table = <T extends object>({
 				pagination={finalPagination}
 				scroll={getFinalScroll(tableColumns)}
 				locale={locale}
+				rootClassName={rootClassName}
+				rowClassName={rowClassName}
 				rowKey={rowKey}
 				components={{
 					header: {

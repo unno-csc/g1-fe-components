@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useMemo } from 'react';
-import { Table, Tooltip } from 'antd';
+import { DatePicker, Table, Tooltip } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { Select } from '@/components/Select';
 import { Button } from '../Button';
@@ -7,6 +7,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { ITableDetailsColumn } from '@/interfaces';
 import { MoneyInputCell, NumberInputCell, TextInputCell } from './Cells';
 import { GetRowKey } from 'antd/es/table/interface';
+import dayjs from 'dayjs';
 
 export interface ITableDetailsProps<T extends object> {
 	columns: ITableDetailsColumn<T>[];
@@ -225,6 +226,35 @@ export const TableDetails = <T extends object>({
 										prefix="$"
 										maxDigits={column.maxDigits}
 										status={error ? 'error' : undefined}
+									/>
+									{error && <small className="text-[9px] text-red-500 italic">{error}</small>}
+								</div>
+							);
+						}
+
+						if (column.type === 'date') {
+							const format = column.dateFormat ?? (column.includeTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD');
+							const dateValue =
+								typeof value === 'string' && dayjs(value, format).isValid()
+									? dayjs(value, format)
+									: value && dayjs(value).isValid()
+										? dayjs(value)
+										: null;
+
+							return (
+								<div className="flex flex-col gap-0.5" style={{ width: '100%', minWidth: 0, display: 'flex' }}>
+									<DatePicker
+										className="w-full"
+										format={{
+											format,
+											type: 'mask',
+										}}
+										showTime={column.includeTime ? { format: 'HH:mm' } : false}
+										value={dateValue}
+										onChange={date => handleChangeData(record, column.dataIndex, date ? date.format(format) : '', index)}
+										disabled={isDisabled || disabledColumnActions}
+										status={error ? 'error' : undefined}
+										allowClear
 									/>
 									{error && <small className="text-[9px] text-red-500 italic">{error}</small>}
 								</div>

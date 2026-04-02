@@ -9,6 +9,8 @@ export type ITableDetailsData = {
 	age: number;
 	discount: number;
 	salary: number;
+	startDate: string;
+	expiresAt: string;
 	email: string;
 	description: string;
 	status: 'active' | 'inactive';
@@ -22,6 +24,8 @@ const sampleData: ITableDetailsData[] = [
 		age: 32,
 		discount: 10,
 		salary: 1250,
+		startDate: '2026-03-10',
+		expiresAt: '2026-03-10 14:30',
 		email: 'john.doe@example.com',
 		description:
 			'Seguro de transporte - gastos no sujetos a IVA con detalle largo para mostrar el tooltip completo.',
@@ -33,6 +37,8 @@ const sampleData: ITableDetailsData[] = [
 		age: 28,
 		discount: 20,
 		salary: 980,
+		startDate: '2026-03-14',
+		expiresAt: '2026-03-14 08:45',
 		email: 'jane.smith@example.com',
 		description:
 			'Seguro de transporte - gastos gravados con IVA y texto extendido para ver el truncado y el popup.',
@@ -44,6 +50,8 @@ const sampleData: ITableDetailsData[] = [
 		age: 45,
 		discount: 30,
 		salary: 1575,
+		startDate: '2026-03-18',
+		expiresAt: '2026-03-18 17:15',
 		email: 'bob.johnson@example.com',
 		description:
 			'Seguro de transporte - prima neta (grava IVA) con una descripción suficientemente larga.',
@@ -83,6 +91,21 @@ const sampleColumns: ITableDetailsColumn<ITableDetailsData>[] = [
 		dataIndex: 'description',
 		key: 'description',
 		width: 220,
+	},
+	{
+		title: 'Fecha inicio',
+		dataIndex: 'startDate',
+		key: 'startDate',
+		type: 'date',
+		width: 170,
+	},
+	{
+		title: 'Vence',
+		dataIndex: 'expiresAt',
+		key: 'expiresAt',
+		type: 'date',
+		includeTime: true,
+		width: 200,
 	},
 	{
 		title: 'Salary',

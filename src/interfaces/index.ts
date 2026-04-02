@@ -353,8 +353,10 @@ export interface FlattenOptionData<OptionType> {
 	group?: boolean;
 }
 
-export interface DebounceSelectProps<ValueType = any>
-	extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
+export interface DebounceSelectProps<ValueType = any> extends Omit<
+	SelectProps<ValueType | ValueType[]>,
+	'options' | 'children'
+> {
 	fetchOptions: (search: string) => Promise<ValueType[]>;
 	debounceTimeout?: number;
 }
@@ -405,12 +407,19 @@ export interface ITableDetailsColumn<T extends object> {
 	dataIndex: keyof T | string | number;
 	key: string;
 	disabled?: boolean | ((record: T, index: number, column: ITableDetailsColumn<T>) => boolean);
-	type?: 'text' | 'number' | 'percentage' | 'select' | 'money';
-	/** Solo se usa en `type: 'select'` cuando el valor viene null/undefined. */
+	type?:
+		| 'text'
+		| 'number'
+		| 'percentage'
+		| 'select'
+		| 'money'
+		| 'date'; /** Solo se usa en `type: 'select'` cuando el valor viene null/undefined. */
 	defaultValue?: string | number | ((record: T, index: number, column: ITableDetailsColumn<T>) => string | number);
 	textTransform?: TTextTransform;
 	maxDigits?: number;
 	options?: { label: string; value: string | number }[];
+	includeTime?: boolean;
+	dateFormat?: string;
 	width?: number;
 	minWidth?: number;
 	min?: number;

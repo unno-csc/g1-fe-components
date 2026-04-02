@@ -29,7 +29,7 @@ export const ModalDetailLayout = ({
 	return (
 		<div
 			className={classNames(
-				'overflow-hidden rounded-2xl border border-zinc-200 bg-white',
+				'overflow-hidden rounded-2xl border border-amber-300 bg-white',
 				className,
 			)}
 		>

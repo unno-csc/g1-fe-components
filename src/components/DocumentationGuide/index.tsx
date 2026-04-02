@@ -1,4 +1,10 @@
 import { Image as AntdImage } from 'antd';
+import type { UploadProps } from 'antd';
+import { Icon } from '@mdi/react';
+import { mdiPlus } from '@mdi/js';
+import { useModalResponsive } from '@/hooks';
+import { ModalAddImagenDocumentation } from './components/ModalAddImagenDocumentation';
+import { Button } from '../Button';
 
 export interface IDocumentationGuideSection {
 	title?: string;
@@ -14,6 +20,8 @@ export interface IDocumentationGuideSections {
 	recommendations: IDocumentationGuideSection;
 }
 
+export type DocumentationGuideSectionKey = keyof IDocumentationGuideSections;
+
 export interface IDocumentationGuideProps {
 	title: string;
 	description: string;
@@ -24,9 +32,12 @@ export interface IDocumentationGuideProps {
 	additionalImagesDescription?: string;
 	documentationBasePath?: string;
 	className?: string;
+	loadingImage?: boolean;
+	basePathImages?: string;
+	addImageCallback?: UploadProps['onChange'];
 }
 
-const orderedSectionKeys: Array<keyof IDocumentationGuideSections> = [
+const orderedSectionKeys: DocumentationGuideSectionKey[] = [
 	'overview',
 	'purpose',
 	'usage',
@@ -34,7 +45,7 @@ const orderedSectionKeys: Array<keyof IDocumentationGuideSections> = [
 	'recommendations',
 ];
 
-const getDefaultSectionTitle = (sectionKey: keyof IDocumentationGuideSections, subjectName?: string) => {
+const getDefaultSectionTitle = (sectionKey: DocumentationGuideSectionKey, subjectName?: string) => {
 	switch (sectionKey) {
 		case 'overview':
 			return subjectName ? `Que es ${subjectName}` : 'Que es';
@@ -52,6 +63,20 @@ const getDefaultSectionTitle = (sectionKey: keyof IDocumentationGuideSections, s
 };
 
 const buildImageSrc = (basePath: string, imageName: string) => {
+	if (/^https?:\/\//i.test(imageName)) {
+		return imageName;
+	}
+
+	if (/^https?:\/\//i.test(basePath)) {
+		const normalizedBasePath = basePath.endsWith('/') ? basePath : `${basePath}/`;
+
+		if (/\/files\/?$/i.test(normalizedBasePath)) {
+			return `${normalizedBasePath}?key=${encodeURIComponent(imageName)}`;
+		}
+
+		return `${normalizedBasePath}${imageName}`;
+	}
+
 	const normalizedBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
 
 	return `${normalizedBasePath}/${imageName}`;
@@ -63,19 +88,21 @@ const getImageAlt = (sectionTitle: string, imageName: string, index: number) => 
 	return cleanedName || `${sectionTitle} imagen ${index + 1}`;
 };
 
+export interface IPreviewImageProps {
+	basePath: string;
+	imageName: string;
+	sectionTitle: string;
+	index: number;
+	imageClassName?: string;
+}
+
 const renderPreviewImage = ({
 	basePath,
 	imageName,
 	sectionTitle,
 	index,
 	imageClassName = 'max-h-[320px]',
-}: {
-	basePath: string;
-	imageName: string;
-	sectionTitle: string;
-	index: number;
-	imageClassName?: string;
-}) => {
+}: IPreviewImageProps) => {
 	const imageSrc = buildImageSrc(basePath, imageName);
 
 	return (
@@ -93,10 +120,23 @@ const renderPreviewImage = ({
 					}}
 				/>
 			</div>
-			<p className="text-xs text-gray-500">{imageName}</p>
 		</div>
 	);
 };
+
+const renderAddImageButton = (
+	addImageCallback?: () => void,
+) => (
+	<Button
+		type="secondary"
+		onClick={() => addImageCallback?.()}
+		label={<div className="flex items-center gap-2">
+			<Icon path={mdiPlus} className="h-5 w-5" />
+			<span>Agregar imagen</span>
+		</div>}
+	/>
+
+);
 
 export const DocumentationGuide = ({
 	title,
@@ -108,12 +148,35 @@ export const DocumentationGuide = ({
 	additionalImagesDescription = 'Material visual complementario de apoyo.',
 	documentationBasePath = '/src/assets/documentation',
 	className = '',
+	loadingImage = false,
+	basePathImages,
+	addImageCallback,
 }: IDocumentationGuideProps) => {
+	const { openModal } = useModalResponsive();
+
+
+	const handleAddImage = () => {
+		openModal({
+			title: 'Agregar imagen',
+			content: <ModalAddImagenDocumentation onUpload={addImageCallback}
+				loading={loadingImage} />,
+			height: 'auto',
+			width: '50vw',
+		});
+	};
+
 	return (
 		<div className={`flex max-h-[80vh] min-w-[90wv] md:min-w-[60vw] flex-col gap-3 overflow-y-auto pr-2 text-sm text-gray-800 ${className}`.trim()}>
-			<div className="flex flex-col gap-1">
-				<h1 className="text-base font-semibold">{title}</h1>
-				<p>{description}</p>
+			<div className="flex flex-col gap-3">
+				<div className="flex flex-row items-start justify-between gap-2">
+					<div className="flex flex-col gap-1 w-full">
+						<h1 className="text-base font-semibold">{title}</h1>
+						<p>{description}</p>
+					</div>
+					<div className="flex items-center">
+						{addImageCallback && renderAddImageButton(handleAddImage)}
+					</div>
+				</div>
 			</div>
 
 			<AntdImage.PreviewGroup>
@@ -137,18 +200,24 @@ export const DocumentationGuide = ({
 							</div>
 
 							{sectionImages.length > 0 ? (
-								<div className="grid gap-3">
-									{sectionImages.map((imageName, index) =>
-										renderPreviewImage({
-											basePath: documentationBasePath,
-											imageName,
-											sectionTitle,
-											index,
-										}),
-									)}
+								<div className="flex flex-col gap-1">
+									<div className="grid gap-1">
+										{sectionImages.map((imageName, index) => (
+											<div key={`${sectionKey}-${imageName}-${index}`}>
+												{renderPreviewImage({
+													basePath: basePathImages ?? documentationBasePath,
+													imageName,
+													sectionTitle,
+													index,
+												})}
+											</div>
+										))}
+									</div>
 								</div>
 							) : (
-								<div className="hidden lg:block" />
+								<div className="flex min-h-0 flex-1 items-center justify-center text-sm text-gray-400">
+									Sin imagen asociada
+								</div>
 							)}
 						</section>
 					);
@@ -163,7 +232,7 @@ export const DocumentationGuide = ({
 
 						<div className="grid gap-3 md:grid-cols-2">
 							{additionalImages.map((imageName, index) => (
-								<div key={imageName} className="flex flex-col gap-2">
+								<div key={`${imageName}-${index}`} className="flex flex-col gap-2">
 									{renderPreviewImage({
 										basePath: documentationBasePath,
 										imageName,
