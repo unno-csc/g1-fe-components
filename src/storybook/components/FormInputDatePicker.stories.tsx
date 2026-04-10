@@ -1,33 +1,26 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button, Space } from 'antd';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
-import { FormInputDatePicker, IInputProps } from '../../components/FormInputDatePicker';
+import { FormInputDatePicker, IInputProps } from '@/components/FormInputDatePicker';
+import { EDateMaskFormat } from '@/enums';
 
-// ---------- Schema y tipos ----------
 const schema = z.object({
-	date: z.any().refine(v => !!v, { message: 'Seleccione una fecha' }),
+	date: z.string({ required_error: 'Seleccione una fecha' }).min(1, 'Seleccione una fecha'),
 });
 type FormValues = z.infer<typeof schema>;
 
-// Wrapper que obtiene el control del contexto del formulario
 const BoundFormInputDatePicker = (props: Omit<IInputProps<FormValues>, 'control'>) => {
-	const { control, watch } = useFormContext<FormValues>();
-	const date = watch('date');
-	console.log('TOMAS ===> date =>', JSON.stringify(structuredClone(date)));
-	return <FormInputDatePicker {...props} control={control as any} />;
+	const { control } = useFormContext<FormValues>();
+	return <FormInputDatePicker<FormValues> {...props} control={control} />;
 };
 
-// ---------- Wrapper con RHF ----------
 const RHFForm: React.FC<{
 	children: React.ReactNode;
 	defaultValues?: Partial<FormValues>;
 	mode?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
-	onSubmitLogLabel?: string;
-}> = ({ children, defaultValues, mode = 'onBlur', onSubmitLogLabel = 'submit' }) => {
+}> = ({ children, defaultValues, mode = 'onBlur' }) => {
 	const methods = useForm<FormValues>({
 		resolver: zodResolver(schema),
 		defaultValues: { date: undefined, ...defaultValues },
@@ -36,13 +29,7 @@ const RHFForm: React.FC<{
 
 	return (
 		<FormProvider {...methods}>
-			<form
-				onSubmit={methods.handleSubmit(data => {
-					// eslint-disable-next-line no-console
-					console.log(onSubmitLogLabel, data);
-				})}
-				style={{ width: 360 }}
-			>
+			<form onSubmit={methods.handleSubmit(() => {})} style={{ width: 360 }}>
 				<Space direction="vertical" style={{ width: '100%' }} size="middle">
 					{children}
 					<Button htmlType="submit" type="primary">
@@ -54,7 +41,6 @@ const RHFForm: React.FC<{
 	);
 };
 
-// ---------- Meta ----------
 const meta: Meta<typeof BoundFormInputDatePicker> = {
 	title: 'components/Form/FormInputDatePicker',
 	component: BoundFormInputDatePicker,
@@ -63,13 +49,13 @@ const meta: Meta<typeof BoundFormInputDatePicker> = {
 		label: { control: 'text' },
 		disabled: { control: 'boolean' },
 		placeholder: { control: 'text' },
+		minuteStep: { control: 'number' },
 	},
 };
 export default meta;
 
 type Story = StoryObj<typeof BoundFormInputDatePicker>;
 
-// ---------- Historias ----------
 export const Default: Story = {
 	name: 'Default',
 	args: {
@@ -92,7 +78,7 @@ export const WithInitialValue: Story = {
 		placeholder: 'DD-MM-YYYY',
 	},
 	render: args => (
-		<RHFForm defaultValues={{ date: dayjs('15-12-2024') }}>
+		<RHFForm defaultValues={{ date: '2024-12-15' }}>
 			<BoundFormInputDatePicker {...args} />
 		</RHFForm>
 	),
@@ -112,6 +98,37 @@ export const Disabled: Story = {
 	),
 };
 
+export const WithTimeAndMinutes: Story = {
+	name: 'Con hora y minutos',
+	args: {
+		name: 'date',
+		label: 'Fecha y hora',
+		placeholder: 'YYYY-MM-DD HH:mm',
+		format: EDateMaskFormat.YYYYMMDD_HHMM,
+	},
+	render: args => (
+		<RHFForm defaultValues={{ date: '2026-03-21 00:00' }}>
+			<BoundFormInputDatePicker {...args} />
+		</RHFForm>
+	),
+};
+
+export const WithMinuteStep: Story = {
+	name: 'Minutos cada 15 (8:00, 8:15, 8:30, 8:45)',
+	args: {
+		name: 'date',
+		label: 'Fecha y hora',
+		placeholder: 'YYYY-MM-DD HH:mm',
+		format: EDateMaskFormat.YYYYMMDD_HHMM,
+		minuteStep: 15,
+	},
+	render: args => (
+		<RHFForm defaultValues={{ date: undefined }}>
+			<BoundFormInputDatePicker {...args} />
+		</RHFForm>
+	),
+};
+
 export const ShowErrorOnSubmit: Story = {
 	name: 'Error al enviar (validación Zod)',
 	args: {
@@ -119,10 +136,8 @@ export const ShowErrorOnSubmit: Story = {
 		label: 'Seleccione una fecha',
 	},
 	render: args => (
-		<RHFForm mode="onSubmit" onSubmitLogLabel="submit-invalid">
+		<RHFForm mode="onSubmit">
 			<BoundFormInputDatePicker {...args} />
 		</RHFForm>
 	),
 };
-
-

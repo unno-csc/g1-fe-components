@@ -12,23 +12,24 @@ dayjs.extend(customParseFormat);
 
 const hasTimeTokens = (format: string) => format.includes('HH') || format.includes('mm') || format.includes('ss');
 
-const getShowTimeConfig = (format: string): DatePickerProps['showTime'] => {
+type TMinuteStep = DatePickerProps['minuteStep'];
+
+const getShowTimeConfig = (format: string, minuteStep?: TMinuteStep): DatePickerProps['showTime'] => {
 	if (!hasTimeTokens(format)) {
 		return false;
 	}
 
 	if (format.includes('ss')) {
-		return { format: 'HH:mm:ss' };
+		return { format: 'HH:mm:ss', minuteStep };
 	}
 
-	return { format: 'HH:mm' };
+	return { format: 'HH:mm', minuteStep };
 };
 
 export interface IInputProps<TFieldValues extends FieldValues>
 	extends Omit<DatePickerProps, 'value' | 'onChange' | 'defaultValue' | 'format'> {
 	name: Path<TFieldValues>;
 	label: string;
-	showCaracteres?: boolean;
 	control: Control<TFieldValues>;
 	placeholder?: string;
 	optional?: boolean;
@@ -45,11 +46,12 @@ const FormInputDatePickerComponent = <TFieldValues extends FieldValues>({
 	format = EDateMaskFormat.YYYYMMDD,
 	disabled = false,
 	allowClear = true,
+	minuteStep,
 	...rest
 }: IInputProps<TFieldValues>) => {
 	const id = useId();
 	const errId = `${id}-error`;
-	const resolvedShowTime = getShowTimeConfig(format);
+	const resolvedShowTime = getShowTimeConfig(format, minuteStep);
 
 	return (
 		<Controller
