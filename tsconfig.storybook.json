@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noImplicitAny": false,
+		"strictNullChecks": false
+	},
+	"include": ["src/storybook/**/*.stories.tsx", "src/storybook/**/*.stories.ts"]
+}

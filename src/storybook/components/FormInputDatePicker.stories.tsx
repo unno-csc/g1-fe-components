@@ -3,11 +3,11 @@ import { Button, Space } from 'antd';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import { FormInputDatePicker, IInputProps } from '@/components/FormInputDatePicker';
-import { EDateMaskFormat } from '@/enums';
+import { FormInputDatePicker, IInputProps } from '../../components/FormInputDatePicker';
+import { EDateMaskFormat } from '../../enums';
 
 const schema = z.object({
-	date: z.string({ required_error: 'Seleccione una fecha' }).min(1, 'Seleccione una fecha'),
+	date: z.string().min(1, 'Seleccione una fecha'),
 });
 type FormValues = z.infer<typeof schema>;
 
