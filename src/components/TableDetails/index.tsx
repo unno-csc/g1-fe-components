@@ -29,6 +29,7 @@ export interface ITableDetailsProps<T extends object> {
 	height?: number | string;
 	loading?: boolean;
 	expandable?: TableProps<T>['expandable'];
+	rowClassName?: TableProps<T>['rowClassName'];
 }
 
 export const TableDetails = <T extends object>({
@@ -45,6 +46,7 @@ export const TableDetails = <T extends object>({
 	height,
 	loading = false,
 	expandable,
+	rowClassName,
 }: ITableDetailsProps<T>) => {
 	const handleChangeData = useCallback(
 		(record: T, dataIndex: keyof T | string | number, value: any, index: number) => {
@@ -53,11 +55,14 @@ export const TableDetails = <T extends object>({
 				[dataIndex]: value,
 			};
 
-			onChangeData?.({
-				record: updatedRecord,
-				dataIndex,
-				value,
-			}, index);
+			onChangeData?.(
+				{
+					record: updatedRecord,
+					dataIndex,
+					value,
+				},
+				index,
+			);
 		},
 		[onChangeData],
 	);
@@ -121,7 +126,6 @@ export const TableDetails = <T extends object>({
 						};
 					},
 					render: (value: any, record: T, index: number) => {
-
 						if (column.render) {
 							return column.render(value, record, index);
 						}
@@ -251,7 +255,9 @@ export const TableDetails = <T extends object>({
 										}}
 										showTime={column.includeTime ? { format: 'HH:mm' } : false}
 										value={dateValue}
-										onChange={date => handleChangeData(record, column.dataIndex, date ? date.format(format) : '', index)}
+										onChange={date =>
+											handleChangeData(record, column.dataIndex, date ? date.format(format) : '', index)
+										}
 										disabled={isDisabled || disabledColumnActions}
 										status={error ? 'error' : undefined}
 										allowClear
@@ -343,6 +349,35 @@ export const TableDetails = <T extends object>({
 		[bodyHeight, scroll],
 	);
 
+	const expandableWithRowClass = useMemo(() => {
+		if (!expandable) return expandable;
+
+		const defaultExpandedRowClass = 'itsa-expanded-row-no-spacing';
+		const currentExpandedRowClass = expandable.expandedRowClassName;
+
+		if (!currentExpandedRowClass) {
+			return {
+				...expandable,
+				expandedRowClassName: () => defaultExpandedRowClass,
+			};
+		}
+
+		if (typeof currentExpandedRowClass === 'string') {
+			return {
+				...expandable,
+				expandedRowClassName: `${currentExpandedRowClass} ${defaultExpandedRowClass}`.trim(),
+			};
+		}
+
+		return {
+			...expandable,
+			expandedRowClassName: (record: T, index: number, indent: number) => {
+				const userClassName = currentExpandedRowClass(record, index, indent);
+				return `${userClassName ?? ''} ${defaultExpandedRowClass}`.trim();
+			},
+		};
+	}, [expandable]);
+
 	return (
 		<div
 			className={bodyHeight ? 'itsa-table-details-fixed-height' : undefined}
@@ -359,7 +394,8 @@ export const TableDetails = <T extends object>({
 				footer={footer ? () => footer : undefined}
 				showHeader={showHeader}
 				loading={loading}
-				expandable={expandable}
+				expandable={expandableWithRowClass}
+				rowClassName={rowClassName}
 			/>
 		</div>
 	);

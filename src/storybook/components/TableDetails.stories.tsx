@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import { TableDetails, ITableDetailsProps } from '../../components/TableDetails';
 import { ITableDetailsColumn  } from '../../interfaces';
 
@@ -269,6 +271,32 @@ export const WithData: Story = {
 const HEIGHT_PRESETS = [200, 280, 360, 400, 500] as const;
 const EXPAND_WIDTH_PRESETS = [32, 56, 80] as const;
 
+type NestedLineRow = { key: string; concept: string; amount: number };
+
+const nestedLinesByParentId: Record<number, NestedLineRow[]> = {
+	1: [
+		{ key: '1a', concept: 'Prima neta', amount: 800 },
+		{ key: '1b', concept: 'Gastos administrativos', amount: 450 },
+	],
+	2: [
+		{ key: '2a', concept: 'Cobertura base', amount: 620 },
+		{ key: '2b', concept: 'Recargo financiero', amount: 360 },
+	],
+	3: [{ key: '3a', concept: 'Total estimado', amount: 1200 }],
+};
+
+const nestedTableColumns: ColumnsType<NestedLineRow> = [
+	{ title: 'Concepto', dataIndex: 'concept', key: 'concept' },
+	{
+		title: 'Importe',
+		dataIndex: 'amount',
+		key: 'amount',
+		align: 'right',
+		render: (value: number) =>
+			new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' }).format(value),
+	},
+];
+
 export const FixedHeight: Story = {
 	render: args => {
 		const [rows, setRows] = useState<ITableDetailsData[]>(args.data);
@@ -401,6 +429,68 @@ export const ExpandableColumnWidth: Story = {
 			description: {
 				story:
 					'Ejemplo de filas expandibles con columna expand en distintos tamaños (32px, 56px y 80px) usando `expandable.columnWidth`.',
+			},
+		},
+	},
+};
+
+export const ExpandableWithNestedTable: Story = {
+	render: args => {
+		const [rows, setRows] = useState<ITableDetailsData[]>(args.data);
+
+		const handleChangeData: NonNullable<ITableDetailsProps<ITableDetailsData>['onChangeData']> = ({
+			record,
+			dataIndex,
+			value,
+		}) => {
+			setRows(prev =>
+				prev.map(item => (item.id === record.id ? { ...record, [dataIndex as keyof ITableDetailsData]: value } : item)),
+			);
+		};
+
+		const handleDelete = (record: ITableDetailsData) => {
+			setRows(prev => prev.filter(item => item.id !== record.id));
+		};
+
+		return (
+			<div>
+				<TableDetails
+					{...args}
+					data={rows}
+					onDelete={handleDelete}
+					onChangeData={handleChangeData}
+					rowKey={args.rowKey || 'id'}
+					expandable={{
+						expandedRowRender: record => {
+							const lines = nestedLinesByParentId[record.id] ?? [];
+							return (
+								<div className='bg-gray-50 px-2 py-2'>
+									<p className='mb-2 text-sm font-medium text-gray-700'>Líneas del registro</p>
+									<Table<NestedLineRow>
+										size='small'
+										pagination={false}
+										columns={nestedTableColumns}
+										dataSource={lines}
+										bordered
+									/>
+								</div>
+							);
+						},
+					}}
+				/>
+			</div>
+		);
+	},
+	args: {
+		data: sampleData,
+		columns: sampleColumns,
+		rowKey: 'id',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story:
+					'Filas expandibles cuyo contenido es una tabla anidada (`antd` `Table`) dentro de `expandable.expandedRowRender`.',
 			},
 		},
 	},

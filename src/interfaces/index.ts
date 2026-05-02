@@ -252,7 +252,7 @@ export interface IModalResponsiveProps {
 
 export interface ITabsMaintenanceItem {
 	key: string;
-	label: string;
+	label: string | ReactNode;
 	children: ReactNode;
 	icon?: ReactNode;
 }

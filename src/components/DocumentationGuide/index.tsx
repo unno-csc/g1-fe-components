@@ -2,9 +2,9 @@ import { Image as AntdImage } from 'antd';
 import type { UploadProps } from 'antd';
 import { Icon } from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
-import { useModalResponsive } from '@/hooks';
-import { ModalAddImagenDocumentation } from './components/ModalAddImagenDocumentation';
+import { Carousel } from '@/components/Carousel';
 import { Button } from '../Button';
+import { ImagePreview } from '../ImagePreview';
 
 export interface IDocumentationGuideSection {
 	title?: string;
@@ -35,6 +35,7 @@ export interface IDocumentationGuideProps {
 	loadingImage?: boolean;
 	basePathImages?: string;
 	addImageCallback?: UploadProps['onChange'];
+	handleAddImage?: () => void;
 }
 
 const orderedSectionKeys: DocumentationGuideSectionKey[] = [
@@ -107,19 +108,12 @@ const renderPreviewImage = ({
 
 	return (
 		<div className="flex w-full flex-col gap-2">
-			<div className="overflow-hidden rounded-md border border-gray-200 bg-gray-50">
-				<AntdImage
-					alt={getImageAlt(sectionTitle, imageName, index)}
-					src={imageSrc}
-					width="100%"
-					className={`cursor-zoom-in object-contain ${imageClassName}`}
-					style={{ width: '100%', objectFit: 'contain' }}
-					preview={{
-						movable: true,
-						mask: <span className="text-xs">Click para ampliar</span>,
-					}}
-				/>
-			</div>
+			<ImagePreview
+				src={imageSrc}
+				alt={getImageAlt(sectionTitle, imageName, index)}
+				minHeight={imageClassName === 'max-h-[240px]' ? 240 : 320}
+				imageClassName={imageClassName}
+			/>
 		</div>
 	);
 };
@@ -148,22 +142,13 @@ export const DocumentationGuide = ({
 	additionalImagesDescription = 'Material visual complementario de apoyo.',
 	documentationBasePath = '/src/assets/documentation',
 	className = '',
-	loadingImage = false,
 	basePathImages,
 	addImageCallback,
+	handleAddImage,
 }: IDocumentationGuideProps) => {
-	const { openModal } = useModalResponsive();
+	const additionalImagesBasePath = basePathImages ?? documentationBasePath;
 
-
-	const handleAddImage = () => {
-		openModal({
-			title: 'Agregar imagen',
-			content: <ModalAddImagenDocumentation onUpload={addImageCallback}
-				loading={loadingImage} />,
-			height: 'auto',
-			width: '50vw',
-		});
-	};
+	// const handleAddImage = () => {};
 
 	return (
 		<div className={`flex max-h-[80vh] min-w-[90wv] md:min-w-[60vw] flex-col gap-3 overflow-y-auto pr-2 text-sm text-gray-800 ${className}`.trim()}>
@@ -201,22 +186,39 @@ export const DocumentationGuide = ({
 
 							{sectionImages.length > 0 ? (
 								<div className="flex flex-col gap-1">
-									<div className="grid gap-1">
-										{sectionImages.map((imageName, index) => (
-											<div key={`${sectionKey}-${imageName}-${index}`}>
-												{renderPreviewImage({
-													basePath: basePathImages ?? documentationBasePath,
-													imageName,
-													sectionTitle,
-													index,
-												})}
-											</div>
-										))}
-									</div>
+									{sectionImages.length === 1 ? (
+										renderPreviewImage({
+											basePath: basePathImages ?? documentationBasePath,
+											imageName: sectionImages[0] ?? '',
+											sectionTitle,
+											index: 0,
+										})
+									) : (
+										<Carousel.Root loop>
+											<Carousel.Content aspectRatio="4/3" className="rounded-md bg-slate-50">
+												{sectionImages.map((imageName, index) => (
+													<Carousel.Item
+														key={`${sectionKey}-${imageName}-${index}`}
+														className="flex items-center justify-center p-3"
+													>
+														{renderPreviewImage({
+															basePath: basePathImages ?? documentationBasePath,
+															imageName,
+															sectionTitle,
+															index,
+														})}
+													</Carousel.Item>
+												))}
+											</Carousel.Content>
+											<Carousel.PrevButton />
+											<Carousel.NextButton />
+											<Carousel.Indicators position="bottom" variant="dots" />
+										</Carousel.Root>
+									)}
 								</div>
 							) : (
 								<div className="flex min-h-0 flex-1 items-center justify-center text-sm text-gray-400">
-									Sin imagen asociada
+									Sin imagen asociada 2
 								</div>
 							)}
 						</section>
@@ -230,18 +232,29 @@ export const DocumentationGuide = ({
 							<p>{additionalImagesDescription}</p>
 						</div>
 
-						<div className="grid gap-3 md:grid-cols-2">
-							{additionalImages.map((imageName, index) => (
-								<div key={`${imageName}-${index}`} className="flex flex-col gap-2">
-									{renderPreviewImage({
-										basePath: documentationBasePath,
-										imageName,
-										sectionTitle: additionalImagesTitle,
-										index,
-										imageClassName: 'max-h-[240px]',
-									})}
-								</div>
-							))}
+						<div className="mx-auto w-full max-w-4xl">
+							<Carousel.Root loop={additionalImages.length > 1}>
+								<Carousel.Content aspectRatio="16/9" className="rounded-md bg-slate-50">
+									{additionalImages.map((imageName, index) => (
+										<Carousel.Item key={`${imageName}-${index}`} className="flex items-center justify-center p-4 md:p-8">
+											{renderPreviewImage({
+												basePath: additionalImagesBasePath,
+												imageName,
+												sectionTitle: additionalImagesTitle,
+												index,
+												imageClassName: 'max-h-[360px] mx-auto',
+											})}
+										</Carousel.Item>
+									))}
+								</Carousel.Content>
+								{additionalImages.length > 1 && (
+									<>
+										<Carousel.PrevButton />
+										<Carousel.NextButton />
+										<Carousel.Indicators position="bottom" variant="dots" />
+									</>
+								)}
+							</Carousel.Root>
 						</div>
 					</section>
 				)}

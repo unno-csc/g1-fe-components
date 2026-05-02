@@ -12,7 +12,7 @@
 
 /* Variable de color primario global para este paquete */
 :root {
-	--itsa-primary: #EA3B48;
+	--motor1-primary: #F9A825;
 }
 
 html,
@@ -103,37 +103,37 @@ body,
 
 
 .itsa-checkbox--default .ant-checkbox .ant-checkbox-inner {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--default .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .itsa-checkbox--default .ant-checkbox:hover .ant-checkbox-inner,
 .itsa-checkbox--default .ant-checkbox-input:focus+.ant-checkbox-inner {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .mi-clase-checkbox .ant-checkbox .ant-checkbox-inner {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .mi-clase-checkbox .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox:hover .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-input:focus+.ant-checkbox-inner {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--default .ant-checkbox-checked .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-checked .ant-checkbox-inner {
-	background-color: var(--itsa-primary) !important;
-	border-color: var(--itsa-primary) !important;
+	background-color: var(--motor1-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--default .ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner,
 .itsa-checkbox--default .ant-checkbox-checked:hover .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-checked:hover .ant-checkbox-inner {
-	background-color: var(--itsa-primary) !important;
-	border-color: var(--itsa-primary) !important;
+	background-color: var(--motor1-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--warning .ant-checkbox .ant-checkbox-inner {
@@ -159,8 +159,8 @@ body,
 
 /* Radio default variant */
 .itsa-radio--default {
-	--ant-colorPrimary: var(--itsa-primary);
-	--ant-primary-color: var(--itsa-primary);
+	--ant-colorPrimary: var(--motor1-primary);
+	--ant-primary-color: var(--motor1-primary);
 }
 
 .itsa-radio--default .ant-radio .ant-radio-inner {
@@ -174,15 +174,15 @@ body,
 }
 
 .itsa-radio--default .ant-radio-checked .ant-radio-inner {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-checked .ant-radio-inner::after {
-	background-color: var(--itsa-primary) !important;
+	background-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-wrapper-checked .ant-radio .ant-radio-inner::after {
-	background-color: var(--itsa-primary) !important;
+	background-color: var(--motor1-primary) !important;
 }
 
 /* Fondo del círculo interno siempre blanco al estar checked */
@@ -193,15 +193,15 @@ body,
 
 /* Anillo exterior (pseudo-elemento) y focus outline */
 .itsa-radio--default .ant-radio-checked::after {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-wrapper:hover .ant-radio-checked::after {
-	border-color: var(--itsa-primary) !important;
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-input:focus+.ant-radio-inner {
-	box-shadow: 0 0 0 3px rgba(234, 61, 72, 0.24) !important;
+	box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.24) !important;
 }
 
 .itsa-radio--warning {
@@ -254,7 +254,7 @@ body,
 }
 
 .itsa-switch-custom .ant-switch-checked {
-	background-color: var(--switch-active-bg, var(--itsa-primary)) !important;
+	background-color: var(--switch-active-bg, var(--motor1-primary)) !important;
 }
 
 .itsa-switch-custom .ant-switch:hover:not(.ant-switch-disabled) {
@@ -262,7 +262,7 @@ body,
 }
 
 .itsa-switch-custom .ant-switch-checked:hover:not(.ant-switch-disabled) {
-	background-color: var(--switch-active-bg, var(--itsa-primary)) !important;
+	background-color: var(--switch-active-bg, var(--motor1-primary)) !important;
 }
 
 /* Botones genéricos ITSA */
@@ -434,21 +434,52 @@ body,
 /* Color de la línea activa (ink bar) */
 .tabs-maintenance .ant-tabs-ink-bar {
 	background-color: var(--ant-colorPrimary) !important;
+	height: 3px !important;
 }
 
 /* Color del texto del tab activo */
 .tabs-maintenance .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-	color: var(--ant-colorPrimary) !important;
+	color: #111111 !important;
+	font-weight: 600 !important;
 }
 
 /* Hover opcional para coherencia visual */
 .tabs-maintenance .ant-tabs-tab:hover .ant-tabs-tab-btn {
-	color: var(--ant-colorPrimary) !important;
+	color: #111111 !important;
 }
 
 
 
 /* ===== ITSA Table customizations (included in package build) ===== */
+
+
+/* Set expandable wrapper background to white */
+.itsa-expanded-row-no-spacing .ant-table-expanded-row-fixed {
+	background-color: #ffffff !important;
+	padding: 0 !important;
+}
+
+/* Expand column: AntD uses 16px cell padding — matches body cells in TableDetails (less row height) */
+.itsa-table-details .ant-table-row-expand-icon-cell {
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+	padding-left: 8px !important;
+	padding-right: 8px !important;
+	vertical-align: middle !important;
+}
+
+/* Expand icon: use app primary color when expanded (scoped to TableDetails) */
+.itsa-table-details .ant-table-row-expand-icon.ant-table-row-expand-icon-expanded {
+	color: var(--motor1-primary) !important;
+	border-color: var(--motor1-primary) !important;
+}
+
+.itsa-table-details .ant-table-row-expand-icon.ant-table-row-expand-icon-expanded:hover,
+.itsa-table-details .ant-table-row-expand-icon.ant-table-row-expand-icon-expanded:focus-visible {
+	color: #ffffff !important;
+	background-color: var(--motor1-primary) !important;
+	border-color: var(--motor1-primary) !important;
+}
 
 /* Header rounding and container */
 .itsa-table--head-rounded .ant-table-container {
@@ -555,6 +586,26 @@ body,
 	box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
 }
 
+/* Selection radio colors (single mode) */
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio .ant-radio-inner {
+	border-color: #F9A825 !important;
+}
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-wrapper:hover .ant-radio-inner,
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio:hover .ant-radio-inner,
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-input:focus + .ant-radio-inner {
+	border-color: #F9A825 !important;
+}
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-checked .ant-radio-inner {
+	border-color: #F9A825 !important;
+	background-color: #F9A825 !important;
+}
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-checked .ant-radio-inner::after {
+	background-color: #ffffff !important;
+}
+
 /* ===== Pagination customizations ===== */
 .itsa-table--head-rounded {
 	--itsa-pagination-active-bg: #F9A825;
@@ -563,6 +614,9 @@ body,
 	--itsa-pagination-font-size: 12px;
 	/* Default hover background for table rows */
 	--itsa-table-row-hover-bg: #F5F5F5;
+	/* Selected row backgrounds */
+	--itsa-table-row-selected-bg: rgba(249, 168, 37, 0.14);
+	--itsa-table-row-selected-hover-bg: rgba(249, 168, 37, 0.2);
 	/* Horizontal padding for table cells */
 	--itsa-table-cell-padding-x: 12px;
 }
@@ -634,6 +688,16 @@ body,
 .itsa-table--head-rounded .ant-table-tbody > tr:hover > td {
 	background-color: var(--itsa-table-row-hover-bg) !important;
 }
+
+/* Selected row backgrounds (checkbox/radio) */
+.itsa-table--head-rounded .ant-table-tbody > tr.ant-table-row-selected > td {
+	background-color: var(--itsa-table-row-selected-bg) !important;
+}
+
+.itsa-table--head-rounded .ant-table-tbody > tr.ant-table-row-selected:hover > td {
+	background-color: var(--itsa-table-row-selected-hover-bg) !important;
+}
+
 
 /* Apply horizontal padding to header and body cells */
 .itsa-table--head-rounded .ant-table-thead > tr > th,
@@ -714,7 +778,7 @@ body,
 }
 
 .itsa-autocomplete--subtle .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-	background: rgba(234, 59, 72, 0.06) !important;
+	background: rgba(249, 168, 37, 0.08) !important;
 	font-weight: 400 !important;
 }
 

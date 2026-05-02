@@ -404,6 +404,10 @@
   top: 50%;
 }
 
+.top-12{
+  top: 3rem;
+}
+
 .top-3{
   top: 0.75rem;
 }
@@ -542,6 +546,10 @@
   margin-top: auto;
 }
 
+.box-border{
+  box-sizing: border-box;
+}
+
 .block{
   display: block;
 }
@@ -600,6 +608,10 @@
 
 .h-10{
   height: 2.5rem;
+}
+
+.h-12{
+  height: 3rem;
 }
 
 .h-14{
@@ -698,8 +710,16 @@
   max-height: 240px;
 }
 
+.max-h-\[260px\]{
+  max-height: 260px;
+}
+
 .max-h-\[320px\]{
   max-height: 320px;
+}
+
+.max-h-\[360px\]{
+  max-height: 360px;
 }
 
 .max-h-\[481px\]{
@@ -722,12 +742,28 @@
   max-height: 88vh;
 }
 
+.max-h-\[clamp\(180px\2c 22vw\2c 340px\)\]{
+  max-height: clamp(180px, 22vw, 340px);
+}
+
 .min-h-0{
   min-height: 0px;
 }
 
+.min-h-\[100vh\]{
+  min-height: 100vh;
+}
+
+.min-h-\[184px\]{
+  min-height: 184px;
+}
+
 .min-h-\[200px\]{
   min-height: 200px;
+}
+
+.min-h-\[220px\]{
+  min-height: 220px;
 }
 
 .min-h-\[297mm\]{
@@ -750,8 +786,20 @@
   min-height: 70px;
 }
 
+.min-h-\[76px\]{
+  min-height: 76px;
+}
+
 .min-h-\[900px\]{
   min-height: 900px;
+}
+
+.min-h-\[92px\]{
+  min-height: 92px;
+}
+
+.min-h-screen{
+  min-height: 100vh;
 }
 
 .\!w-full{
@@ -768,6 +816,10 @@
 
 .w-10{
   width: 2.5rem;
+}
+
+.w-12{
+  width: 3rem;
 }
 
 .w-14{
@@ -862,6 +914,18 @@
   max-width: 42rem;
 }
 
+.max-w-4xl{
+  max-width: 56rem;
+}
+
+.max-w-7xl{
+  max-width: 80rem;
+}
+
+.max-w-\[120px\]{
+  max-width: 120px;
+}
+
 .max-w-\[150px\]{
   max-width: 150px;
 }
@@ -874,8 +938,16 @@
   max-width: 220px;
 }
 
+.max-w-\[360px\]{
+  max-width: 360px;
+}
+
 .max-w-\[420px\]{
   max-width: 420px;
+}
+
+.max-w-\[440px\]{
+  max-width: 440px;
 }
 
 .max-w-\[560px\]{
@@ -886,12 +958,12 @@
   max-width: 840px;
 }
 
-.max-w-full{
-  max-width: 100%;
+.max-w-\[calc\(100\%-4\.5rem\)\]{
+  max-width: calc(100% - 4.5rem);
 }
 
-.max-w-md{
-  max-width: 28rem;
+.max-w-full{
+  max-width: 100%;
 }
 
 .max-w-xl{
@@ -1172,6 +1244,10 @@
   overflow-wrap: break-word;
 }
 
+.\!rounded-2xl{
+  border-radius: 1rem !important;
+}
+
 .rounded{
   border-radius: 0.25rem;
 }
@@ -1312,12 +1388,21 @@
   border-top-width: 1px;
 }
 
+.border-t-4{
+  border-top-width: 4px;
+}
+
 .border-dashed{
   border-style: dashed;
 }
 
 .border-none{
   border-style: none;
+}
+
+.\!border-gray-300{
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(176 188 213 / var(--tw-border-opacity, 1)) !important;
 }
 
 .\!border-gray-900{
@@ -1430,9 +1515,19 @@
   border-color: rgb(229 57 53 / var(--tw-border-opacity, 1));
 }
 
+.border-yellow-500{
+  --tw-border-opacity: 1;
+  border-color: rgb(248 211 18 / var(--tw-border-opacity, 1));
+}
+
 .\!border-b-gray-200{
   --tw-border-opacity: 1 !important;
   border-bottom-color: rgb(217 223 227 / var(--tw-border-opacity, 1)) !important;
+}
+
+.border-t-yellow-500{
+  --tw-border-opacity: 1;
+  border-top-color: rgb(248 211 18 / var(--tw-border-opacity, 1));
 }
 
 .\!bg-black-100{
@@ -1448,6 +1543,11 @@
 .\!bg-white-100{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)) !important;
+}
+
+.bg-\[\#f5f5f5\]{
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
 }
 
 .bg-\[rgba\(255\2c 255\2c 255\2c 0\.6\)\]{
@@ -1554,9 +1654,24 @@
   background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
 }
 
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 66 62 / var(--tw-bg-opacity, 1));
+}
+
 .bg-white-100{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 253 232 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 211 18 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-50{
@@ -1649,6 +1764,16 @@
   padding-right: 1rem;
 }
 
+.px-6{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-0\.5{
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
 .py-1{
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -1726,6 +1851,10 @@
   padding-left: 1.5rem;
 }
 
+.pl-9{
+  padding-left: 2.25rem;
+}
+
 .pr-2{
   padding-right: 0.5rem;
 }
@@ -1734,8 +1863,16 @@
   padding-right: 0.75rem;
 }
 
+.pr-32{
+  padding-right: 8rem;
+}
+
 .pr-4{
   padding-right: 1rem;
+}
+
+.pr-7{
+  padding-right: 1.75rem;
 }
 
 .pt-0\.5{
@@ -1808,6 +1945,10 @@
   font-size: 11px;
 }
 
+.text-\[18px\]{
+  font-size: 18px;
+}
+
 .text-\[8px\]{
   font-size: 8px;
 }
@@ -1873,6 +2014,14 @@
   font-style: italic;
 }
 
+.leading-5{
+  line-height: 1.25rem;
+}
+
+.leading-7{
+  line-height: 1.75rem;
+}
+
 .leading-\[1\.2\]{
   line-height: 1.2;
 }
@@ -1917,9 +2066,19 @@
   color: rgb(59 149 185 / var(--tw-text-opacity, 1));
 }
 
+.text-blue-750{
+  --tw-text-opacity: 1;
+  color: rgb(16 112 154 / var(--tw-text-opacity, 1));
+}
+
 .text-gray-300{
   --tw-text-opacity: 1;
   color: rgb(176 188 213 / var(--tw-text-opacity, 1));
+}
+
+.text-gray-350{
+  --tw-text-opacity: 1;
+  color: rgb(141 157 168 / var(--tw-text-opacity, 1));
 }
 
 .text-gray-400{
@@ -2015,6 +2174,11 @@
 .text-yellow-500{
   --tw-text-opacity: 1;
   color: rgb(248 211 18 / var(--tw-text-opacity, 1));
+}
+
+.text-yellow-600{
+  --tw-text-opacity: 1;
+  color: rgb(232 187 10 / var(--tw-text-opacity, 1));
 }
 
 .line-through{
@@ -2204,7 +2368,7 @@
 /* Variable de color primario global para este paquete */
 
 :root {
-  --itsa-primary: #EA3B48;
+  --motor1-primary: #F9A825;
 }
 
 html,
@@ -2294,37 +2458,37 @@ body,
 }
 
 .itsa-checkbox--default .ant-checkbox .ant-checkbox-inner {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--default .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .itsa-checkbox--default .ant-checkbox:hover .ant-checkbox-inner,
 .itsa-checkbox--default .ant-checkbox-input:focus+.ant-checkbox-inner {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .mi-clase-checkbox .ant-checkbox .ant-checkbox-inner {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .mi-clase-checkbox .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox:hover .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-input:focus+.ant-checkbox-inner {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--default .ant-checkbox-checked .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: var(--itsa-primary) !important;
-  border-color: var(--itsa-primary) !important;
+  background-color: var(--motor1-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--default .ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner,
 .itsa-checkbox--default .ant-checkbox-checked:hover .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner,
 .mi-clase-checkbox .ant-checkbox-checked:hover .ant-checkbox-inner {
-  background-color: var(--itsa-primary) !important;
-  border-color: var(--itsa-primary) !important;
+  background-color: var(--motor1-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-checkbox--warning .ant-checkbox .ant-checkbox-inner {
@@ -2351,8 +2515,8 @@ body,
 /* Radio default variant */
 
 .itsa-radio--default {
-  --ant-colorPrimary: var(--itsa-primary);
-  --ant-primary-color: var(--itsa-primary);
+  --ant-colorPrimary: var(--motor1-primary);
+  --ant-primary-color: var(--motor1-primary);
 }
 
 .itsa-radio--default .ant-radio .ant-radio-inner {
@@ -2366,15 +2530,15 @@ body,
 }
 
 .itsa-radio--default .ant-radio-checked .ant-radio-inner {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-checked .ant-radio-inner::after {
-  background-color: var(--itsa-primary) !important;
+  background-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-wrapper-checked .ant-radio .ant-radio-inner::after {
-  background-color: var(--itsa-primary) !important;
+  background-color: var(--motor1-primary) !important;
 }
 
 /* Fondo del círculo interno siempre blanco al estar checked */
@@ -2387,15 +2551,15 @@ body,
 /* Anillo exterior (pseudo-elemento) y focus outline */
 
 .itsa-radio--default .ant-radio-checked::after {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-wrapper:hover .ant-radio-checked::after {
-  border-color: var(--itsa-primary) !important;
+  border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-input:focus+.ant-radio-inner {
-  box-shadow: 0 0 0 3px rgba(234, 61, 72, 0.24) !important;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.24) !important;
 }
 
 .itsa-radio--warning {
@@ -2449,7 +2613,7 @@ body,
 }
 
 .itsa-switch-custom .ant-switch-checked {
-  background-color: var(--switch-active-bg, var(--itsa-primary)) !important;
+  background-color: var(--switch-active-bg, var(--motor1-primary)) !important;
 }
 
 .itsa-switch-custom .ant-switch:hover:not(.ant-switch-disabled) {
@@ -2457,7 +2621,7 @@ body,
 }
 
 .itsa-switch-custom .ant-switch-checked:hover:not(.ant-switch-disabled) {
-  background-color: var(--switch-active-bg, var(--itsa-primary)) !important;
+  background-color: var(--switch-active-bg, var(--motor1-primary)) !important;
 }
 
 /* Botones genéricos ITSA */
@@ -2470,21 +2634,54 @@ body,
 
 .tabs-maintenance .ant-tabs-ink-bar {
   background-color: var(--ant-colorPrimary) !important;
+  height: 3px !important;
 }
 
 /* Color del texto del tab activo */
 
 .tabs-maintenance .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: var(--ant-colorPrimary) !important;
+  color: #111111 !important;
+  font-weight: 600 !important;
 }
 
 /* Hover opcional para coherencia visual */
 
 .tabs-maintenance .ant-tabs-tab:hover .ant-tabs-tab-btn {
-  color: var(--ant-colorPrimary) !important;
+  color: #111111 !important;
 }
 
 /* ===== ITSA Table customizations (included in package build) ===== */
+
+/* Set expandable wrapper background to white */
+
+.itsa-expanded-row-no-spacing .ant-table-expanded-row-fixed {
+  background-color: #ffffff !important;
+  padding: 0 !important;
+}
+
+/* Expand column: AntD uses 16px cell padding — matches body cells in TableDetails (less row height) */
+
+.itsa-table-details .ant-table-row-expand-icon-cell {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  vertical-align: middle !important;
+}
+
+/* Expand icon: use app primary color when expanded (scoped to TableDetails) */
+
+.itsa-table-details .ant-table-row-expand-icon.ant-table-row-expand-icon-expanded {
+  color: var(--motor1-primary) !important;
+  border-color: var(--motor1-primary) !important;
+}
+
+.itsa-table-details .ant-table-row-expand-icon.ant-table-row-expand-icon-expanded:hover,
+.itsa-table-details .ant-table-row-expand-icon.ant-table-row-expand-icon-expanded:focus-visible {
+  color: #ffffff !important;
+  background-color: var(--motor1-primary) !important;
+  border-color: var(--motor1-primary) !important;
+}
 
 /* Header rounding and container */
 
@@ -2598,6 +2795,27 @@ body,
   box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.28) !important;
 }
 
+/* Selection radio colors (single mode) */
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio .ant-radio-inner {
+  border-color: #F9A825 !important;
+}
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-wrapper:hover .ant-radio-inner,
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio:hover .ant-radio-inner,
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-input:focus + .ant-radio-inner {
+  border-color: #F9A825 !important;
+}
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-checked .ant-radio-inner {
+  border-color: #F9A825 !important;
+  background-color: #F9A825 !important;
+}
+
+.itsa-table--head-rounded .ant-table-selection-column .ant-radio-checked .ant-radio-inner::after {
+  background-color: #ffffff !important;
+}
+
 /* ===== Pagination customizations ===== */
 
 .itsa-table--head-rounded {
@@ -2607,6 +2825,9 @@ body,
   --itsa-pagination-font-size: 12px;
   /* Default hover background for table rows */
   --itsa-table-row-hover-bg: #F5F5F5;
+  /* Selected row backgrounds */
+  --itsa-table-row-selected-bg: rgba(249, 168, 37, 0.14);
+  --itsa-table-row-selected-hover-bg: rgba(249, 168, 37, 0.2);
   /* Horizontal padding for table cells */
   --itsa-table-cell-padding-x: 12px;
 }
@@ -2686,6 +2907,16 @@ body,
   background-color: var(--itsa-table-row-hover-bg) !important;
 }
 
+/* Selected row backgrounds (checkbox/radio) */
+
+.itsa-table--head-rounded .ant-table-tbody > tr.ant-table-row-selected > td {
+  background-color: var(--itsa-table-row-selected-bg) !important;
+}
+
+.itsa-table--head-rounded .ant-table-tbody > tr.ant-table-row-selected:hover > td {
+  background-color: var(--itsa-table-row-selected-hover-bg) !important;
+}
+
 /* Apply horizontal padding to header and body cells */
 
 .itsa-table--head-rounded .ant-table-thead > tr > th,
@@ -2741,7 +2972,7 @@ body,
 }
 
 .itsa-autocomplete--subtle .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background: rgba(234, 59, 72, 0.06) !important;
+  background: rgba(249, 168, 37, 0.08) !important;
   font-weight: 400 !important;
 }
 
@@ -2813,6 +3044,11 @@ body,
   border-color: rgb(253 111 108 / var(--tw-border-opacity, 1));
 }
 
+.hover\:border-yellow-500:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(248 211 18 / var(--tw-border-opacity, 1));
+}
+
 .hover\:\!bg-black-100:hover{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1)) !important;
@@ -2868,11 +3104,6 @@ body,
   background-color: rgb(238 241 243 / var(--tw-bg-opacity, 1));
 }
 
-.hover\:bg-green-100:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(227 253 229 / var(--tw-bg-opacity, 1));
-}
-
 .hover\:bg-green-50:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(246 254 246 / var(--tw-bg-opacity, 1));
@@ -2899,6 +3130,11 @@ body,
 .hover\:bg-red-500:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(245 66 62 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-600:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 57 53 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:\!text-gray-900:hover{
@@ -2944,6 +3180,11 @@ body,
 .hover\:text-red-500:hover{
   --tw-text-opacity: 1;
   color: rgb(245 66 62 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-red-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(229 57 53 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-red-700:hover{
@@ -3285,6 +3526,10 @@ body,
     padding: 1.25rem;
   }
 
+  .md\:p-8{
+    padding: 2rem;
+  }
+
   .md\:px-2\.5{
     padding-left: 0.625rem;
     padding-right: 0.625rem;
@@ -3333,6 +3578,10 @@ body,
 
   .lg\:w-\[125px\]{
     width: 125px;
+  }
+
+  .lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-\[minmax\(0\2c 1fr\)_320px\]{

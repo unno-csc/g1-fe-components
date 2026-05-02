@@ -43,8 +43,6 @@ export interface ITableProps<T extends object> {
 	locale?: TableLocale;
 	rowHoverable?: boolean;
 	refreshDataFunction?: () => void;
-	/** Tamaño compacto: 'small' (compacto) | 'default' (espaciado normal) */
-	compact?: 'small' | 'default';
 }
 
 export const Table = <T extends object>({
@@ -54,6 +52,7 @@ export const Table = <T extends object>({
 	loading,
 	onChange,
 	bordered = false,
+	className,
 	rowSelection,
 	selectionMode = 'multiple',
 	showPagination = false,
@@ -63,7 +62,6 @@ export const Table = <T extends object>({
 	columnActions,
 	getActionsDisabled,
 	getActionsTriggerDisabled,
-
 	locale = {
 		emptyText: 'No hay datos',
 	},
@@ -71,11 +69,12 @@ export const Table = <T extends object>({
 	refreshDataFunction,
 	rowClassName,
 	rootClassName,
-	compact = 'default',
 }: ITableProps<T>) => {
 	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
 	const currentAgency = useAppLayoutStore(state => state.currentAgency);
 	const finalPagination = showPagination ? paginationConfig : false;
+	const baseTableScopeClass = 'itsa-table--head-rounded';
+	const resolvedRootClassName = [baseTableScopeClass, rootClassName, className].filter(Boolean).join(' ');
 
 	const [confirmModalState, setConfirmModalState] = useState<{
 		open: boolean;
@@ -251,7 +250,9 @@ export const Table = <T extends object>({
 		const isSingleSelection = selectionMode === 'single';
 
 		const lastSingleSelectionKey =
-			isSingleSelection && Array.isArray(rowSelection.selectedRowKeys) && rowSelection.selectedRowKeys.length > 0
+			isSingleSelection &&
+				Array.isArray(rowSelection.selectedRowKeys) &&
+				rowSelection.selectedRowKeys.length > 0
 				? rowSelection.selectedRowKeys[rowSelection.selectedRowKeys.length - 1]
 				: undefined;
 
@@ -263,7 +264,7 @@ export const Table = <T extends object>({
 		const finalRowSelection: NonNullable<AntTableProps<T>['rowSelection']> = {
 			...rowSelection,
 			selectedRowKeys: sanitizedSelectedRowKeys,
-			type: isSingleSelection ? 'radio' : (rowSelection.type ?? 'checkbox'),
+			type: isSingleSelection ? 'radio' : rowSelection.type ?? 'checkbox',
 		};
 
 		if (isSingleSelection && rowSelection.onChange) {
@@ -285,15 +286,6 @@ export const Table = <T extends object>({
 	};
 
 	const resolvedRowSelection = getRowSelection();
-
-	// Estilos según el tamaño compacto
-	const headerHeight = compact === 'small' ? '36px' : '42px';
-	const headerPadding = compact === 'small' ? '3px 6px' : '4px 8px';
-	const headerFontSize = compact === 'small' ? '11px' : '12px';
-	const headerBg = '#F4F4F4'; // zinc-100
-	const rowHeight = compact === 'small' ? '28px' : '30px';
-	const rowPadding = compact === 'small' ? '3px 6px' : '4px 8px';
-	const rowFontSize = compact === 'small' ? '11px' : '12px';
 
 	const getRecordKey = (record: T): React.Key | undefined => {
 		if (typeof rowKey === 'function') return rowKey(record);
@@ -333,29 +325,27 @@ export const Table = <T extends object>({
 		resolvedRowSelection.onChange?.(nextKeys, nextRows, { type: isSingle ? 'single' : 'multiple' });
 	};
 
-	const newTableHeaderTable: ColumnsType<T> = [
-		{
-			title: (
-				<div className="flex w-full justify-start desktop:justify-end">
-					<Button
-						style={{ color: 'gray', border: 'none' }}
-						type="text"
-						loading={loading}
-						onClick={() => refreshDataFunction?.()}
-						icon={<ReloadOutlined />}
-					>
-						Refrescar
-					</Button>
-				</div>
-			),
-			children: [...(tableColumns as ColumnsType<T>)],
-		},
-	];
+	const newTableHeaderTable: ColumnsType<T> = [{
+		title: (
+			<div className="flex w-full justify-start desktop:justify-end">
+				<Button
+					style={{ color: 'gray', border: 'none' }}
+					type='text'
+					loading={loading}
+					onClick={() => refreshDataFunction?.()}
+					icon={<ReloadOutlined />}
+				>
+					Refrescar
+				</Button>
+			</div>
+		),
+		children: [...tableColumns as ColumnsType<T>],
+	}];
 
 	const validateRefreshDataFunction = (): ColumnsType<T> => {
 		if (!refreshDataFunction) {
 			return tableColumns as ColumnsType<T>;
-		}
+		};
 		return newTableHeaderTable;
 	};
 
@@ -372,7 +362,8 @@ export const Table = <T extends object>({
 				pagination={finalPagination}
 				scroll={getFinalScroll(tableColumns)}
 				locale={locale}
-				rootClassName={rootClassName}
+				className={resolvedRootClassName}
+				rootClassName={resolvedRootClassName}
 				rowClassName={rowClassName}
 				rowKey={rowKey}
 				components={{
@@ -394,14 +385,11 @@ export const Table = <T extends object>({
 									{...props}
 									style={{
 										...props?.style,
-										background: headerBg,
-										color: '#525252',
-										fontSize: headerFontSize,
-										fontWeight: 600,
-										height: headerHeight,
-										padding: headerPadding,
-										border: 'none',
-										borderBottom: '1px solid #e5e5e5',
+										background: '#EEF1F3',
+										color: 'black',
+										fontSize: '12px',
+										height: '42px',
+										padding: '4px 8px',
 									}}
 								/>
 							);
@@ -413,13 +401,11 @@ export const Table = <T extends object>({
 								{...props}
 								style={{
 									...props?.style,
-									color: '#333',
-									fontSize: rowFontSize,
-									height: rowHeight,
-									lineHeight: '1.4',
-									padding: rowPadding,
-									border: 'none',
-									borderBottom: '1px solid #f5f5f5',
+									color: 'black',
+									fontSize: '12px',
+									height: '30px',
+									lineHeight: '18px',
+									padding: '4px 8px',
 								}}
 							/>
 						),

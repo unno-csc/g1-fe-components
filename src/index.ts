@@ -44,6 +44,7 @@ export { FormCheckBox } from './components/FormCheckBox';
 export { FormRadio } from './components/FormRadio';
 export { FormInputPassword } from './components/FormInputPassword';
 export { FormInputDatePicker } from './components/FormInputDatePicker';
+export { FormDateTimePicker } from './components/FormDateTimePicker';
 export { FormInputTimePicker } from './components/FormInputTimePicker';
 export { FormSwitch } from './components/FormSwitch';
 export { FilterSelect } from './components/FilterSelect';
@@ -53,6 +54,7 @@ export { FilterInputDatePicker } from './components/FilterInputDatePicker';
 export { FormLabel } from './components/FormLabel';
 export { FormButtonSelector } from './components/FormButtonSelector';
 export { FormLabelError } from './components/FormLabelError';
+export type { IFormDateTimePickerProps } from './components/FormDateTimePicker';
 export { ExcelFileUploader } from './components/ExcelFileUploader';
 export type { IExcelFileUploaderProps } from './components/ExcelFileUploader';
 export { PdfFileUploader } from './components/PdfFileUploader';
@@ -62,7 +64,11 @@ export { InputAddress } from './components/InputAddress';
 export { Input } from './components/Input/Input';
 export { InputSearch } from './components/InputSearch';
 export { Image } from './components/Image';
+export { ImageCatalog } from './components/ImageCatalog';
+export { ImagePreview } from './components/ImagePreview';
 export { ImageMaintenance } from './components/ImageMaintenance';
+export { UploadImage } from './components/UploadImage';
+export type { IUploadImageProps, UploadImageFileType } from './components/UploadImage';
 export { InfoRow } from './components/InfoRow/InfoRow';
 export { reportBaseHtml, reportHeaderHtml } from './components/HtmlCssReport';
 export { ItemList } from './components/ItemList';
@@ -79,10 +85,19 @@ export { ModalField } from './components/Modals/ModalField';
 export { Notification } from './components/Notification';
 export { Progress } from './components/Progress/Progress';
 export { Redirect } from './components/Redirect/Redirect';
+export { ReadOnlyField } from './components/ReadOnlyField';
+export type { IReadOnlyFieldProps } from './components/ReadOnlyField';
 export { Radio } from './components/Radio/Radio';
 export { Select } from './components/Select';
 export { Segmented } from './components/Segmented/Segmented';
 export type { ISegmentedProps } from './components/Segmented/Segmented';
+export { SelectedItemsSlider } from './components/SelectedItemsSlider';
+export type {
+	ISelectedItemsSliderRenderContext,
+	ISelectedItemsSliderProps,
+	ISelectedSliderItem,
+	TSelectedItemBadgeVariant,
+} from './components/SelectedItemsSlider';
 export { Skeleton } from './components/Skeleton/Skeleton';
 export { Spin } from './components/Spin';
 export { StackedCards } from './components/StackedCards';
@@ -122,7 +137,7 @@ export type {
 	FieldType,
 	TableColumnConfig as DetailTableColumnConfig,
 } from './components/DetailView';
-
+export type { IImageCatalogProps, ImageCatalogItemValue, ImageCatalogSource } from './components/ImageCatalog';
 export { UIProvider } from './HOC/UIProvider';
 export { ControlActionsProvider } from './HOC/ControlActions';
 export { AppLayoutFooterProvider } from './HOC/AppLayoutFooterContext';

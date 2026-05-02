@@ -1,18 +1,17 @@
+import { COLORS } from '../../constants/colors';
+
 export const getCollapseCardStyles = (): string => `
 	:root {
-		--collapse-primary: #EA3B48;
-		--collapse-gradient-start: #fff0f1;
-		--collapse-gradient-end: white;
-		--collapse-border-active: #ffc2c6;
+		--collapse-primary: ${COLORS.warning};
+		--collapse-border-active: #FACC15;
 		--collapse-border-inactive: #e0e0e0;
-		--collapse-text-active: #EA3B48;
+		--collapse-text-active: #111111;
 		--collapse-text-inactive: #000000;
-		--collapse-badge-bg-active: #EA3B48;
-		--collapse-badge-text-active: #FFFFFF;
+		--collapse-badge-bg-active: ${COLORS.warning};
+		--collapse-badge-text-active: #111111;
 		--collapse-badge-bg-inactive: #F4F8FB;
 		--collapse-badge-text-inactive: #4A5565;
 		--collapse-bg-white: white;
-		--collapse-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 		--collapse-border-radius: 12px;
 	}
 
@@ -26,12 +25,11 @@ export const getCollapseCardStyles = (): string => `
 		background: var(--collapse-bg-white) !important;
 		border-radius: var(--collapse-border-radius) !important;
 		border: 1px solid var(--collapse-border-inactive) !important;
-		box-shadow: var(--collapse-shadow) !important;
 		overflow: hidden !important;
 	}
 
 	.itsa-collapse--card.ant-collapse > .ant-collapse-item.ant-collapse-item-active {
-		background: linear-gradient(to bottom, var(--collapse-gradient-start) 0%, var(--collapse-gradient-end) 30%) !important;
+		background: var(--collapse-bg-white) !important;
 		border: 1.5px solid var(--collapse-border-active) !important;
 	}
 
