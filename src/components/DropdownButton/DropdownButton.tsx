@@ -13,6 +13,8 @@ export interface IDropdownButtonItem {
 	label: string;
 	icon?: ReactNode;
 	onClick: () => void;
+	/** visual intent for the action (affects item styling) */
+	type?: 'danger' | 'primary' | 'secondary' | 'success' | 'warning';
 	disabled?: boolean;
 }
 
@@ -53,7 +55,8 @@ export const DropdownButton = ({
 	const isActionForbidden = actionType ? isDisabledAction(userActionPermissions, actionType) : false;
 	const isDisabled = disabled || !isOnline || isActionForbidden || loading;
 
-	const sizeClass = size === 'small' ? 'itsa-dropdown-btn--sm' : size === 'large' ? 'itsa-dropdown-btn--lg' : 'itsa-dropdown-btn--md';
+	const sizeClass =
+		size === 'small' ? 'itsa-dropdown-btn--sm' : size === 'large' ? 'itsa-dropdown-btn--lg' : 'itsa-dropdown-btn--md';
 	const variantClass = type === 'primary' ? 'itsa-dropdown-btn--primary' : 'itsa-dropdown-btn--secondary';
 	const disabledClass = isDisabled ? 'itsa-dropdown-btn--disabled' : '';
 	const className = ['itsa-dropdown-btn', sizeClass, variantClass, disabledClass].filter(Boolean).join(' ');

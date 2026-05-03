@@ -220,7 +220,7 @@ export const ImageCatalog = ({
 					{items.map((item, index) => (
 						<div
 							key={`${item.label}-${index}`}
-							className="box-border w-full min-w-0 max-w-full overflow-hidden rounded-2xl border border-gray-200 bg-white p-3 shadow-sm"
+							className="box-border w-full min-w-0 max-w-full overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 shadow-none"
 						>
 							<div className="relative w-full min-w-0 max-w-full overflow-hidden rounded-xl">
 								<ImagePreview
@@ -244,9 +244,9 @@ export const ImageCatalog = ({
 							</div>
 
 							{showItemFooter && (
-								<div className="mt-3 min-w-0 space-y-1">
-									<p className="truncate text-sm font-medium text-gray-800">{item.label}</p>
-									<p className="truncate text-xs text-gray-500">{item.description}</p>
+								<div className="flex flex-col gap-0.5">
+									<strong className="truncate text-sm font-medium text-gray-800">{item.label}</strong>
+									<small className="truncate text-xs text-gray-500">{item.description}</small>
 								</div>
 							)}
 						</div>

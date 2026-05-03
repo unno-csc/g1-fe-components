@@ -95,7 +95,48 @@ export const getDropdownButtonStyles = (): string => `
 		font-size: 10px;
 		margin-left: 4px;
 	}
+	.itsa-dropdown-btn__arrow--up {
+		transform: rotate(180deg);
+	}
 
+	.itsa-dropdown-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 8px;
+	}
+
+	.itsa-dropdown-item__icon {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.itsa-dropdown-item__label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* Variants for item severity */
+	.itsa-dropdown-item--danger {
+		color: #D93025;
+	}
+
+	.itsa-dropdown-item--primary {
+		color: #1F2937;
+	}
+
+	.itsa-dropdown-item--secondary {
+		color: #4A5565;
+	}
+
+	.itsa-dropdown-item--success {
+		color: #16A34A;
+	}
+
+	.itsa-dropdown-item--warning {
+		color: #F59E0B;
+	}
 	.itsa-dropdown-btn .anticon-loading {
 		font-size: 14px;
 	}

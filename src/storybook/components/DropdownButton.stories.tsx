@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { EditOutlined, DeleteOutlined, CopyOutlined, PlusOutlined } from '@ant-design/icons';
 import { DropdownButton } from '../../components/DropdownButton/DropdownButton';
+import type { IDropdownButtonItem } from '../../components/DropdownButton/DropdownButton';
 
 const meta: Meta<typeof DropdownButton> = {
 	title: 'Components/DropdownButton',
@@ -120,5 +121,37 @@ export const WithDisabledItem: Story = {
 			{ key: 'edit', label: 'Editar', icon: <EditOutlined />, onClick: () => console.log('Editar') },
 			{ key: 'delete', label: 'Eliminar (sin permisos)', icon: <DeleteOutlined />, onClick: () => console.log('Eliminar'), disabled: true },
 		],
+	},
+};
+
+export const ItemTypes: Story = {
+	render: () => {
+		const items: IDropdownButtonItem[] = [
+			{ key: 'ok', label: 'Guardar', icon: <EditOutlined />, onClick: () => console.log('Guardar'), type: 'primary' },
+			{ key: 'warn', label: 'Advertencia', icon: <CopyOutlined />, onClick: () => console.log('Advertencia'), type: 'warning' },
+			{ key: 'danger', label: 'Eliminar', icon: <DeleteOutlined />, onClick: () => console.log('Eliminar'), type: 'danger' },
+			{ key: 'success', label: 'Duplicar', icon: <CopyOutlined />, onClick: () => console.log('Duplicar'), type: 'success' },
+		];
+
+		return (
+			<div style={{ display: 'flex', gap: 12 }}>
+				<DropdownButton label="Acciones" items={items} type="primary" />
+			</div>
+		);
+	},
+};
+
+export const PlacementTop: Story = {
+	render: () => {
+		const items = [
+			{ key: '1', label: 'Opción 1', onClick: () => console.log('1') },
+			{ key: '2', label: 'Opción 2', onClick: () => console.log('2') },
+		];
+
+		return (
+			<div style={{ display: 'flex', gap: 12 }}>
+				<DropdownButton label="Arriba" items={items} placement="topLeft" />
+			</div>
+		);
 	},
 };
