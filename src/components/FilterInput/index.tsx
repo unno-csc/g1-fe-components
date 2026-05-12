@@ -11,9 +11,21 @@ export interface FilterInputProps extends InputProps {
 	loading?: boolean;
 	enterButton?: boolean;
 	onSearch?: (value: string) => void;
+	searchTrigger?: 'change' | 'enter';
 }
 
-export const FilterInput = ({ ref, type = 'text', defaultValue, loading, onSearch, title, ...rest }: FilterInputProps) => {
+export type IFilterInputProps = FilterInputProps;
+
+export const FilterInput = ({
+	ref,
+	type = 'text',
+	defaultValue,
+	loading,
+	onSearch,
+	searchTrigger = 'change',
+	title,
+	...rest
+}: FilterInputProps) => {
 	const initRef = useRef<boolean>(false);
 	const [internalValue, setInternalValue] = useState<string>(
 		typeof (rest as any).value === 'string'
@@ -46,13 +58,13 @@ export const FilterInput = ({ ref, type = 'text', defaultValue, loading, onSearc
 		if (typeof (rest as any).value === 'undefined') {
 			setInternalValue(value);
 		}
-		if (onSearch) onSearch(value);
+		if (onSearch && searchTrigger === 'change') onSearch(value);
 	};
 
 	const handlePressEnter: React.KeyboardEventHandler<HTMLInputElement> = e => {
 		if (rest.onPressEnter) rest.onPressEnter(e);
 		const value = (e.currentTarget as HTMLInputElement).value;
-		if (onSearch) onSearch(value);
+		if (onSearch && searchTrigger === 'enter') onSearch(value);
 	};
 
 	const showLoading = !!loading;
