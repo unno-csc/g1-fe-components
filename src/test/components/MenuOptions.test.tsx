@@ -1,38 +1,49 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import MenuOptions, { MenuOptionsProps } from '../../components/AppLayout/components/MenuOptions';
+import { MenuOptions } from '../../components/AppLayout/components/MenuOptions';
 
-vi.mock('antd', async () => {
-	const actual = await vi.importActual<any>('antd');
-
-	const strip = (p: any) => {
-		if (!p) return p;
-		return p;
-	};
-
-	const Menu = (props: any) => (
-		<div data-testid="menu" data-props={JSON.stringify(strip(props))}>
-			<pre>{JSON.stringify(strip(props))}</pre>
-			{props.children}
-		</div>
-	);
-
+vi.mock('@/hooks', async () => {
+	const actual = await vi.importActual<any>('@/hooks');
 	return {
 		...actual,
-		Menu,
+		useSidebarStore: vi.fn(() => ({ setCurrentProgram: vi.fn() })),
 	};
 });
 
-const renderMenuOptions = (props: Partial<MenuOptionsProps> = {}) => {
-	const defaultProps: MenuOptionsProps = {
-		items: [],
-		collapsed: false,
-		currentPath: '/',
-		onClickOptionMenu: vi.fn(),
+vi.mock('@/store', async () => {
+	const actual = await vi.importActual<any>('@/store');
+	return {
+		...actual,
+		useMenuDataStore: vi.fn(() => vi.fn()),
+		useAppLayoutStore: vi.fn(() => null),
 	};
+});
 
-	return render(<MenuOptions {...defaultProps} {...props} />);
+vi.mock('@/helpers/functions', async () => {
+	const actual = await vi.importActual<any>('@/helpers/functions');
+	return {
+		...actual,
+		findMenuItemByRoute: vi.fn(() => null),
+		getProgramActionsbyPath: vi.fn(() => null),
+	};
+});
+
+vi.mock('antd', async () => {
+	const actual = await vi.importActual<any>('antd');
+	const Menu = (props: any) => (
+		<div data-testid="menu" data-props={JSON.stringify(props)}>
+			{props.children}
+		</div>
+	);
+	return { ...actual, Menu };
+});
+
+const defaultProps = {
+	loadingAppLayout: false,
+	openKeysMenuOptions: [] as string[],
+	onClickOptionMenu: vi.fn(),
+	items: [] as any[],
+	onOpenKeysChange: vi.fn(),
 };
 
 const mockMenuItems = [
@@ -50,7 +61,7 @@ const mockMenuItems = [
 
 describe('MenuOptions', () => {
 	it('renders correctly with default props', () => {
-		const { container } = renderMenuOptions();
+		const { container } = render(<MenuOptions {...defaultProps} />);
 
 		expect(screen.getByTestId('menu')).toBeInTheDocument();
 		expect(container.querySelector('.menu-options')).toBeInTheDocument();
@@ -58,76 +69,46 @@ describe('MenuOptions', () => {
 	});
 
 	it('passes correct props to Antd Menu component', () => {
-		const { container } = renderMenuOptions({
-			items: mockMenuItems,
-			currentPath: '/dashboard',
-			collapsed: false,
-			mode: 'inline',
-		});
+		const { container } = render(
+			<MenuOptions {...defaultProps} items={mockMenuItems} mode="inline" />,
+		);
 
 		const menuElement = screen.getByTestId('menu');
 		const menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
 
 		expect(menuProps.items).toEqual(mockMenuItems);
-		expect(menuProps.defaultSelectedKeys).toEqual(['/dashboard']);
 		expect(menuProps.mode).toBe('inline');
-		expect(menuProps.inlineCollapsed).toBe(false);
 		expect(container).toMatchSnapshot();
 	});
 
-	it('sets inlineCollapsed to true when collapsed prop is true', () => {
-		const { container } = renderMenuOptions({
-			collapsed: true,
-			items: mockMenuItems,
-		});
+	it('passes openKeys to Menu component', () => {
+		const { container } = render(
+			<MenuOptions {...defaultProps} openKeysMenuOptions={['sub1']} items={mockMenuItems} />,
+		);
 
 		const menuElement = screen.getByTestId('menu');
 		const menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
 
-		expect(menuProps.inlineCollapsed).toBe(true);
+		expect(menuProps.openKeys).toEqual(['sub1']);
 		expect(container).toMatchSnapshot();
 	});
 
-	it('uses currentPath as defaultSelectedKeys', () => {
-		const currentPath = '/users/profile';
-		const { container } = renderMenuOptions({
-			currentPath,
-			items: mockMenuItems,
-		});
+	it('shows loading indicator when loadingAppLayout is true and items are empty', () => {
+		const { container } = render(
+			<MenuOptions {...defaultProps} loadingAppLayout={true} items={[]} />,
+		);
 
-		const menuElement = screen.getByTestId('menu');
-		const menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
-
-		expect(menuProps.defaultSelectedKeys).toEqual([currentPath]);
+		expect(container.querySelector('.menu-options')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 
 	it('renders with empty items array', () => {
-		const { container } = renderMenuOptions({ items: [] });
+		const { container } = render(<MenuOptions {...defaultProps} items={[]} />);
 
 		const menuElement = screen.getByTestId('menu');
 		const menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
 
 		expect(menuProps.items).toEqual([]);
-		expect(container).toMatchSnapshot();
-	});
-
-	it('renders when collapsed state changes', () => {
-		const { container, rerender } = renderMenuOptions({
-			collapsed: false,
-			items: mockMenuItems,
-			currentPath: '/dashboard',
-		});
-
-		let menuElement = screen.getByTestId('menu');
-		let menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
-		expect(menuProps.inlineCollapsed).toBe(false);
-
-		rerender(<MenuOptions collapsed={true} items={mockMenuItems} currentPath="/dashboard" />);
-
-		menuElement = screen.getByTestId('menu');
-		menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
-		expect(menuProps.inlineCollapsed).toBe(true);
 		expect(container).toMatchSnapshot();
 	});
 
@@ -138,20 +119,13 @@ describe('MenuOptions', () => {
 				label: 'Main Section 1',
 				children: [
 					{ key: 'sub1-1', label: 'Subsection 1.1' },
-					{
-						key: 'sub1-2',
-						label: 'Subsection 1.2',
-						children: [
-							{ key: 'deep1', label: 'Deep Item 1' },
-							{ key: 'deep2', label: 'Deep Item 2' },
-						],
-					},
+					{ key: 'sub1-2', label: 'Subsection 1.2' },
 				],
 			},
 			{ key: 'main2', label: 'Main Section 2' },
 		];
 
-		const { container } = renderMenuOptions({ items: complexItems });
+		const { container } = render(<MenuOptions {...defaultProps} items={complexItems} />);
 
 		const menuElement = screen.getByTestId('menu');
 		const menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
@@ -160,21 +134,29 @@ describe('MenuOptions', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('renders correctly when all props are provided', () => {
-		const testProps = {
-			items: mockMenuItems,
-			collapsed: true,
-			currentPath: '/test-path',
-		};
+	it('passes onOpenChange callback to Menu', () => {
+		const onOpenKeysChange = vi.fn();
+		render(<MenuOptions {...defaultProps} onOpenKeysChange={onOpenKeysChange} items={mockMenuItems} />);
 
-		const { container } = renderMenuOptions(testProps);
+		const menuElement = screen.getByTestId('menu');
+		expect(menuElement).toBeInTheDocument();
+	});
+
+	it('renders correctly when all props are provided', () => {
+		const { container } = render(
+			<MenuOptions
+				{...defaultProps}
+				items={mockMenuItems}
+				loadingAppLayout={false}
+				openKeysMenuOptions={['sub1']}
+				mode="inline"
+			/>,
+		);
 
 		const menuElement = screen.getByTestId('menu');
 		const menuProps = JSON.parse(menuElement.getAttribute('data-props') || '{}');
 
 		expect(menuProps.items).toEqual(mockMenuItems);
-		expect(menuProps.inlineCollapsed).toBe(true);
-		expect(menuProps.defaultSelectedKeys).toEqual(['/test-path']);
 		expect(menuProps.mode).toBe('inline');
 		expect(container).toMatchSnapshot();
 	});

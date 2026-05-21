@@ -3,7 +3,8 @@
 exports[`Title component > applies custom className on level 3 1`] = `
 <div>
   <h3
-    class="ant-typography custom-class css-dev-only-do-not-override-l9pxc0"
+    class="ant-typography custom-class css-dev-only-do-not-override-mncuj7"
+    style="margin-bottom: 0px;"
   >
     Clase personalizada
   </h3>
@@ -13,7 +14,8 @@ exports[`Title component > applies custom className on level 3 1`] = `
 exports[`Title component > renders level 1 heading with text 1`] = `
 <div>
   <h1
-    class="ant-typography css-dev-only-do-not-override-l9pxc0"
+    class="ant-typography css-dev-only-do-not-override-mncuj7"
+    style="margin-bottom: 0px;"
   >
     Título nivel 1
   </h1>
@@ -23,7 +25,8 @@ exports[`Title component > renders level 1 heading with text 1`] = `
 exports[`Title component > renders level 4 with secondary type style 1`] = `
 <div>
   <h4
-    class="ant-typography ant-typography-secondary css-dev-only-do-not-override-l9pxc0"
+    class="ant-typography ant-typography-secondary css-dev-only-do-not-override-mncuj7"
+    style="margin-bottom: 0px;"
   >
     Secundario
   </h4>
@@ -33,7 +36,8 @@ exports[`Title component > renders level 4 with secondary type style 1`] = `
 exports[`Title component > renders level 5 heading 1`] = `
 <div>
   <h5
-    class="ant-typography css-dev-only-do-not-override-l9pxc0"
+    class="ant-typography css-dev-only-do-not-override-mncuj7"
+    style="margin-bottom: 0px;"
   >
     Título nivel 5
   </h5>

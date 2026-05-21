@@ -5,6 +5,18 @@ import { describe, expect, it, vi, beforeAll } from 'vitest';
 import { ModalResponsive } from '../../components/ModalResponsive';
 import { CustomFooterModal } from '../../components/CustomFooterModal';
 
+vi.mock('@/hooks', async () => {
+	const actual = await vi.importActual<any>('@/hooks');
+	return {
+		...actual,
+		useControlActions: vi.fn(() => ({
+			setCurrentPath: vi.fn(),
+			programId: undefined,
+			fnApiValidatePermissionAction: vi.fn().mockResolvedValue(true),
+		})),
+	};
+});
+
 beforeAll(() => {
 	Object.defineProperty(window, 'matchMedia', {
 		writable: true,
@@ -90,7 +102,7 @@ describe('ModalResponsive', () => {
 			/>,
 		);
 
-		const modalBody = container.querySelector('.ant-modal-body') as HTMLElement;
+		const modalBody = document.querySelector('.ant-modal-body') as HTMLElement;
 		expect(modalBody).toBeTruthy();
 		// style is applied via inline styles on body through styles prop; existence is enough here
 		expect(modalBody.getAttribute('style')).toContain('overflow-y');

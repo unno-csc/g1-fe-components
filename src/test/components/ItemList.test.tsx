@@ -3,6 +3,18 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { ItemList } from '../../components/ItemList';
 
+vi.mock('@/hooks', async () => {
+	const actual = await vi.importActual<any>('@/hooks');
+	return {
+		...actual,
+		useControlActions: vi.fn(() => ({
+			setCurrentPath: vi.fn(),
+			programId: undefined,
+			fnApiValidatePermissionAction: vi.fn().mockResolvedValue(true),
+		})),
+	};
+});
+
 describe('ItemList component', () => {
     const baseProps = {
         title: 'Title',

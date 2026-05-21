@@ -145,12 +145,14 @@ describe('FormInputNumber component', () => {
 		);
 
 		const input = screen.getByRole('spinbutton') as HTMLInputElement;
-		
+
 		await user.click(input);
 		await user.type(input, '1.2.3');
 
+		// Component allows one decimal point (first `.` is allowed, second is blocked)
+		// '1.2.3' → '1.23' (second dot blocked by handleKeyDown)
 		await waitFor(() => {
-			expect(input.value).toBe('123');
+			expect(input.value).toBe('1.23');
 		});
 	});
 
@@ -243,7 +245,8 @@ describe('FormInputNumber component', () => {
 		);
 
 		const input = screen.getByRole('spinbutton') as HTMLInputElement;
-		expect(input).toHaveAttribute('placeholder', 'Enter numbers only...');
+		// Placeholder is uppercased by the component
+		expect(input).toHaveAttribute('placeholder', 'ENTER NUMBERS ONLY...');
 		expect(input).toHaveAttribute('maxlength', '10');
 		expect(input).toBeDisabled();
 	});

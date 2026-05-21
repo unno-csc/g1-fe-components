@@ -3,7 +3,7 @@
 exports[`Skeleton component > passes extra props to AntSkeleton 1`] = `
 <div>
   <div
-    class="ant-skeleton ant-skeleton-active css-dev-only-do-not-override-l9pxc0"
+    class="ant-skeleton ant-skeleton-active css-dev-only-do-not-override-mncuj7"
   >
     <div
       class="ant-skeleton-content"
@@ -29,7 +29,7 @@ exports[`Skeleton component > passes extra props to AntSkeleton 1`] = `
 exports[`Skeleton component > renders the Skeleton with active class by default 1`] = `
 <div>
   <div
-    class="ant-skeleton ant-skeleton-active css-dev-only-do-not-override-l9pxc0"
+    class="ant-skeleton ant-skeleton-active css-dev-only-do-not-override-mncuj7"
   >
     <div
       class="ant-skeleton-content"

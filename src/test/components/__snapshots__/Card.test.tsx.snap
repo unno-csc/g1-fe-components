@@ -3,7 +3,7 @@
 exports[`Card component > accepts and applies title prop 1`] = `
 <div>
   <div
-    class="ant-card ant-card-bordered css-dev-only-do-not-override-l9pxc0"
+    class="ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7"
   >
     <div
       class="ant-card-head"
@@ -30,7 +30,7 @@ exports[`Card component > accepts and applies title prop 1`] = `
 exports[`Card component > accepts extra prop 1`] = `
 <div>
   <div
-    class="ant-card ant-card-bordered css-dev-only-do-not-override-l9pxc0"
+    class="ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7"
   >
     <div
       class="ant-card-head"
@@ -64,7 +64,7 @@ exports[`Card component > accepts extra prop 1`] = `
 exports[`Card component > renders children content 1`] = `
 <div>
   <div
-    class="ant-card ant-card-bordered css-dev-only-do-not-override-l9pxc0"
+    class="ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7"
   >
     <div
       class="ant-card-body"
@@ -78,7 +78,7 @@ exports[`Card component > renders children content 1`] = `
 exports[`Card component > renders without crashing with no props 1`] = `
 <div>
   <div
-    class="ant-card ant-card-bordered css-dev-only-do-not-override-l9pxc0"
+    class="ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7"
   >
     <div
       class="ant-card-body"

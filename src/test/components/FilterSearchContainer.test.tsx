@@ -2,6 +2,18 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { FilterSearchContainer } from '../../components/FilterSearchContainer/FilterSearchContainer';
 
+vi.mock('@/hooks', async () => {
+	const actual = await vi.importActual<any>('@/hooks');
+	return {
+		...actual,
+		useControlActions: vi.fn(() => ({
+			setCurrentPath: vi.fn(),
+			programId: undefined,
+			fnApiValidatePermissionAction: vi.fn().mockResolvedValue(true),
+		})),
+	};
+});
+
 vi.mock('@/helpers', () => ({
 	clearURLParams: vi.fn(),
 }));

@@ -3,7 +3,7 @@
 exports[`TabsMaintenance component > renders tabs with default active key 1`] = `
 <div>
   <div
-    class="ant-tabs ant-tabs-top ant-tabs-centered tabs-maintenance css-dev-only-do-not-override-l9pxc0"
+    class="ant-tabs ant-tabs-top ant-tabs-centered tabs-maintenance css-dev-only-do-not-override-mncuj7"
   >
     <div
       aria-orientation="horizontal"

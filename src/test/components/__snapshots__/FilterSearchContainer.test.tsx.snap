@@ -13,17 +13,25 @@ exports[`FilterSearchContainer > renders children and buttons 1`] = `
           Child content
         </div>
         <button
-          class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+          class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
           type="button"
         >
-          <span>
+          <span
+            class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+          >
             Limpiar Filtros
           </span>
         </button>
         <button
-          class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-default ant-btn-color-default ant-btn-variant-outlined !hidden"
-          type="submit"
-        />
+          class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
+          type="button"
+        >
+          <span
+            class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            Submit
+          </span>
+        </button>
       </div>
     </div>
   </form>

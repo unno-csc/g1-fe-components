@@ -7,10 +7,10 @@ exports[`Radio component > renders label when provided 1`] = `
       Choose option
     </p>
     <div
-      class="ant-radio-group ant-radio-group-outline css-dev-only-do-not-override-l9pxc0"
+      class="ant-radio-group ant-radio-group-outline motor1-radio css-dev-only-do-not-override-mncuj7"
     >
       <label
-        class="ant-radio-wrapper css-dev-only-do-not-override-l9pxc0"
+        class="ant-radio-wrapper css-dev-only-do-not-override-mncuj7"
       >
         <span
           class="ant-radio ant-wave-target"
@@ -40,10 +40,10 @@ exports[`Radio component > renders radio options and allows selection 1`] = `
 <div>
   <div>
     <div
-      class="ant-radio-group ant-radio-group-outline css-dev-only-do-not-override-l9pxc0"
+      class="ant-radio-group ant-radio-group-outline motor1-radio css-dev-only-do-not-override-mncuj7"
     >
       <label
-        class="ant-radio-wrapper css-dev-only-do-not-override-l9pxc0"
+        class="ant-radio-wrapper css-dev-only-do-not-override-mncuj7"
       >
         <span
           class="ant-radio ant-wave-target"
@@ -66,7 +66,7 @@ exports[`Radio component > renders radio options and allows selection 1`] = `
         </span>
       </label>
       <label
-        class="ant-radio-wrapper ant-radio-wrapper-checked css-dev-only-do-not-override-l9pxc0"
+        class="ant-radio-wrapper ant-radio-wrapper-checked css-dev-only-do-not-override-mncuj7"
       >
         <span
           class="ant-radio ant-wave-target ant-radio-checked"

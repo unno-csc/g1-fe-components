@@ -2,10 +2,15 @@
 
 exports[`FormLabel component > renders label text 1`] = `
 <div>
-  <label
-    class="font-bold"
+  <div
+    class="flex w-full items-center justify-between gap-2"
   >
-    Nombre
-  </label>
+    <label
+      class="font-bold flex-1 min-w-0 truncate"
+      title="Nombre"
+    >
+      Nombre
+    </label>
+  </div>
 </div>
 `;

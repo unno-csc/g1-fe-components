@@ -6,13 +6,9 @@ exports[`MenuOptions > handles complex menu items with nested structure 1`] = `
     class="menu-options"
   >
     <div
-      data-props="{"mode":"inline","inlineCollapsed":false,"items":[{"key":"main1","label":"Main Section 1","children":[{"key":"sub1-1","label":"Subsection 1.1"},{"key":"sub1-2","label":"Subsection 1.2","children":[{"key":"deep1","label":"Deep Item 1"},{"key":"deep2","label":"Deep Item 2"}]}]},{"key":"main2","label":"Main Section 2"}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}"
+      data-props="{"mode":"inline","items":[{"key":"main1","label":"Main Section 1","children":[{"key":"sub1-1","label":"Subsection 1.1"},{"key":"sub1-2","label":"Subsection 1.2"}]},{"key":"main2","label":"Main Section 2"}],"selectedKeys":[],"className":"overflow-auto scrollbar-none border-none min-w-full","openKeys":[]}"
       data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":false,"items":[{"key":"main1","label":"Main Section 1","children":[{"key":"sub1-1","label":"Subsection 1.1"},{"key":"sub1-2","label":"Subsection 1.2","children":[{"key":"deep1","label":"Deep Item 1"},{"key":"deep2","label":"Deep Item 2"}]}]},{"key":"main2","label":"Main Section 2"}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}
-      </pre>
-    </div>
+    />
   </div>
 </div>
 `;
@@ -23,13 +19,22 @@ exports[`MenuOptions > passes correct props to Antd Menu component 1`] = `
     class="menu-options"
   >
     <div
-      data-props="{"mode":"inline","inlineCollapsed":false,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/dashboard"],"openKeys":[]}"
+      data-props="{"mode":"inline","items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"selectedKeys":[],"className":"overflow-auto scrollbar-none border-none min-w-full","openKeys":[]}"
       data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":false,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/dashboard"],"openKeys":[]}
-      </pre>
-    </div>
+    />
+  </div>
+</div>
+`;
+
+exports[`MenuOptions > passes openKeys to Menu component 1`] = `
+<div>
+  <div
+    class="menu-options"
+  >
+    <div
+      data-props="{"mode":"inline","items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"selectedKeys":[],"className":"overflow-auto scrollbar-none border-none min-w-full","openKeys":["sub1"]}"
+      data-testid="menu"
+    />
   </div>
 </div>
 `;
@@ -40,13 +45,9 @@ exports[`MenuOptions > renders correctly when all props are provided 1`] = `
     class="menu-options"
   >
     <div
-      data-props="{"mode":"inline","inlineCollapsed":true,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/test-path"],"openKeys":[]}"
+      data-props="{"mode":"inline","items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"selectedKeys":[],"className":"overflow-auto scrollbar-none border-none min-w-full","openKeys":["sub1"]}"
       data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":true,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/test-path"],"openKeys":[]}
-      </pre>
-    </div>
+    />
   </div>
 </div>
 `;
@@ -57,30 +58,9 @@ exports[`MenuOptions > renders correctly with default props 1`] = `
     class="menu-options"
   >
     <div
-      data-props="{"mode":"inline","inlineCollapsed":false,"items":[],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}"
+      data-props="{"mode":"inline","items":[],"selectedKeys":[],"className":"overflow-auto scrollbar-none border-none min-w-full","openKeys":[]}"
       data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":false,"items":[],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}
-      </pre>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`MenuOptions > renders when collapsed state changes 1`] = `
-<div>
-  <div
-    class="menu-options"
-  >
-    <div
-      data-props="{"mode":"inline","inlineCollapsed":true,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/dashboard"],"openKeys":[]}"
-      data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":true,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/dashboard"],"openKeys":[]}
-      </pre>
-    </div>
+    />
   </div>
 </div>
 `;
@@ -91,46 +71,45 @@ exports[`MenuOptions > renders with empty items array 1`] = `
     class="menu-options"
   >
     <div
-      data-props="{"mode":"inline","inlineCollapsed":false,"items":[],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}"
+      data-props="{"mode":"inline","items":[],"selectedKeys":[],"className":"overflow-auto scrollbar-none border-none min-w-full","openKeys":[]}"
       data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":false,"items":[],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}
-      </pre>
-    </div>
+    />
   </div>
 </div>
 `;
 
-exports[`MenuOptions > sets inlineCollapsed to true when collapsed prop is true 1`] = `
+exports[`MenuOptions > shows loading indicator when loadingAppLayout is true and items are empty 1`] = `
 <div>
   <div
     class="menu-options"
   >
     <div
-      data-props="{"mode":"inline","inlineCollapsed":true,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}"
-      data-testid="menu"
+      class="flex flex-col items-center justify-center h-full pt-10 gap-2"
     >
-      <pre>
-        {"mode":"inline","inlineCollapsed":true,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/"],"openKeys":[]}
-      </pre>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`MenuOptions > uses currentPath as defaultSelectedKeys 1`] = `
-<div>
-  <div
-    class="menu-options"
-  >
-    <div
-      data-props="{"mode":"inline","inlineCollapsed":false,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/users/profile"],"openKeys":[]}"
-      data-testid="menu"
-    >
-      <pre>
-        {"mode":"inline","inlineCollapsed":false,"items":[{"key":"1","label":"Dashboard"},{"key":"2","label":"Users"},{"key":"sub1","label":"Settings","children":[{"key":"3","label":"Profile"},{"key":"4","label":"Security"}]}],"className":"overflow-auto scrollbar-none border-none min-w-full","defaultSelectedKeys":["/users/profile"],"openKeys":[]}
-      </pre>
+      <span
+        aria-label="sync"
+        class="anticon anticon-sync anticon-spin text-gray-400"
+        role="img"
+      >
+        <svg
+          aria-hidden="true"
+          data-icon="sync"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M168 504.2c1-43.7 10-86.1 26.9-126 17.3-41 42.1-77.7 73.7-109.4S337 212.3 378 195c42.4-17.9 87.4-27 133.9-27s91.5 9.1 133.8 27A341.5 341.5 0 01755 268.8c9.9 9.9 19.2 20.4 27.8 31.4l-60.2 47a8 8 0 003 14.1l175.7 43c5 1.2 9.9-2.6 9.9-7.7l.8-180.9c0-6.7-7.7-10.5-12.9-6.3l-56.4 44.1C765.8 155.1 646.2 92 511.8 92 282.7 92 96.3 275.6 92 503.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8zm756 7.8h-60c-4.4 0-7.9 3.5-8 7.8-1 43.7-10 86.1-26.9 126-17.3 41-42.1 77.8-73.7 109.4A342.45 342.45 0 01512.1 856a342.24 342.24 0 01-243.2-100.8c-9.9-9.9-19.2-20.4-27.8-31.4l60.2-47a8 8 0 00-3-14.1l-175.7-43c-5-1.2-9.9 2.6-9.9 7.7l-.7 181c0 6.7 7.7 10.5 12.9 6.3l56.4-44.1C258.2 868.9 377.8 932 512.2 932c229.2 0 415.5-183.7 419.8-411.8a8 8 0 00-8-8.2z"
+          />
+        </svg>
+      </span>
+      <small
+        class="text-gray-400"
+      >
+        Cargando menú
+      </small>
     </div>
   </div>
 </div>

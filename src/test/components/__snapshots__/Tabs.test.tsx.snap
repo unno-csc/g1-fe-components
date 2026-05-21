@@ -3,7 +3,7 @@
 exports[`Tabs component > renders tabs and switches content 1`] = `
 <div>
   <div
-    class="ant-tabs ant-tabs-top css-dev-only-do-not-override-l9pxc0"
+    class="ant-tabs ant-tabs-top motor1-tabs css-dev-only-do-not-override-mncuj7"
   >
     <div
       aria-orientation="horizontal"

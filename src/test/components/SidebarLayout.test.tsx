@@ -12,34 +12,18 @@ let mockSearchTerm: string;
 let mockSetSearchTerm: any;
 let mockOpenKeys: string[];
 let mockSetOpenKeys: any;
-let mockCurrentModule: any;
 let mockOnClickOptionMenu: any;
 
-// Mock helper functions
-vi.mock('../../helpers', () => ({
-	transformModuleToMenuData: vi.fn((module) => {
-		if (!module) return [];
-		return [
-			{ key: '/home', label: 'INICIO', icon: null },
-			{ key: 'users', label: 'Users', icon: null },
-			{ key: 'settings', label: 'Settings', icon: null }
-		];
-	}),
-	getAllMenuKeys: vi.fn((menuData) => {
-		return menuData.map((item: any) => item.key);
-	}),
-}));
-
-vi.mock('../../helpers/menu/menuDataTransformer', () => ({
-	filterMenuItems: vi.fn((items, query) => {
-		if (!query.trim()) return items;
-		return items.filter((item: any) => item.label && item.label.toLowerCase().includes(query.toLowerCase()));
-	}),
+vi.mock('../../HOC/AppLayoutFooterContext', () => ({
+	useAppLayoutFooter: vi.fn(() => ({
+		footerComponent: null,
+		setFooterComponent: vi.fn(),
+		clearFooter: vi.fn(),
+	})),
 }));
 
 vi.mock('../../components/AppLayout/components/MenuOptions', () => ({
-	__esModule: true,
-	default: (props: any) => {
+	MenuOptions: (props: any) => {
 		lastMenuOptionsProps = props;
 		return <div data-testid="menu-options" />;
 	},
@@ -54,39 +38,49 @@ vi.mock('../../hooks', () => ({
 		openKeys: mockOpenKeys,
 		setOpenKeys: mockSetOpenKeys,
 	}),
+	useAppLayoutFooter: vi.fn(() => ({
+		footerComponent: null,
+		setFooterComponent: vi.fn(),
+		clearFooter: vi.fn(),
+	})),
 }));
 
-vi.mock('../../store/appLayout.store', () => ({
-	useAppLayoutStore: () => ({
-		currentModule: mockCurrentModule,
-	}),
+vi.mock('../../store', async () => {
+	const actual = await vi.importActual<any>('../../store');
+	return {
+		...actual,
+		useMenuDataStore: vi.fn(() => []),
+	};
+});
+
+vi.mock('../../store/viewport.store', () => ({
+	useViewportStore: vi.fn(() => 1280),
 }));
+
+vi.mock('../../helpers/menu/menuDataTransformer', () => ({
+	filterMenuItems: vi.fn((items: any) => items),
+}));
+
+vi.mock('../../helpers/functions', async () => {
+	const actual = await vi.importActual<any>('../../helpers/functions');
+	return {
+		...actual,
+		findMenuItemByRoute: vi.fn(() => null),
+	};
+});
 
 vi.mock('antd', async () => {
 	const actual = await vi.importActual<any>('antd');
 	return {
 		...actual,
-		Input: (props: any) => {
-			const inputProps: any = {
-				'data-testid': 'search-input',
-				placeholder: props.placeholder,
-				onChange: (e: any) => {
-					if (props.onChange) {
-						props.onChange(e);
-					}
-				}
-			};
-			
-			// Only add defaultValue if it's actually provided and has meaningful content
-			if (props.defaultValue !== undefined && props.defaultValue !== '' && props.defaultValue.trim() !== '') {
-				inputProps.defaultValue = props.defaultValue;
-			} else if (props.defaultValue && props.defaultValue.trim() === '') {
-				// Handle whitespace-only values
-				inputProps.value = props.defaultValue;
-			}
-			
-			return <input {...inputProps} />;
-		},
+		Input: (props: any) => (
+			<input
+				data-testid="search-input"
+				placeholder={props.placeholder}
+				defaultValue={props.defaultValue}
+				onChange={(e: any) => props.onChange?.(e)}
+			/>
+		),
 		Button: (props: any) => (
 			<button data-testid="collapse-button" onClick={props.onClick} type="button">
 				{props.icon}
@@ -102,8 +96,8 @@ vi.mock('antd/es/layout/layout', () => ({
 }));
 
 vi.mock('@ant-design/icons', () => ({
-	DoubleLeftOutlined: () => <span data-testid="double-left-icon">⬅️</span>,
-	SearchOutlined: () => <span data-testid="search-icon">🔍</span>,
+	DoubleLeftOutlined: () => <span data-testid="double-left-icon" />,
+	SearchOutlined: () => <span data-testid="search-icon" />,
 }));
 
 beforeEach(() => {
@@ -114,38 +108,13 @@ beforeEach(() => {
 	mockCollapsed = false;
 	mockSearchTerm = '';
 	mockOpenKeys = [];
-	mockCurrentModule = {
-		id: 1,
-		name: 'Test Module',
-		submodules: [
-			{
-				id: 1,
-				name: 'Test Submodule',
-				groups: [
-					{
-						id: 1,
-						name: 'Test Group',
-						programs: [
-							{ id: 1, name: 'Test Program', path: '/test' }
-						]
-					}
-				]
-			}
-		]
-	};
 	lastMenuOptionsProps = undefined;
 });
-
-const sampleMenuItems = [
-	{ key: '/home', label: 'INICIO' },
-	{ key: 'users', label: 'Users' },
-	{ key: 'settings', label: 'Settings' },
-];
 
 const renderSidebarLayout = (props: Partial<React.ComponentProps<typeof SidebarLayout>> = {}) => {
 	const defaultProps = {
 		children: <div data-testid="default-children">Default content</div>,
-		currentPath: '/',
+		loadingAppLayout: false,
 		onClickOptionMenu: mockOnClickOptionMenu,
 		...props,
 	};
@@ -154,31 +123,31 @@ const renderSidebarLayout = (props: Partial<React.ComponentProps<typeof SidebarL
 
 describe('SidebarLayout', () => {
 	describe('Rendering', () => {
-			it('renders sidebar elements when not collapsed', () => {
-		mockCollapsed = false;
-		const { container } = renderSidebarLayout({
-			children: <div data-testid="sidebar-children">Test content</div>,
+		it('renders sidebar elements when not collapsed', () => {
+			mockCollapsed = false;
+			const { container } = renderSidebarLayout({
+				children: <div data-testid="sidebar-children">Test content</div>,
+			});
+
+			expect(screen.getByTestId('search-input')).toBeInTheDocument();
+			expect(screen.getByTestId('menu-options')).toBeInTheDocument();
+			expect(screen.getByTestId('collapse-button')).toBeInTheDocument();
+			expect(screen.getByTestId('sidebar-children')).toBeInTheDocument();
+			expect(container).toMatchSnapshot();
 		});
 
-		expect(screen.getByTestId('search-input')).toBeInTheDocument();
-		expect(screen.getByTestId('menu-options')).toBeInTheDocument();
-		expect(screen.getByTestId('collapse-button')).toBeInTheDocument();
-		expect(screen.getByTestId('sidebar-children')).toBeInTheDocument();
-		expect(container).toMatchSnapshot();
-	});
+		it('hides sidebar elements when collapsed', () => {
+			mockCollapsed = true;
+			const { container } = renderSidebarLayout({
+				children: <div data-testid="sidebar-children">Test content</div>,
+			});
 
-			it('hides sidebar elements when collapsed', () => {
-		mockCollapsed = true;
-		const { container } = renderSidebarLayout({
-			children: <div data-testid="sidebar-children">Test content</div>,
+			expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
+			expect(screen.queryByTestId('menu-options')).not.toBeInTheDocument();
+			expect(screen.queryByTestId('collapse-button')).not.toBeInTheDocument();
+			expect(screen.getByTestId('sidebar-children')).toBeInTheDocument();
+			expect(container).toMatchSnapshot();
 		});
-
-		expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
-		expect(screen.queryByTestId('menu-options')).not.toBeInTheDocument();
-		expect(screen.queryByTestId('collapse-button')).not.toBeInTheDocument();
-		expect(screen.getByTestId('sidebar-children')).toBeInTheDocument();
-		expect(container).toMatchSnapshot();
-	});
 	});
 
 	describe('Search functionality', () => {
@@ -186,32 +155,32 @@ describe('SidebarLayout', () => {
 			mockCollapsed = false;
 		});
 
-			it('filters menu items based on search input', async () => {
-		const user = userEvent.setup();
-		const { container } = renderSidebarLayout();
+		it('filters menu items based on search input', async () => {
+			const user = userEvent.setup();
+			const { container } = renderSidebarLayout();
 
-		const searchInput = screen.getByTestId('search-input');
-		await user.type(searchInput, 'User');
+			const searchInput = screen.getByTestId('search-input');
+			await user.type(searchInput, 'User');
 
-		await waitFor(() => {
-			expect(mockSetSearchTerm).toHaveBeenCalledWith('User');
+			await waitFor(() => {
+				expect(mockSetSearchTerm).toHaveBeenCalledWith('User');
+			});
+			expect(container).toMatchSnapshot();
 		});
-		expect(container).toMatchSnapshot();
-	});
 
-			it('shows all items when search is cleared', async () => {
-		const user = userEvent.setup();
-		const { container } = renderSidebarLayout();
+		it('shows all items when search is cleared', async () => {
+			const user = userEvent.setup();
+			const { container } = renderSidebarLayout();
 
-		const searchInput = screen.getByTestId('search-input');
-		await user.type(searchInput, 'test');
-		await user.clear(searchInput);
+			const searchInput = screen.getByTestId('search-input');
+			await user.type(searchInput, 'test');
+			await user.clear(searchInput);
 
-		await waitFor(() => {
-			expect(mockSetSearchTerm).toHaveBeenLastCalledWith('');
+			await waitFor(() => {
+				expect(mockSetSearchTerm).toHaveBeenLastCalledWith('');
+			});
+			expect(container).toMatchSnapshot();
 		});
-		expect(container).toMatchSnapshot();
-	});
 	});
 
 	describe('Collapse functionality', () => {
@@ -229,81 +198,60 @@ describe('SidebarLayout', () => {
 	});
 
 	describe('Props handling', () => {
-			it('passes correct props to MenuOptions', () => {
-		mockCollapsed = false;
-		const { container } = renderSidebarLayout({
-			currentPath: '/users',
-			modeSidebar: 'inline',
+		it('passes correct props to MenuOptions', () => {
+			mockCollapsed = false;
+			renderSidebarLayout({ loadingAppLayout: false });
+
+			expect(lastMenuOptionsProps).toMatchObject({
+				loadingAppLayout: false,
+				openKeysMenuOptions: mockOpenKeys,
+			});
+			expect(lastMenuOptionsProps.onClickOptionMenu).toBe(mockOnClickOptionMenu);
 		});
 
-		expect(lastMenuOptionsProps).toMatchObject({
-			collapsed: false,
-			currentPath: '/users',
-			mode: 'inline',
-			openKeys: mockOpenKeys,
-		});
-		expect(lastMenuOptionsProps.onClickOptionMenu).toBe(mockOnClickOptionMenu);
-		expect(container).toMatchSnapshot();
-	});
+		it('handles missing optional props gracefully', () => {
+			mockCollapsed = false;
+			renderSidebarLayout();
 
-			it('handles missing props gracefully', () => {
-		mockCollapsed = false;
-		const { container } = renderSidebarLayout({ currentPath: undefined });
-
-		expect(lastMenuOptionsProps.currentPath).toBe('');
-		expect(container).toMatchSnapshot();
-	});
-
-			it('handles null currentModule gracefully', () => {
-		mockCollapsed = false;
-		mockCurrentModule = null;
-		const { container } = renderSidebarLayout({
-			currentPath: '/test',
+			expect(lastMenuOptionsProps).toBeDefined();
 		});
 
-		expect(lastMenuOptionsProps.items).toEqual([]);
-		expect(container).toMatchSnapshot();
-	});
+		it('handles loadingAppLayout true gracefully', () => {
+			mockCollapsed = false;
+			renderSidebarLayout({ loadingAppLayout: true });
 
-	it('handles undefined currentModule gracefully', () => {
-		mockCollapsed = false;
-		mockCurrentModule = undefined;
-		const { container } = renderSidebarLayout({
-			currentPath: '/test',
+			expect(lastMenuOptionsProps.loadingAppLayout).toBe(true);
 		});
 
-		expect(lastMenuOptionsProps.items).toEqual([]);
-		expect(container).toMatchSnapshot();
-	});
+		it('handles loadingAppLayout false gracefully', () => {
+			mockCollapsed = false;
+			renderSidebarLayout({ loadingAppLayout: false });
+
+			expect(lastMenuOptionsProps.loadingAppLayout).toBe(false);
+		});
 	});
 
 	describe('Search state edge cases', () => {
-			it('handles various search input scenarios including empty values', async () => {
-		mockCollapsed = false;
-		const user = userEvent.setup();
+		it('handles various search input scenarios including empty values', async () => {
+			mockCollapsed = false;
+			const user = userEvent.setup();
+			const { container } = renderSidebarLayout();
 
-		const { container } = renderSidebarLayout();
+			const searchInput = screen.getByTestId('search-input');
+			await user.type(searchInput, 'Users');
 
-		const searchInput = screen.getByTestId('search-input');
-
-		// Test typing
-		await user.type(searchInput, 'Users');
-
-		await waitFor(() => {
-			expect(mockSetSearchTerm).toHaveBeenCalled();
+			await waitFor(() => {
+				expect(mockSetSearchTerm).toHaveBeenCalled();
+			});
+			expect(container).toMatchSnapshot();
 		});
-
-		expect(container).toMatchSnapshot();
 	});
-});
 
 	describe('Width and styling', () => {
 		it('applies custom width when provided', () => {
 			mockCollapsed = false;
 			const customWidth = 300;
-			const { container } = renderSidebarLayout({
-				width: customWidth,
-			});
+			const { container } = renderSidebarLayout({ width: customWidth });
 
 			const sidebarDiv = container.querySelector('div[style*="width"]');
 			expect(sidebarDiv).toHaveStyle(`width: ${customWidth}px`);
@@ -315,7 +263,7 @@ describe('SidebarLayout', () => {
 			const { container } = renderSidebarLayout();
 
 			const sidebarDiv = container.querySelector('div[style*="width"]');
-			expect(sidebarDiv).toHaveStyle('width: 235px');
+			expect(sidebarDiv).toHaveStyle('width: 266px');
 			expect(container).toMatchSnapshot();
 		});
 	});
@@ -335,7 +283,7 @@ describe('SidebarLayout', () => {
 			mockOpenKeys = ['key1', 'key2'];
 			renderSidebarLayout();
 
-			expect(lastMenuOptionsProps.openKeys).toEqual(['key1', 'key2']);
+			expect(lastMenuOptionsProps.openKeysMenuOptions).toEqual(['key1', 'key2']);
 		});
 
 		it('passes onOpenKeysChange to MenuOptions', () => {
@@ -347,17 +295,15 @@ describe('SidebarLayout', () => {
 	});
 
 	describe('Module transformation and menu data', () => {
-		it('generates menu data from currentModule', () => {
+		it('generates menu data from store', () => {
 			mockCollapsed = false;
 			renderSidebarLayout();
 
-					// Verify that the component renders with menu data
-		expect(lastMenuOptionsProps.items).toBeDefined();
+			expect(lastMenuOptionsProps.items).toBeDefined();
 		});
 
-		it('handles empty menu data when no currentModule', () => {
+		it('handles empty menu data', () => {
 			mockCollapsed = false;
-			mockCurrentModule = null;
 			renderSidebarLayout();
 
 			expect(lastMenuOptionsProps.items).toEqual([]);
@@ -368,19 +314,17 @@ describe('SidebarLayout', () => {
 			mockSearchTerm = 'test search';
 			renderSidebarLayout();
 
-					// Verify that search term affects the component
-		expect(lastMenuOptionsProps.items).toBeDefined();
+			expect(lastMenuOptionsProps.items).toBeDefined();
 		});
 	});
 
 	describe('Search term and open keys synchronization', () => {
-		it('sets openKeys when search term is not empty', () => {
+		it('provides openKeys from store', () => {
 			mockCollapsed = false;
-			mockSearchTerm = 'search';
-			const { container } = renderSidebarLayout();
+			mockOpenKeys = ['key1'];
+			renderSidebarLayout();
 
-					// Verify that openKeys are handled correctly
-		expect(lastMenuOptionsProps.openKeys).toBeDefined();
+			expect(lastMenuOptionsProps.openKeysMenuOptions).toBeDefined();
 		});
 
 		it('clears openKeys when search term is empty', () => {
@@ -388,24 +332,21 @@ describe('SidebarLayout', () => {
 			mockSearchTerm = '';
 			renderSidebarLayout();
 
-			// This would be handled by the useEffect in the component
-			expect(lastMenuOptionsProps.openKeys).toEqual([]);
+			expect(lastMenuOptionsProps.openKeysMenuOptions).toEqual([]);
 		});
 	});
 
 	describe('Edge cases and error handling', () => {
-		it('handles empty currentModule gracefully', () => {
+		it('handles empty menu data gracefully', () => {
 			mockCollapsed = false;
-			mockCurrentModule = null;
 			const { container } = renderSidebarLayout();
 
 			expect(screen.getByTestId('content')).toBeInTheDocument();
 			expect(container).toMatchSnapshot();
 		});
 
-		it('handles undefined currentModule gracefully', () => {
+		it('handles undefined menu data gracefully', () => {
 			mockCollapsed = false;
-			mockCurrentModule = undefined;
 			const { container } = renderSidebarLayout();
 
 			expect(screen.getByTestId('content')).toBeInTheDocument();
@@ -414,7 +355,7 @@ describe('SidebarLayout', () => {
 
 		it('handles invalid search terms gracefully', () => {
 			mockCollapsed = false;
-			mockSearchTerm = '   '; // whitespace only
+			mockSearchTerm = '   ';
 			const { container } = renderSidebarLayout();
 
 			expect(screen.getByTestId('menu-options')).toBeInTheDocument();
@@ -433,17 +374,15 @@ describe('SidebarLayout', () => {
 			expect(container).toMatchSnapshot();
 		});
 
-		it('handles all modeSidebar options', () => {
-			const modes = ['vertical', 'horizontal', 'inline'] as const;
-			
-			modes.forEach(mode => {
-				mockCollapsed = false;
-				const { container } = renderSidebarLayout({
-					modeSidebar: mode,
-				});
+		it('renders with different loadingAppLayout states', () => {
+			const states = [true, false];
 
-				expect(lastMenuOptionsProps.mode).toBe(mode);
-				expect(container).toMatchSnapshot();
+			states.forEach(state => {
+				mockCollapsed = false;
+				const { unmount } = renderSidebarLayout({ loadingAppLayout: state });
+
+				expect(lastMenuOptionsProps.loadingAppLayout).toBe(state);
+				unmount();
 			});
 		});
 	});

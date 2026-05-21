@@ -6,19 +6,20 @@ exports[`AppLayout > should render correctly with basic props 1`] = `
     class="flex h-[100dvh] w-full overflow-hidden"
   >
     <div
-      class="ant-layout p-2 gap-2 css-dev-only-do-not-override-l9pxc0"
+      class="ant-layout p-2 gap-2 css-dev-only-do-not-override-mncuj7"
     >
       <div
-        data-props="{"loadingHeader":false,"notifications":{"items":[]},"userActions":{"items":[]},"logo":""}"
+        data-props="{"loadingAppLayout":false,"notifications":{"items":[]},"userActions":{"items":[]}}"
         data-testid="header-layout"
       >
         Header Content
       </div>
       <div
-        data-props="{"width":280,"currentPath":"/","modeSidebar":"inline","onClickOptionMenu":"function","children":{"type":"div","key":null,"props":{"children":"Test Content"},"_owner":null,"_store":{}}}"
         data-testid="sidebar-layout"
       >
-        <div>
+        <div
+          data-testid="test-content"
+        >
           Test Content
         </div>
       </div>

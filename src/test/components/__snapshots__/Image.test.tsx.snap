@@ -2,13 +2,18 @@
 
 exports[`Image component > handles image load successfully 1`] = `
 <div>
-  <img
-    alt="Test image"
-    height="150"
-    src="test-image.jpg"
-    style="display: block;"
-    width="200"
-  />
+  <div
+    class="overflow-hidden "
+    style="width: 200px; height: 150px;"
+  >
+    <img
+      alt="Test image"
+      height="150"
+      src="test-image.jpg"
+      style="display: block; transition: transform 200ms ease-in-out; transform: scale(1);"
+      width="200"
+    />
+  </div>
 </div>
 `;
 
@@ -16,6 +21,7 @@ exports[`Image component > handles onError callback correctly 1`] = `
 <div>
   <div
     class="flex w-full h-full items-center justify-start"
+    style=""
   >
     Load failed
   </div>
@@ -24,13 +30,18 @@ exports[`Image component > handles onError callback correctly 1`] = `
 
 exports[`Image component > renders image with basic props 1`] = `
 <div>
-  <img
-    alt="Test image"
-    height="150"
-    src="test-image.jpg"
-    style="display: block;"
-    width="200"
-  />
+  <div
+    class="overflow-hidden "
+    style="width: 200px; height: 150px;"
+  >
+    <img
+      alt="Test image"
+      height="150"
+      src="test-image.jpg"
+      style="display: block; transition: transform 200ms ease-in-out; transform: scale(1);"
+      width="200"
+    />
+  </div>
 </div>
 `;
 
@@ -48,6 +59,7 @@ exports[`Image component > shows error message when image fails to load 1`] = `
 <div>
   <div
     class="flex w-full h-full items-center justify-start"
+    style=""
   >
     Failed to load
   </div>
@@ -68,6 +80,7 @@ exports[`Image component > shows error when imgPath changes from valid to empty 
 <div>
   <div
     class="flex w-full h-full items-center justify-start"
+    style=""
   >
     Empty path error
   </div>
@@ -78,6 +91,7 @@ exports[`Image component > shows error when imgPath changes from valid to invali
 <div>
   <div
     class="flex w-full h-full items-center justify-start"
+    style=""
   >
     Image error
   </div>
@@ -86,12 +100,17 @@ exports[`Image component > shows error when imgPath changes from valid to invali
 
 exports[`Image component > updates image when imgPath changes 1`] = `
 <div>
-  <img
-    alt="Test image"
-    height="150"
-    src="second-image.jpg"
-    style="display: block;"
-    width="200"
-  />
+  <div
+    class="overflow-hidden "
+    style="width: 200px; height: 150px;"
+  >
+    <img
+      alt="Test image"
+      height="150"
+      src="second-image.jpg"
+      style="display: block; transition: transform 200ms ease-in-out; transform: scale(1);"
+      width="200"
+    />
+  </div>
 </div>
 `;

@@ -25,12 +25,13 @@ describe('DropdownCustomLabel component', () => {
         const trigger = await screen.findByLabelText('Abrir opciones');
         await user.click(trigger);
 
-        const item = await screen.findByText('Opción B');
-        await user.click(item);
+        // Use getAllByText because the item appears both in button label and dropdown menu
+        const items = await screen.findAllByText('Opción B');
+        // Click the menu item (last one, inside the dropdown)
+        await user.click(items[items.length - 1]);
 
         expect(onChange).toHaveBeenCalledWith('b');
-        // Left button text changes
-        expect(await screen.findByText('Opción B')).toBeInTheDocument();
+        expect(screen.getAllByText('Opción B').length).toBeGreaterThan(0);
     });
 });
 

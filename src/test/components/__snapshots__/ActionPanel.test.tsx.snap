@@ -3,7 +3,7 @@
 exports[`ActionPanel > renders button with icon 1`] = `
 <div>
   <button
-    class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-circle ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-icon-only ant-dropdown-trigger"
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-circle ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-icon-only ant-dropdown-trigger"
     type="button"
   >
     <span
@@ -27,7 +27,7 @@ exports[`ActionPanel > renders button with icon 1`] = `
 exports[`ActionPanel > shows menu items when button is clicked 1`] = `
 <div>
   <button
-    class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-circle ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-icon-only ant-dropdown-trigger ant-dropdown-open"
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-circle ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-icon-only ant-dropdown-trigger ant-dropdown-open"
     type="button"
   >
     <span

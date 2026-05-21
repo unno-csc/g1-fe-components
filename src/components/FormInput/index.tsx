@@ -29,6 +29,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	autoComplete = 'off',
 	disabled = false,
 	textTransform = 'uppercase',
+	...inputProps
 }: IInputProps<TFieldValues>) => {
 	const id = useId();
 	const errId = `${id}-error`;
@@ -96,6 +97,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 							autoComplete={autoComplete}
 							disabled={disabled}
 							style={{ textTransform: textTransform }}
+							{...inputProps}
 						/>
 						{(validatMsg || errorIdentificationExists) && <FormLabelError label={validatMsg ?? ''} id={errId} />}
 					</div>

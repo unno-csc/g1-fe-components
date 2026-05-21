@@ -2,11 +2,8 @@
 
 exports[`Alert component > renders with description 1`] = `
 <div>
-  <p>
-    Alert!
-  </p>
   <div
-    class="ant-alert ant-alert-info ant-alert-with-description ant-alert-no-icon css-dev-only-do-not-override-l9pxc0"
+    class="ant-alert ant-alert-info ant-alert-with-description ant-alert-no-icon css-dev-only-do-not-override-mncuj7"
     data-show="true"
     role="alert"
   >
@@ -30,11 +27,8 @@ exports[`Alert component > renders with description 1`] = `
 
 exports[`Alert component > renders with message 1`] = `
 <div>
-  <p>
-    Alert!
-  </p>
   <div
-    class="ant-alert ant-alert-info ant-alert-no-icon css-dev-only-do-not-override-l9pxc0"
+    class="ant-alert ant-alert-info ant-alert-no-icon css-dev-only-do-not-override-mncuj7"
     data-show="true"
     role="alert"
   >

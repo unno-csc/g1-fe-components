@@ -3,10 +3,10 @@
 exports[`Checkbox component > calls onChange when clicked 1`] = `
 <div>
   <label
-    class="ant-checkbox-wrapper css-dev-only-do-not-override-l9pxc0"
+    class="ant-checkbox-wrapper css-dev-only-do-not-override-mncuj7"
   >
     <span
-      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-l9pxc0 ant-checkbox-checked"
+      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-mncuj7 ant-checkbox-checked"
     >
       <input
         class="ant-checkbox-input"
@@ -28,10 +28,10 @@ exports[`Checkbox component > calls onChange when clicked 1`] = `
 exports[`Checkbox component > can be disabled 1`] = `
 <div>
   <label
-    class="ant-checkbox-wrapper ant-checkbox-wrapper-disabled css-dev-only-do-not-override-l9pxc0"
+    class="ant-checkbox-wrapper ant-checkbox-wrapper-disabled css-dev-only-do-not-override-mncuj7"
   >
     <span
-      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-l9pxc0 ant-checkbox-disabled"
+      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-mncuj7 ant-checkbox-disabled"
     >
       <input
         class="ant-checkbox-input"
@@ -54,10 +54,10 @@ exports[`Checkbox component > can be disabled 1`] = `
 exports[`Checkbox component > is checked when defaultChecked is true 1`] = `
 <div>
   <label
-    class="ant-checkbox-wrapper css-dev-only-do-not-override-l9pxc0"
+    class="ant-checkbox-wrapper css-dev-only-do-not-override-mncuj7"
   >
     <span
-      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-l9pxc0 ant-checkbox-checked"
+      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-mncuj7 ant-checkbox-checked"
     >
       <input
         checked=""
@@ -80,10 +80,10 @@ exports[`Checkbox component > is checked when defaultChecked is true 1`] = `
 exports[`Checkbox component > renders with label text 1`] = `
 <div>
   <label
-    class="ant-checkbox-wrapper css-dev-only-do-not-override-l9pxc0"
+    class="ant-checkbox-wrapper css-dev-only-do-not-override-mncuj7"
   >
     <span
-      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-l9pxc0"
+      class="ant-checkbox ant-wave-target css-dev-only-do-not-override-mncuj7"
     >
       <input
         class="ant-checkbox-input"

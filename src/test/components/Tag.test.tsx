@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Tag } from '../../components/Tag/Tag';
+import { Tag } from '../../components/Tag';
 
 describe('Tag component', () => {
 	it('renders with children and additional props', () => {

@@ -1,5 +1,5 @@
 import { Progress as AntProgress, ProgressProps } from 'antd';
 
-export const Progress = ({ ...rest }: ProgressProps) => {
-	return <AntProgress {...rest} />;
+export const Progress = ({ className, ...rest }: ProgressProps) => {
+	return <AntProgress className={`motor1-progress${className ? ` ${className}` : ''}`} {...rest} />;
 };

@@ -10,6 +10,7 @@ export interface IRadioProps extends RadioGroupProps {
 export const Radio = ({ label, ...rest }: IRadioProps) => {
 	const { variant, className, rootClassName, ...props } = rest;
 	const mergedRootClassName = [
+		'motor1-radio',
 		rootClassName,
 		variant === 'default' ? 'itsa-radio--default' : undefined,
 	]

@@ -3,31 +3,40 @@
 exports[`ErrorPage component > renders error and message texts 1`] = `
 <div>
   <div
-    class="flex flex-col justify-center items-center h-screen bg-white-100"
+    class="flex flex-col items-center justify-center h-screen bg-white-100 px-4 text-center gap-4"
   >
+    <img
+      alt="Página no encontrada"
+      class="w-full max-w-[560px] h-auto max-h-[50vh] object-contain "
+      src="/src/assets/images/page-not-found.png"
+    />
     <div
-      class="text-center"
+      class="flex flex-col justify-center items-center"
     >
-      <h1
-        class="ant-typography css-dev-only-do-not-override-l9pxc0"
+      <h5
+        class="ant-typography css-dev-only-do-not-override-mncuj7"
+        style="margin-bottom: 0px;"
       >
         404
-      </h1>
-      <p
-        class="text-lg"
+      </h5>
+      <h5
+        class="ant-typography css-dev-only-do-not-override-mncuj7"
+        style="margin-bottom: 0px;"
       >
         Página no encontrada
-      </p>
+      </h5>
     </div>
     <div
-      class="flex justify-center mt-8"
+      class="flex flex-col justify-center items-center pt-4"
     >
       <button
-        class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+        class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
         type="button"
       >
-        <span>
-          Ir al Inicio
+        <span
+          class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+        >
+          Regresar al inicio
         </span>
       </button>
     </div>

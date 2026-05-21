@@ -3,7 +3,7 @@
 exports[`Tag component > passes extra props to AntTag 1`] = `
 <div>
   <span
-    class="ant-tag css-dev-only-do-not-override-l9pxc0"
+    class="ant-tag css-dev-only-do-not-override-mncuj7"
     data-testid="tag-testid"
     id="custom-id"
   >
@@ -15,7 +15,7 @@ exports[`Tag component > passes extra props to AntTag 1`] = `
 exports[`Tag component > renders with children and additional props 1`] = `
 <div>
   <span
-    class="ant-tag ant-tag-blue css-dev-only-do-not-override-l9pxc0"
+    class="ant-tag ant-tag-blue css-dev-only-do-not-override-mncuj7"
   >
     Test Tag
   </span>

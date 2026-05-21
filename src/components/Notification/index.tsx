@@ -24,7 +24,7 @@ const NotificationComponent = ({
 	closable = false,
 	onClose,
 	width = '100%',
-	showIcon = false,
+	showIcon = true,
 	className,
 	testId,
 }: INotificationProps) => {
@@ -56,6 +56,7 @@ const NotificationComponent = ({
 	const notificationClasses = classNames(
 		'mb-4',
 		'animate-slideInRight',
+		'itsa-notification',
 		`itsa-notification--${type}`,
 		className
 	);

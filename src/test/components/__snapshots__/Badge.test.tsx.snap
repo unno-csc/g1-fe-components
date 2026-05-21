@@ -3,7 +3,7 @@
 exports[`Badge component > renders children and shows badge count 1`] = `
 <div>
   <span
-    class="ant-badge css-dev-only-do-not-override-l9pxc0"
+    class="ant-badge css-dev-only-do-not-override-mncuj7"
   >
     <span
       data-testid="child"
@@ -13,6 +13,7 @@ exports[`Badge component > renders children and shows badge count 1`] = `
     <sup
       class="ant-scroll-number ant-badge-count"
       data-show="true"
+      style="background: rgb(250, 204, 21);"
       title="5"
     >
       <bdi>
@@ -35,7 +36,7 @@ exports[`Badge component > renders children and shows badge count 1`] = `
 exports[`Badge component > renders children without count 1`] = `
 <div>
   <span
-    class="ant-badge css-dev-only-do-not-override-l9pxc0"
+    class="ant-badge ant-badge-status css-dev-only-do-not-override-mncuj7"
   >
     <span
       data-testid="child"
@@ -49,7 +50,7 @@ exports[`Badge component > renders children without count 1`] = `
 exports[`Badge component > shows dot badge when dot prop is true 1`] = `
 <div>
   <span
-    class="ant-badge css-dev-only-do-not-override-l9pxc0"
+    class="ant-badge ant-badge-status css-dev-only-do-not-override-mncuj7"
   >
     <span
       data-testid="child"
@@ -59,6 +60,7 @@ exports[`Badge component > shows dot badge when dot prop is true 1`] = `
     <sup
       class="ant-scroll-number ant-badge-dot"
       data-show="true"
+      style="background: rgb(250, 204, 21);"
     />
   </span>
 </div>

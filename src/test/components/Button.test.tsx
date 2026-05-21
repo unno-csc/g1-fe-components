@@ -2,6 +2,18 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { Button } from '../../components/Button';
 
+vi.mock('@/hooks', async () => {
+	const actual = await vi.importActual<any>('@/hooks');
+	return {
+		...actual,
+		useControlActions: vi.fn(() => ({
+			setCurrentPath: vi.fn(),
+			programId: undefined,
+			fnApiValidatePermissionAction: vi.fn().mockResolvedValue(true),
+		})),
+	};
+});
+
 describe('Button component', () => {
 	it('renders label text', () => {
 		const { container } = render(<Button label="Click me" />);

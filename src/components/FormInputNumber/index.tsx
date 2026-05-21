@@ -27,6 +27,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	disabled = false,
 	suffix,
 	prefix,
+	...rest
 }: IInputProps<TFieldValues>) => {
 	const id = useId();
 	const errId = `${id}-error`;
@@ -125,6 +126,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 							disabled={disabled}
 							prefix={prefix}
 							suffix={suffix}
+							{...rest}
 						/>
 						{errorMsg && <FormLabelError label={errorMsg} id={errId} />}
 					</div>

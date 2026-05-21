@@ -3,7 +3,7 @@
 exports[`FormLabelError component > renders error label text 1`] = `
 <div>
   <label
-    class="text-red-500"
+    class="text-red-500 text-xs"
   >
     Campo requerido
   </label>

@@ -1,10 +1,8 @@
-import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { HeaderLayout, HeaderLayoutProps } from '../../components/AppLayout/components/HeaderLayout';
-import { IAgency, IModule } from '../../interfaces';
-import { MenuProps } from 'antd';
+import { IAgency, IModule, IUserRole } from '../../interfaces';
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -27,6 +25,19 @@ Object.defineProperty(window, 'localStorage', {
 	value: localStorageMock,
 });
 
+vi.mock('../../assets/images', () => ({
+	logoMotorsBlanco: 'test-motor-logo.png',
+}));
+
+vi.mock('../../hooks/useEnvironment', () => ({
+	useEnvironment: vi.fn(() => 'PRODUCCION'),
+}));
+
+vi.mock('@ant-design/icons', () => ({
+	MenuUnfoldOutlined: () => <span data-testid="menu-unfold-icon" />,
+	SettingOutlined: () => <span data-testid="setting-icon" />,
+}));
+
 // Mock stores
 const mockAppLayoutStore = {
 	currentAgency: undefined as IAgency | undefined,
@@ -34,9 +45,13 @@ const mockAppLayoutStore = {
 	agencies: [] as IAgency[],
 	modulesAgency: [] as IModule[],
 	userName: undefined as string | undefined,
-	userRole: undefined as string | undefined,
+	userRole: undefined as IUserRole | undefined,
 	setCurrentModule: vi.fn(),
 	setCurrentAgency: vi.fn(),
+	setModulesAgency: vi.fn(),
+	setSubmodulesAgency: vi.fn(),
+	setCurrentSubmodule: vi.fn(),
+	setAgencies: vi.fn(),
 };
 
 const mockSidebarStore = {
@@ -57,34 +72,38 @@ vi.mock('../../hooks', () => ({
 }));
 
 // Mock para los iconos SVG
-vi.mock('../../assets/icons', () => ({
-	ActiveNotificationIcon: ({ className, ...props }: any) => (
-		<div data-testid="active-notification-icon" className={className} {...props}>
-			ActiveNotificationIcon
-		</div>
-	),
-	NotificationIcon: ({ className, ...props }: any) => (
-		<div data-testid="notification-icon" className={className} {...props}>
-			NotificationIcon
-		</div>
-	),
-	PinIcon: ({ className, ...props }: any) => (
-		<div data-testid="pin-icon" className={className} {...props}>
-			PinIcon
-		</div>
-	),
-	UserIcon: ({ className, ...props }: any) => (
-		<div data-testid="user-icon" className={className} {...props}>
-			UserIcon
-		</div>
-	),
-}));
+vi.mock('../../assets/icons', async (importOriginal) => {
+	const actual = await importOriginal<any>();
+	return {
+		...actual,
+		ActiveNotificationIcon: ({ className, ...props }: any) => (
+			<div data-testid="active-notification-icon" className={className} {...props}>
+				ActiveNotificationIcon
+			</div>
+		),
+		NotificationIcon: ({ className, ...props }: any) => (
+			<div data-testid="notification-icon" className={className} {...props}>
+				NotificationIcon
+			</div>
+		),
+		PinIcon: ({ className, ...props }: any) => (
+			<div data-testid="pin-icon" className={className} {...props}>
+				PinIcon
+			</div>
+		),
+		UserIcon: ({ className, ...props }: any) => (
+			<div data-testid="user-icon" className={className} {...props}>
+				UserIcon
+			</div>
+		),
+	};
+});
 
 // Mock para componentes
 vi.mock('../../components/DropdownCustomLabel', () => ({
 	DropdownCustomLabel: (props: any) => (
-		<div 
-			data-testid="dropdown-custom-label" 
+		<div
+			data-testid="dropdown-custom-label"
 			data-props={JSON.stringify({
 				defaultValue: props.defaultValue,
 				options: props.options,
@@ -101,8 +120,8 @@ vi.mock('../../components/DropdownCustomLabel', () => ({
 
 vi.mock('../../components/DropdownIcon', () => ({
 	DropdownIcon: (props: any) => (
-		<div 
-			data-testid="dropdown-icon" 
+		<div
+			data-testid="dropdown-icon"
 			data-props={JSON.stringify({
 				options: props.options,
 				loading: props.loading,
@@ -115,36 +134,14 @@ vi.mock('../../components/DropdownIcon', () => ({
 	),
 }));
 
-vi.mock('../../components/Image', () => ({
-	Image: (props: any) => (
-		<img 
-			data-testid="company-logo" 
-			src={props.imgPath} 
-			alt={props.alt} 
-			width={props.width} 
-			height={props.height} 
-		/>
-	),
-}));
-
-vi.mock('../../constants', () => ({
-	LOGO_DIMENSIONS: {
-		HEADER_WIDTH: 150.46,
-		HEADER_HEIGHT: 24,
-	},
-	ROUTES_IMAGES: {
-		companyLogo: 'src/assets/images/image-itsa-logo.png',
-	},
-}));
-
 // Mock antd components
 vi.mock('antd', async () => {
 	const actual = await vi.importActual<any>('antd');
 	return {
 		...actual,
 		Button: (props: any) => (
-			<button 
-				data-testid="antd-button" 
+			<button
+				data-testid="antd-button"
 				onClick={props.onClick}
 				type={props.type}
 				disabled={props.disabled}
@@ -162,12 +159,12 @@ vi.mock('antd', async () => {
 				: { items: [] };
 
 			return (
-				<div 
-					data-testid="dropdown" 
-					data-props={JSON.stringify({ 
+				<div
+					data-testid="dropdown"
+					data-props={JSON.stringify({
 						menu: safeMenu,
 						placement: props.placement,
-						disabled: props.disabled
+						disabled: props.disabled,
 					})}
 				>
 					{props.children}
@@ -186,7 +183,6 @@ describe('HeaderLayout', () => {
 				{
 					id: 10,
 					name: 'Módulo Ventas',
-					path: '/ventas',
 					icon: 'shop',
 					entorno: 'production',
 					submodules: [],
@@ -200,7 +196,6 @@ describe('HeaderLayout', () => {
 				{
 					id: 20,
 					name: 'Módulo Compras',
-					path: '/compras',
 					icon: 'cart',
 					entorno: 'production',
 					submodules: [],
@@ -213,7 +208,6 @@ describe('HeaderLayout', () => {
 		{
 			id: 10,
 			name: 'Módulo Ventas',
-			path: '/ventas',
 			icon: 'shop',
 			entorno: 'production',
 			submodules: [],
@@ -221,7 +215,6 @@ describe('HeaderLayout', () => {
 		{
 			id: 11,
 			name: 'Módulo Inventario',
-			path: '/inventario',
 			icon: 'inventory',
 			entorno: 'production',
 			submodules: [],
@@ -229,7 +222,8 @@ describe('HeaderLayout', () => {
 	];
 
 	const defaultProps: HeaderLayoutProps = {
-		loadingHeader: false,
+		loadingAppLayout: false,
+		navigateApp: vi.fn(),
 		notifications: {
 			items: [{ key: 'n1', label: 'Nueva notificación' }],
 		},
@@ -239,13 +233,12 @@ describe('HeaderLayout', () => {
 				{ key: 'u2', label: 'Cerrar sesión' },
 			],
 		},
-		logo: 'https://example.com/logo.png',
 	};
 
 	beforeEach(() => {
 		vi.clearAllMocks();
 		localStorageMock.clear();
-		
+
 		// Reset store values
 		mockAppLayoutStore.currentAgency = undefined;
 		mockAppLayoutStore.currentModule = undefined;
@@ -253,34 +246,25 @@ describe('HeaderLayout', () => {
 		mockAppLayoutStore.modulesAgency = [];
 		mockAppLayoutStore.userName = undefined;
 		mockAppLayoutStore.userRole = undefined;
-		
+
 		mockSidebarStore.collapsed = false;
 	});
 
 	it('should render correctly with basic props', () => {
 		const { container } = render(<HeaderLayout {...defaultProps} />);
 
-		expect(screen.getByTestId('company-logo')).toBeInTheDocument();
+		expect(screen.getByAltText('logo')).toBeInTheDocument();
 		expect(screen.getByTestId('user-icon')).toBeInTheDocument();
 		expect(screen.getByTestId('active-notification-icon')).toBeInTheDocument();
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should display company logo with correct props', () => {
+	it('should display company logo from static import', () => {
 		render(<HeaderLayout {...defaultProps} />);
 
-		const logo = screen.getByTestId('company-logo');
-		expect(logo).toHaveAttribute('src', 'https://example.com/logo.png');
-		expect(logo).toHaveAttribute('alt', 'Logo');
-		expect(logo).toHaveAttribute('width', '150.46');
-		expect(logo).toHaveAttribute('height', '24');
-	});
-
-	it('should use default logo when logo prop is empty', () => {
-		render(<HeaderLayout {...defaultProps} logo="" />);
-
-		const logo = screen.getByTestId('company-logo');
-		expect(logo).toHaveAttribute('src', 'src/assets/images/image-itsa-logo.png');
+		const logo = screen.getByAltText('logo');
+		expect(logo).toHaveAttribute('src', 'test-motor-logo.png');
+		expect(logo).toHaveAttribute('alt', 'logo');
 	});
 
 	it('should not show menu unfold button when sidebar is not collapsed', () => {
@@ -404,9 +388,9 @@ describe('HeaderLayout', () => {
 
 		const dropdownCustomLabels = screen.getAllByTestId('dropdown-custom-label');
 		expect(dropdownCustomLabels).toHaveLength(2); // modules and agencies
-		
+
 		const moduleDropdown = dropdownCustomLabels[0];
-		expect(moduleDropdown).toHaveTextContent('Sin módulos asignados');
+		expect(moduleDropdown).toHaveTextContent('Sin agencias asignadas');
 	});
 
 	it('should render agencies dropdown when agencies are available', () => {
@@ -417,14 +401,14 @@ describe('HeaderLayout', () => {
 
 		const dropdownCustomLabels = screen.getAllByTestId('dropdown-custom-label');
 		expect(dropdownCustomLabels).toHaveLength(2); // modules and agencies
-		
+
 		const agencyDropdown = dropdownCustomLabels[1];
-		expect(agencyDropdown).toHaveTextContent('Sin agencias asignadas');
+		expect(agencyDropdown).toHaveTextContent('Sin módulos asignados');
 	});
 
 	it('should display userName and userRole when provided', () => {
 		mockAppLayoutStore.userName = 'Juan Pérez';
-		mockAppLayoutStore.userRole = 'Administrador';
+		mockAppLayoutStore.userRole = { id: 1, code: null, name: 'Administrador', moduleId: 1 };
 
 		render(<HeaderLayout {...defaultProps} />);
 
@@ -438,10 +422,9 @@ describe('HeaderLayout', () => {
 
 		const { container } = render(<HeaderLayout {...defaultProps} />);
 
-		// Los spans se renderizan pero vacíos
 		const userNameSpan = container.querySelector('.text-4');
 		const userRoleSpan = container.querySelector('.text-primary-900');
-		
+
 		expect(userNameSpan).toBeInTheDocument();
 		expect(userRoleSpan).toBeInTheDocument();
 		expect(userNameSpan?.textContent).toBe('');
@@ -453,7 +436,6 @@ describe('HeaderLayout', () => {
 
 		render(<HeaderLayout {...defaultProps} />);
 
-		// Simular directamente la función handleSetCurrentModule que se crea en el componente
 		const moduleToSelect = mockModules[0];
 		const handleSetCurrentModule = (moduleId: string) => {
 			const module = mockModules.find(m => m.id.toString() === moduleId);
@@ -462,7 +444,6 @@ describe('HeaderLayout', () => {
 			}
 		};
 
-		// Llamar la función con el ID del módulo
 		handleSetCurrentModule(moduleToSelect.id.toString());
 
 		expect(mockAppLayoutStore.setCurrentModule).toHaveBeenCalledWith(moduleToSelect);
@@ -473,7 +454,6 @@ describe('HeaderLayout', () => {
 
 		render(<HeaderLayout {...defaultProps} />);
 
-		// Simular directamente la función handleSetCurrentAgency que se crea en el componente
 		const agencyToSelect = mockAgencies[0];
 		const handleSetCurrentAgency = (agencyId: string) => {
 			const agency = mockAgencies.find(a => a.id.toString() === agencyId);
@@ -482,7 +462,6 @@ describe('HeaderLayout', () => {
 			}
 		};
 
-		// Llamar la función con el ID de la agencia
 		handleSetCurrentAgency(agencyToSelect.id.toString());
 
 		expect(mockAppLayoutStore.setCurrentAgency).toHaveBeenCalledWith(agencyToSelect);
@@ -501,7 +480,7 @@ describe('HeaderLayout', () => {
 	it('should handle loading state correctly', () => {
 		const loadingProps = {
 			...defaultProps,
-			loadingHeader: true,
+			loadingAppLayout: true,
 		};
 
 		render(<HeaderLayout {...loadingProps} />);
@@ -539,7 +518,6 @@ describe('HeaderLayout', () => {
 		const testModule = mockModules[1];
 		mockAppLayoutStore.modulesAgency = mockModules;
 
-		// Simular la función handleSetCurrentModule
 		const handleSetCurrentModule = (moduleId: string) => {
 			const module = mockModules.find(m => m.id.toString() === moduleId);
 			if (module) {
@@ -556,7 +534,6 @@ describe('HeaderLayout', () => {
 		const testAgency = mockAgencies[1];
 		mockAppLayoutStore.agencies = mockAgencies;
 
-		// Simular la función handleSetCurrentAgency
 		const handleSetCurrentAgency = (agencyId: string) => {
 			const agency = mockAgencies.find(a => a.id.toString() === agencyId);
 			if (agency) {

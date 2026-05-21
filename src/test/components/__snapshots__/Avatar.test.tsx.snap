@@ -3,7 +3,7 @@
 exports[`Avatar component > passes additional props to AntAvatar 1`] = `
 <div>
   <span
-    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-l9pxc0"
+    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-mncuj7"
     style="width: 64px; height: 64px; font-size: 18px;"
   >
     <span
@@ -19,7 +19,7 @@ exports[`Avatar component > passes additional props to AntAvatar 1`] = `
 exports[`Avatar component > renders nothing if name is not provided 1`] = `
 <div>
   <span
-    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-l9pxc0"
+    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-mncuj7"
   >
     <span
       class="ant-avatar-string"
@@ -32,7 +32,7 @@ exports[`Avatar component > renders nothing if name is not provided 1`] = `
 exports[`Avatar component > shows initial for single-word name 1`] = `
 <div>
   <span
-    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-l9pxc0"
+    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-mncuj7"
   >
     <span
       class="ant-avatar-string"
@@ -47,7 +47,7 @@ exports[`Avatar component > shows initial for single-word name 1`] = `
 exports[`Avatar component > shows initials for two-word name 1`] = `
 <div>
   <span
-    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-l9pxc0"
+    class="ant-avatar ant-avatar-circle css-dev-only-do-not-override-mncuj7"
   >
     <span
       class="ant-avatar-string"

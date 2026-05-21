@@ -1,7 +1,26 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { GoogleAutoComplete, getLongName } from '../../components/InputAddress/components/GoogleAutoComplete';
-import React from 'react';
+
+vi.mock('@/assets/icons', () => ({
+	Pin2Icon: () => <span data-testid="pin2-icon" />,
+}));
+
+vi.mock('@/components/Button', () => ({
+	Button: (props: any) => <button type="button" onClick={props.onClick}>{props.label}</button>,
+}));
+
+vi.mock('@/hooks', async () => {
+	const actual = await vi.importActual<any>('@/hooks');
+	return {
+		...actual,
+		useControlActions: vi.fn(() => ({
+			setCurrentPath: vi.fn(),
+			programId: undefined,
+			fnApiValidatePermissionAction: vi.fn().mockResolvedValue(true),
+		})),
+	};
+});
 
 // Mock del Loader de Google Maps
 vi.mock('@googlemaps/js-api-loader', () => ({
@@ -73,17 +92,18 @@ describe('GoogleAutoComplete component', () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
+		mockProps.watch.mockReturnValue({ address: { principalStreet: 'Test Street' } });
 	});
 
 	afterEach(() => {
-		vi.resetAllMocks();
+		vi.clearAllMocks();
 	});
 
 	it('renders the component with input field', async () => {
-		render(<GoogleAutoComplete {...mockProps} />);
-		
+		const { container } = render(<GoogleAutoComplete {...mockProps} />);
+
 		await waitFor(() => {
-			expect(screen.getByTestId('google-autocomplete-input')).toBeInTheDocument();
+			expect(container.querySelector('input[name="address"]')).toBeInTheDocument();
 		});
 	});
 
@@ -91,26 +111,25 @@ describe('GoogleAutoComplete component', () => {
 		const propsWithError = {
 			...mockProps,
 			error: 'Address is required',
-			watch: vi.fn().mockReturnValue({ address: null }),
+			watch: vi.fn().mockReturnValue({ address: undefined }),
 		};
 
 		render(<GoogleAutoComplete {...propsWithError} />);
-		
+
 		expect(screen.getByText('Address is required')).toBeInTheDocument();
 	});
 
 	it('displays the "No puede encontrar la dirección?" text', () => {
 		render(<GoogleAutoComplete {...mockProps} />);
-		
-		expect(screen.getByText('¿No puede encontrar la dirección?')).toBeInTheDocument();
+
+		expect(screen.getByText('¿No se puede encontrar la dirección?')).toBeInTheDocument();
 	});
 
 	it('calls setShowManualEntry when clicking on manual entry option', () => {
 		render(<GoogleAutoComplete {...mockProps} />);
-		
-		// El texto clickeable no tiene contenido visible, pero podemos verificar que el div existe
-		const manualEntryDiv = screen.getByText('¿No puede encontrar la dirección?').parentElement?.nextElementSibling;
-		expect(manualEntryDiv).toBeInTheDocument();
+
+		const manualEntrySpan = screen.getByText('¿No se puede encontrar la dirección?');
+		expect(manualEntrySpan).toBeInTheDocument();
 	});
 
 	it('calls setValue with isManualAddress false on mount', async () => {

@@ -3,7 +3,7 @@
 exports[`ButtonDanger component > renders children content 1`] = `
 <div>
   <button
-    class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-text ant-btn-color-default ant-btn-variant-text bg-red-50 border-red-500 text-red-500 hover:bg-red-100 hover:border-red-200"
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-text ant-btn-color-default ant-btn-variant-text bg-red-50 border-red-500 text-red-500 hover:bg-red-100 hover:border-red-200"
     type="button"
   >
     <span>

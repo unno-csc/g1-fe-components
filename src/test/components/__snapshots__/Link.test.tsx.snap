@@ -3,7 +3,7 @@
 exports[`Link component > renders anchor with href and children 1`] = `
 <div>
   <a
-    class="ant-typography css-dev-only-do-not-override-l9pxc0"
+    class="ant-typography css-dev-only-do-not-override-mncuj7"
     href="https://example.com"
   >
     Ir

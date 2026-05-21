@@ -12,18 +12,18 @@ exports[`ItemList component > renders title, description and time 1`] = `
         class="flex flex-row items-center justify-between"
       >
         <span
-          class="ant-typography text-gray-900 text-sm font-medium truncate css-dev-only-do-not-override-l9pxc0"
+          class="ant-typography text-gray-900 text-sm font-medium truncate css-dev-only-do-not-override-mncuj7"
         >
           Title
         </span>
         <span
-          class="ant-typography text-gray-400 text-xs css-dev-only-do-not-override-l9pxc0"
+          class="ant-typography text-gray-400 text-xs css-dev-only-do-not-override-mncuj7"
         >
           10:00
         </span>
       </div>
       <span
-        class="ant-typography text-gray-400 text-xs truncate css-dev-only-do-not-override-l9pxc0"
+        class="ant-typography text-gray-400 text-xs truncate css-dev-only-do-not-override-mncuj7"
       >
         Description
       </span>

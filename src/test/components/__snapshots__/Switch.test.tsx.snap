@@ -2,25 +2,30 @@
 
 exports[`Switch component > renders correctly and toggles 1`] = `
 <div>
-  <button
-    aria-checked="true"
-    class="ant-switch css-dev-only-do-not-override-l9pxc0 ant-switch-checked"
-    role="switch"
-    type="button"
+  <span
+    class="itsa-switch-custom"
+    style="--switch-active-bg: #F9A825;"
   >
-    <div
-      class="ant-switch-handle"
-    />
-    <span
-      class="ant-switch-inner"
+    <button
+      aria-checked="true"
+      class="ant-switch css-dev-only-do-not-override-mncuj7 ant-switch-checked"
+      role="switch"
+      type="button"
     >
-      <span
-        class="ant-switch-inner-checked"
+      <div
+        class="ant-switch-handle"
       />
       <span
-        class="ant-switch-inner-unchecked"
-      />
-    </span>
-  </button>
+        class="ant-switch-inner"
+      >
+        <span
+          class="ant-switch-inner-checked"
+        />
+        <span
+          class="ant-switch-inner-unchecked"
+        />
+      </span>
+    </button>
+  </span>
 </div>
 `;

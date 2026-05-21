@@ -3,7 +3,7 @@
 exports[`ButtonAntd component > passes props to Ant Button 1`] = `
 <div>
   <button
-    class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
     disabled=""
     type="button"
   >
@@ -17,7 +17,7 @@ exports[`ButtonAntd component > passes props to Ant Button 1`] = `
 exports[`ButtonAntd component > renders children content 1`] = `
 <div>
   <button
-    class="ant-btn css-dev-only-do-not-override-l9pxc0 ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
     type="button"
   >
     <span>

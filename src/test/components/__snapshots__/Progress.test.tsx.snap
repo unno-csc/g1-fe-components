@@ -6,7 +6,7 @@ exports[`Progress component > renders with custom stroke color 1`] = `
     aria-valuemax="100"
     aria-valuemin="0"
     aria-valuenow="75"
-    class="ant-progress ant-progress-status-normal ant-progress-line ant-progress-line-align-end ant-progress-line-position-outer ant-progress-show-info ant-progress-default css-dev-only-do-not-override-l9pxc0"
+    class="ant-progress ant-progress-status-normal ant-progress-line ant-progress-line-align-end ant-progress-line-position-outer ant-progress-show-info ant-progress-default motor1-progress css-dev-only-do-not-override-mncuj7"
     role="progressbar"
   >
     <div
@@ -38,7 +38,7 @@ exports[`Progress component > renders with default props 1`] = `
     aria-valuemax="100"
     aria-valuemin="0"
     aria-valuenow="50"
-    class="ant-progress ant-progress-status-normal ant-progress-line ant-progress-line-align-end ant-progress-line-position-outer ant-progress-show-info ant-progress-default css-dev-only-do-not-override-l9pxc0"
+    class="ant-progress ant-progress-status-normal ant-progress-line ant-progress-line-align-end ant-progress-line-position-outer ant-progress-show-info ant-progress-default motor1-progress css-dev-only-do-not-override-mncuj7"
     role="progressbar"
   >
     <div
