@@ -1,14 +1,14 @@
 {
-	"name": "@bbustamanteunno/g1-fe-components",
+	"name": "@unno-csc/g1-fe-components",
 	"private": false,
-	"version": "0.0.72",
+	"version": "0.0.74",
 	"type": "module",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"import": "./dist/itsa-fe-components.es.js",
-			"require": "./dist/itsa-fe-components.cjs.js",
-			"default": "./dist/itsa-fe-components.es.js"
+			"import": "./dist/g1-fe-components.es.js",
+			"require": "./dist/g1-fe-components.cjs.js",
+			"default": "./dist/g1-fe-components.es.js"
 		},
 		"./styles.css": {
 			"require": "./dist/styles.css",
@@ -138,19 +138,19 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/ITSA-Develop/itsa-fe-components.git"
+		"url": "git+https://github.com/unno-csc/g1-fe-components.git"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com/"
 	},
 	"description": "Deploy Vercel",
-	"main": "./dist/itsa-fe-components.cjs.js",
-	"module": "./dist/itsa-fe-components.es.js",
+	"main": "./dist/g1-fe-components.cjs.js",
+	"module": "./dist/g1-fe-components.es.js",
 	"types": "./dist/index.d.ts",
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/ITSA-Develop/itsa-fe-components/issues"
+		"url": "https://github.com/unno-csc/g1-fe-components/issues"
 	},
-	"homepage": "https://github.com/ITSA-Develop/itsa-fe-components#readme"
+	"homepage": "https://github.com/unno-csc/g1-fe-components#readme"
 }
