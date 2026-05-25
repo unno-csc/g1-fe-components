@@ -26,8 +26,8 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: './src/index.ts',
-			name: 'itsa-fe-components',
-			fileName: format => `itsa-fe-components.${format}.js`,
+			name: 'g1-fe-components',
+			fileName: format => `g1-fe-components.${format}.js`,
 			formats: ['es', 'cjs', 'umd'],
 		},
 		rollupOptions: {

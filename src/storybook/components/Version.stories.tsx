@@ -37,7 +37,7 @@ export const Inicio: Story = {
 					const data = (mod as any).default ?? (mod as any);
 					setInfo(data as PackageJson);
 				} catch {
-					setInfo({ name: '@itsa-develop/itsa-fe-components', version: 'desconocida' });
+					setInfo({ name: '@unno-csc/g1-fe-components', version: 'desconocida' });
 				}
 			})();
 		}, []);
@@ -51,7 +51,7 @@ export const Inicio: Story = {
 					<div>
 						<Title title={`Versión: ${info?.version ?? 'Cargando…'}`} level={4} />
 						<Title title={'Instalación:'} type='secondary' level={4} />
-						<Title title={'yarn add @itsa-develop/itsa-fe-components@latest'} level={4} />
+						<Title title={'yarn add @unno-csc/g1-fe-components@latest'} level={4} />
 					</div>
 					
 				</div>

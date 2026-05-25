@@ -1,4 +1,4 @@
-# @itsa-develop/itsa-fe-components
+# @unno-csc/g1-fe-components
 
 Deploy Vercel
 
@@ -46,7 +46,7 @@ Para instalar este paquete, puedes usar yarn:
 ### Instalación de la version publica
 
 ```bash
-yarn add @ITSA-Nucleo/itsa-fe-components
+yarn add @unno-csc/g1-fe-components
 ```
 
 ### Instalación de la version local
@@ -61,11 +61,11 @@ esto creara un tgz con el nombre y la version del paquete segun este en el packa
 
 paquete generado:
 
-`itsa-develop-itsa-fe-components-v0.0.6.tgz`
+`unno-csc-g1-fe-components-v0.0.72.tgz`
 
 Luego de actualizar algo , localmente hablando, mas en el paquete debemos actualizar el nombre a:
 
-`itsa-develop-itsa-fe-components-v0.0.6-a.tgz` para que la version local se sobreescriba.
+`unno-csc-g1-fe-components-v0.0.72-a.tgz` para que la version local se sobreescriba.
 
 ## Scripts
 
@@ -137,7 +137,7 @@ Construye el paquete en modo producción sin mapas de origen (--no-sourcemap) y 
 Para importar y utilizar los componentes en tu aplicación:
 
 ```bash
-import { MyComponent } from '@itsa-develop/itsa-fe-components';
+import { MyComponent } from '@unno-csc/g1-fe-components';
 ```
 
 ```bash
