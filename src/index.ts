@@ -40,6 +40,7 @@ export { FormLayout } from './components/FormLayout/FormLayout';
 export { FormInput } from './components/FormInput';
 export { FormInputNumber } from './components/FormInputNumber';
 export { FormSelect } from './components/FormSelect';
+export { FormSelectMultiple } from './components/FormSelectMultiple';
 export { FormCheckBox } from './components/FormCheckBox';
 export { FormRadio } from './components/FormRadio';
 export { FormInputPassword } from './components/FormInputPassword';
