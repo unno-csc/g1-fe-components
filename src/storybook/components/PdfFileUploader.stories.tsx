@@ -141,3 +141,41 @@ export const ShowErrorOnSubmit: Story = {
 		</RHFForm>
 	),
 };
+
+export const WithExistingFile: Story = {
+	name: 'Modo edicion — archivo existente',
+	args: {
+		name: 'files',
+		label: 'Contrato firmado',
+		existingFileName: 'contrato_2024_firmado.pdf',
+		existingFileUrl: 'https://example.com/contrato_2024_firmado.pdf',
+		onExistingFileClick: () => {
+			// eslint-disable-next-line no-console
+			console.log('Abrir archivo en nueva pestaña');
+		},
+	},
+	render: args => (
+		<RHFForm>
+			<BoundPdfFileUploader {...args} />
+			<Text type="secondary" style={{ fontSize: 12 }}>
+				Haz clic en el nombre del archivo para abrirlo, o en &quot;Cambiar&quot; para reemplazarlo.
+			</Text>
+		</RHFForm>
+	),
+};
+
+export const WithExistingFileDisabled: Story = {
+	name: 'Modo edicion — archivo existente deshabilitado',
+	args: {
+		name: 'files',
+		label: 'Contrato firmado',
+		existingFileName: 'contrato_2024_firmado.pdf',
+		existingFileUrl: 'https://example.com/contrato_2024_firmado.pdf',
+		disabled: true,
+	},
+	render: args => (
+		<RHFForm>
+			<BoundPdfFileUploader {...args} />
+		</RHFForm>
+	),
+};

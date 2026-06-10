@@ -2189,6 +2189,10 @@
   text-decoration-line: line-through;
 }
 
+.underline-offset-2{
+  text-underline-offset: 2px;
+}
+
 .opacity-0{
   opacity: 0;
 }
@@ -2631,7 +2635,7 @@ body,
 /* Botones genéricos ITSA */
 
 .tabs-maintenance {
-  --ant-colorPrimary: var(--motor1-primary);
+  --ant-colorPrimary: #F9A825;
 }
 
 /* Color de la línea activa (ink bar) */
@@ -2652,67 +2656,6 @@ body,
 
 .tabs-maintenance .ant-tabs-tab:hover .ant-tabs-tab-btn {
   color: #111111 !important;
-}
-
-/* Tabs motor1 */
-
-.motor1-tabs {
-  --ant-colorPrimary: var(--motor1-primary);
-}
-
-.motor1-tabs .ant-tabs-ink-bar {
-  background-color: var(--ant-colorPrimary) !important;
-  height: 3px !important;
-}
-
-.motor1-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #111111 !important;
-  font-weight: 600 !important;
-}
-
-.motor1-tabs .ant-tabs-tab:hover .ant-tabs-tab-btn {
-  color: #111111 !important;
-}
-
-/* Radio motor1 */
-
-.motor1-radio .ant-radio-checked .ant-radio-inner {
-  border-color: var(--motor1-primary) !important;
-}
-
-.motor1-radio .ant-radio-checked .ant-radio-inner::after {
-  background-color: var(--motor1-primary) !important;
-}
-
-.motor1-radio .ant-radio-wrapper-checked .ant-radio .ant-radio-inner::after {
-  background-color: var(--motor1-primary) !important;
-}
-
-.motor1-radio .ant-radio-checked .ant-radio-inner,
-.motor1-radio .ant-radio-wrapper-checked .ant-radio .ant-radio-inner {
-  background-color: #ffffff !important;
-}
-
-.motor1-radio .ant-radio-checked::after {
-  border-color: var(--motor1-primary) !important;
-}
-
-.motor1-radio .ant-radio-wrapper:hover .ant-radio-checked::after {
-  border-color: var(--motor1-primary) !important;
-}
-
-.motor1-radio .ant-radio-input:focus + .ant-radio-inner {
-  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.24) !important;
-}
-
-/* Progress motor1 */
-
-.motor1-progress .ant-progress-bg {
-  background-color: var(--motor1-primary) !important;
-}
-
-.motor1-progress.ant-progress-status-active .ant-progress-bg::before {
-  background-color: var(--motor1-primary) !important;
 }
 
 /* ===== ITSA Table customizations (included in package build) ===== */

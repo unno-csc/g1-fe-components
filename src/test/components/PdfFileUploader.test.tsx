@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { PdfFileUploader } from '../../components/PdfFileUploader';
 
@@ -74,5 +74,91 @@ describe('PdfFileUploader component', () => {
 		});
 
 		expect(screen.queryByText('nota.txt')).not.toBeInTheDocument();
+	});
+});
+
+describe('PdfFileUploader — modo edicion', () => {
+	function EditHarness({
+		existingFileName,
+		existingFileUrl,
+		onExistingFileClick,
+		disabled,
+	}: {
+		existingFileName?: string;
+		existingFileUrl?: string;
+		onExistingFileClick?: () => void;
+		disabled?: boolean;
+	}) {
+		const methods = useForm<FormValues>({
+			defaultValues: { files: [] },
+		});
+
+		return (
+			<FormProvider {...methods}>
+				<PdfFileUploader<FormValues>
+					name="files"
+					label="Archivos PDF"
+					control={methods.control}
+					existingFileName={existingFileName}
+					existingFileUrl={existingFileUrl}
+					onExistingFileClick={onExistingFileClick}
+					disabled={disabled}
+				/>
+			</FormProvider>
+		);
+	}
+
+	it('muestra el nombre del archivo existente cuando se pasa existingFileName', () => {
+		render(<EditHarness existingFileName="contrato.pdf" />);
+
+		expect(screen.getByText('contrato.pdf')).toBeInTheDocument();
+		expect(screen.queryByText(/Haz clic/i)).not.toBeInTheDocument();
+	});
+
+	it('muestra el boton Cambiar cuando hay archivo existente y no esta deshabilitado', () => {
+		render(<EditHarness existingFileName="contrato.pdf" />);
+
+		expect(screen.getByRole('button', { name: 'Cambiar' })).toBeInTheDocument();
+	});
+
+	it('al hacer clic en Cambiar muestra el uploader', async () => {
+		const user = userEvent.setup();
+		render(<EditHarness existingFileName="contrato.pdf" />);
+
+		await user.click(screen.getByRole('button', { name: 'Cambiar' }));
+
+		expect(screen.getByText(/Haz clic/i)).toBeInTheDocument();
+		expect(screen.queryByText('contrato.pdf')).not.toBeInTheDocument();
+	});
+
+	it('llama a onExistingFileClick al hacer clic en el nombre del archivo', async () => {
+		const user = userEvent.setup();
+		const onExistingFileClick = vi.fn();
+		render(
+			<EditHarness existingFileName="contrato.pdf" onExistingFileClick={onExistingFileClick} />,
+		);
+
+		await user.click(screen.getByText('contrato.pdf'));
+
+		expect(onExistingFileClick).toHaveBeenCalledTimes(1);
+	});
+
+	it('no muestra el boton Cambiar cuando esta deshabilitado', () => {
+		render(<EditHarness existingFileName="contrato.pdf" disabled />);
+
+		expect(screen.queryByRole('button', { name: 'Cambiar' })).not.toBeInTheDocument();
+	});
+
+	it('muestra el uploader normal cuando no se pasan props de archivo existente', () => {
+		render(<EditHarness />);
+
+		expect(screen.getByText(/Haz clic/i)).toBeInTheDocument();
+		expect(screen.queryByRole('button', { name: 'Cambiar' })).not.toBeInTheDocument();
+	});
+
+	it('muestra texto por defecto cuando hay existingFileUrl pero no existingFileName', () => {
+		render(<EditHarness existingFileUrl="https://example.com/file.pdf" />);
+
+		expect(screen.getByText('Archivo cargado')).toBeInTheDocument();
 	});
 });
