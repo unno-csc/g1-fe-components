@@ -65,7 +65,6 @@ export const ConCabecera: Story = {
 					.columns({ xs: 1, md: 2 })
 					.field('itemCode', 'Código')
 					.field('brandName', 'Marca')
-					.badge('isActive', 'Estado')
 					.field('itemDescription', 'Descripción', { span: 2 }),
 			)
 			.section('Clasificaciones', s =>
@@ -118,7 +117,6 @@ export const SinCabecera: Story = {
 					.columns({ xs: 1, md: 2 })
 					.field('itemCode', 'Código')
 					.field('brandName', 'Marca')
-					.badge('isActive', 'Estado')
 					.field('itemDescription', 'Descripción', { span: 2 }),
 			)
 			.section('Especificaciones Técnicas', s =>
@@ -154,7 +152,6 @@ export const Inactivo: Story = {
 					.columns({ xs: 1, md: 2 })
 					.field('itemCode', 'Código')
 					.field('brandName', 'Marca')
-					.badge('isActive', 'Estado')
 					.field('itemDescription', 'Descripción', { span: 2 }),
 			)
 			.build(),

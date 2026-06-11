@@ -72,8 +72,9 @@ export const DetailSection = <TData extends object = object>({ section, data }: 
 	const gridClass = `grid ${getGridColumns(columns, section.fullWidth)}`;
 
 	const sectionHeader = (
-		<div className="flex items-center justify-between mb-1 ml-1">
-			<h3 className="text-xs font-bold uppercase tracking-widest text-amber-500 my-3">{section.title}</h3>
+		<div className="flex items-center gap-2 px-2 py-3">
+			<span className="inline-block h-5 w-1.5 rounded-full bg-amber-400" />
+			<h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-700 my-3">{section.title}</h3>
 			{section.extra && <div>{section.extra}</div>}
 		</div>
 	);
@@ -126,9 +127,7 @@ export const DetailSection = <TData extends object = object>({ section, data }: 
 						key={`${field.key}-${index}`}
 						className={classNames('flex items-baseline gap-2 py-2 border-b border-zinc-100 mx-5', spanClass)}
 					>
-						{field.label && (
-							<span className="min-w-[80px] shrink-0 text-xs text-zinc-400">{field.label}</span>
-						)}
+						{field.label && <span className="min-w-[80px] shrink-0 text-xs text-zinc-400">{field.label}</span>}
 						<span className="text-sm font-semibold text-zinc-800 break-words min-w-0 flex-1">
 							<RendererComponent value={value} data={data as Record<string, unknown>} config={field as FieldConfig} />
 						</span>
