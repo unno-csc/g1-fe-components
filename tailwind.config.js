@@ -1,9 +1,13 @@
+import colors from 'tailwindcss/colors';
+
 /** @type {import('tailwindcss').Config} */
 
 export default {
 	content: ['./src/**/*.{ts,tsx}', './.storybook/**/*.{js,ts,jsx,tsx,mdx}'],
 	theme: {
 		colors: {
+			amber: colors.amber,
+			zinc: colors.zinc,
 			'primary-50': '#FCEEEE',
 			'primary-100': '#F8DADA',
 			'primary-200': '#F0B5B5',

@@ -173,13 +173,18 @@ export class SchemaBuilder<TData = Record<string, unknown>> {
 		};
 	}
 
-	title(title: string): this {
-		this.schema.title = title;
+	title(keyOrTitle: keyof TData & string | string): this {
+		this.schema.title = keyOrTitle;
 		return this;
 	}
 
-	description(description: string): this {
-		this.schema.description = description;
+	description(keyOrDescription: keyof TData & string | string): this {
+		this.schema.description = keyOrDescription;
+		return this;
+	}
+
+	statusBadge(key: keyof TData & string, labels?: { true: string; false: string }): this {
+		this.schema.statusBadge = { key, labels };
 		return this;
 	}
 

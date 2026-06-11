@@ -100,6 +100,10 @@ export interface DetailSchema<TData = Record<string, unknown>> {
 		createdAt?: string;
 		[key: string]: unknown;
 	};
+	statusBadge?: {
+		key: keyof TData & string;
+		labels?: { true: string; false: string };
+	};
 }
 
 export interface DetailViewProps<TData = Record<string, unknown>> {
