@@ -1,5 +1,5 @@
 import { Empty } from 'antd';
-import { useMemo } from 'react';
+import { useMemo, ReactNode } from 'react';
 import { DetailViewProps, FieldConfig } from './schema/types';
 import { DetailSection } from './DetailSection';
 import { getNestedValue } from '@/helpers/objects';
@@ -60,14 +60,14 @@ export const DetailView = <T extends object = object>({
 		.filter(Boolean)
 		.join(' ');
 
-	let displayTitle = schema.title;
-	if (schema.title && data) {
+	let displayTitle: ReactNode = typeof schema.title === 'function' ? schema.title(data) : schema.title;
+	if (typeof schema.title === 'string' && data) {
 		const val = getNestedValue(data, schema.title);
 		if (val !== undefined && val !== null) displayTitle = String(val);
 	}
 
-	let displayDesc = schema.description;
-	if (schema.description && data) {
+	let displayDesc: ReactNode = typeof schema.description === 'function' ? schema.description(data) : schema.description;
+	if (typeof schema.description === 'string' && data) {
 		const val = getNestedValue(data, schema.description);
 		if (val !== undefined && val !== null) displayDesc = String(val);
 	}
@@ -76,7 +76,9 @@ export const DetailView = <T extends object = object>({
 
 	let statusSlot = null;
 	if (schema.statusBadge && data) {
-		const value = getNestedValue(data, schema.statusBadge.key);
+		const value = schema.statusBadge.getValue 
+			? schema.statusBadge.getValue(data) 
+			: (schema.statusBadge.key ? getNestedValue(data, schema.statusBadge.key) : null);
 		statusSlot = (
 			<BadgeRenderer
 				value={value}

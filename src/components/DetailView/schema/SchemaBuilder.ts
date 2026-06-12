@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
 	ColumnConfig,
 	DetailSchema,
@@ -173,18 +174,25 @@ export class SchemaBuilder<TData = Record<string, unknown>> {
 		};
 	}
 
-	title(keyOrTitle: keyof TData & string | string): this {
-		this.schema.title = keyOrTitle;
+	title(resolver: string | ((data: TData) => ReactNode)): this {
+		this.schema.title = resolver;
 		return this;
 	}
 
-	description(keyOrDescription: keyof TData & string | string): this {
-		this.schema.description = keyOrDescription;
+	description(resolver: string | ((data: TData) => ReactNode)): this {
+		this.schema.description = resolver;
 		return this;
 	}
 
-	statusBadge(key: keyof TData & string, labels?: { true: string; false: string }): this {
-		this.schema.statusBadge = { key, labels };
+	statusBadge(
+		keyOrResolver: (keyof TData & string) | string | ((data: TData) => unknown),
+		labels?: { true: string; false: string }
+	): this {
+		if (typeof keyOrResolver === 'function') {
+			this.schema.statusBadge = { getValue: keyOrResolver as (data: TData) => unknown, labels };
+		} else {
+			this.schema.statusBadge = { key: keyOrResolver, labels };
+		}
 		return this;
 	}
 
