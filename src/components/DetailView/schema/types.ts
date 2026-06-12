@@ -91,8 +91,8 @@ export interface SectionConfig<TData = Record<string, unknown>> {
 export interface DetailSchema<TData = Record<string, unknown>> {
 	sections: SectionConfig<TData>[];
 	defaultColumns?: ColumnConfig;
-	title?: string;
-	description?: string;
+	title?: string | ((data: TData) => ReactNode);
+	description?: string | ((data: TData) => ReactNode);
 	className?: string;
 	metadata?: {
 		version?: string;
@@ -101,7 +101,8 @@ export interface DetailSchema<TData = Record<string, unknown>> {
 		[key: string]: unknown;
 	};
 	statusBadge?: {
-		key: keyof TData & string;
+		key?: string;
+		getValue?: (data: TData) => unknown;
 		labels?: { true: string; false: string };
 	};
 }
