@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
 	ColumnConfig,
 	DetailSchema,
@@ -173,12 +174,12 @@ export class SchemaBuilder<TData = Record<string, unknown>> {
 		};
 	}
 
-	title(resolver: string | ((data: TData) => React.ReactNode)): this {
+	title(resolver: string | ((data: TData) => ReactNode)): this {
 		this.schema.title = resolver;
 		return this;
 	}
 
-	description(resolver: string | ((data: TData) => React.ReactNode)): this {
+	description(resolver: string | ((data: TData) => ReactNode)): this {
 		this.schema.description = resolver;
 		return this;
 	}
