@@ -6,6 +6,9 @@ import { TStrictTableColumnsType } from '@/types';
 
 const { Text } = Typography;
 
+const fallbackKeyMap = new WeakMap<object, string>();
+let fallbackKeyCounter = 0;
+
 interface TableRendererProps {
 	value: unknown;
 	data: Record<string, unknown>;
@@ -68,9 +71,17 @@ export const TableRenderer = ({ value, config }: TableRendererProps) => {
 		},
 	}));
 
-	const getRowKey = rowKey || ((record: Record<string, unknown>, index?: number) => 
-		(record.id as string) || (record.key as string) || String(index)
-	);
+	const getRowKey = rowKey || ((record: Record<string, unknown>) => {
+		if (record.id !== undefined && record.id !== null) return String(record.id);
+		if (record.key !== undefined && record.key !== null) return String(record.key);
+		
+		let key = fallbackKeyMap.get(record);
+		if (!key) {
+			key = `fallback_row_${++fallbackKeyCounter}`;
+			fallbackKeyMap.set(record, key);
+		}
+		return key;
+	});
 
 	return (
 		<div className="w-full">
@@ -83,7 +94,7 @@ export const TableRenderer = ({ value, config }: TableRendererProps) => {
 				bordered={bordered}
 				showPagination={false}
 				showColumnActions={false}
-				scroll={{ y: "calc(100dvh - 320px)" }}
+				scroll={{ y: "calc(100dvh - 320px)", x: "max-content" }}
 				className="detail-view-embedded-table"
 			/>
 		</div>
