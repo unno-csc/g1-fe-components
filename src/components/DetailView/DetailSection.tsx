@@ -120,15 +120,30 @@ export const DetailSection = <TData extends object = object>({ section, data }: 
 						RendererComponent = TextRenderer;
 				}
 
+				const isBlockField = fieldType === 'table' || fieldType === 'gallery' || fieldType === 'array' || field.layout === 'vertical';
+				const flexClass = isBlockField 
+					? 'flex flex-col lg:flex-row lg:items-start' 
+					: 'flex items-baseline';
+
 				const spanClass = field.span && field.span > 1 && !section.fullWidth ? (spanMap[field.span] ?? '') : '';
 
 				return (
 					<div
 						key={`${field.key}-${index}`}
-						className={classNames('flex items-baseline gap-2 py-2 border-b border-zinc-100 mx-5', spanClass)}
+						className={classNames('gap-2 py-2 border-b border-zinc-100 mx-5', flexClass, spanClass)}
 					>
-						{field.label && <span className="min-w-[80px] shrink-0 text-xs text-zinc-400">{field.label}</span>}
-						<span className="text-sm font-semibold text-zinc-800 break-words min-w-0 flex-1">
+						{field.label && (
+							<span className={classNames(
+								"min-w-[80px] shrink-0 text-xs text-zinc-400",
+								isBlockField ? "mb-1 lg:mb-0 lg:mt-1.5 lg:w-1/4 xl:w-1/5" : ""
+							)}>
+								{field.label}
+							</span>
+						)}
+						<span className={classNames(
+							"text-sm font-semibold text-zinc-800 break-words min-w-0",
+							isBlockField ? "w-full lg:flex-1" : "flex-1"
+						)}>
 							<RendererComponent value={value} data={data as Record<string, unknown>} config={field as FieldConfig} />
 						</span>
 					</div>

@@ -71,6 +71,7 @@ export interface FieldConfig<TData = Record<string, unknown>> {
 	showTooltip?: boolean;
 	hideIfEmpty?: boolean;
 	condition?: (fullData: TData) => boolean;
+	layout?: 'vertical' | 'horizontal';
 }
 
 export interface SectionConfig<TData = Record<string, unknown>> {
