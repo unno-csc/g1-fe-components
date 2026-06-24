@@ -13,3 +13,4 @@ export { useControlActions } from './useControlActions/useControlActions';
 export { useGeolocation } from './useGeolocation';
 export { useAppLayoutFooter } from '../HOC/AppLayoutFooterContext';
 export { useDestructureRoutes } from './useDestructureRoutes/useDestructureRoutes';
+export { useImageUploadManager } from './useImageUploadManager';

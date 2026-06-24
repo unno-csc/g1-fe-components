@@ -1,0 +1,351 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ImageGallerySection component > renders empty state when no images are provided 1`] = `
+<div>
+  <div
+    class="bg-gray-250 p-4 rounded-md flex flex-col gap-4"
+  >
+    <div
+      class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <h4
+        class="ant-typography css-dev-only-do-not-override-mncuj7"
+        style="margin-bottom: 0px;"
+      >
+        Galería de Imágenes
+      </h4>
+      <div
+        class="flex items-center justify-between gap-2 sm:justify-end"
+      >
+        <span
+          class="text-xs text-gray-500"
+        >
+          0
+          /
+          10
+           imágenes
+        </span>
+        <button
+          class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined itsa-btn itsa-btn--md itsa-btn--secondary"
+          type="button"
+        >
+          <span
+            class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            <div
+              class="flex items-center gap-2"
+            >
+              <span
+                aria-label="plus"
+                class="anticon anticon-plus"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="plus"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                  />
+                  <path
+                    d="M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z"
+                  />
+                </svg>
+              </span>
+              Subir imagen
+            </div>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="rounded-md border border-dashed border-gray-300 bg-white px-4 py-6 text-center text-sm text-gray-500"
+    >
+      No hay imágenes cargadas todavía.
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ImageGallerySection component > renders images correctly 1`] = `
+<div>
+  <div
+    class="bg-gray-250 p-4 rounded-md flex flex-col gap-4"
+  >
+    <div
+      class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <h4
+        class="ant-typography css-dev-only-do-not-override-mncuj7"
+        style="margin-bottom: 0px;"
+      >
+        Galería de Imágenes
+      </h4>
+      <div
+        class="flex items-center justify-between gap-2 sm:justify-end"
+      >
+        <span
+          class="text-xs text-gray-500"
+        >
+          2
+          /
+          5
+           imágenes
+        </span>
+        <button
+          class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined itsa-btn itsa-btn--md itsa-btn--secondary"
+          type="button"
+        >
+          <span
+            class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            <div
+              class="flex items-center gap-2"
+            >
+              <span
+                aria-label="plus"
+                class="anticon anticon-plus"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="plus"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                  />
+                  <path
+                    d="M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z"
+                  />
+                </svg>
+              </span>
+              Subir imagen
+            </div>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="max-h-96 overflow-y-auto rounded-lg border border-gray-100 p-2"
+    >
+      <div
+        class="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-3 place-items-center"
+      >
+        <div
+          class="group relative w-full max-w-[220px] overflow-hidden rounded-md bg-gray-50 shadow-sm"
+        >
+          <div
+            class="relative w-full overflow-hidden rounded-md"
+            style="height: 124px;"
+          >
+            <img
+              alt="Imagen 1"
+              decoding="sync"
+              fetchpriority="high"
+              loading="eager"
+              placeholder="[object Object]"
+              preview="[object Object]"
+              src="test1.jpg"
+              style="width: 220px; height: 124px; object-fit: cover;"
+            />
+          </div>
+          <div
+            class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-0 bg-black/60 px-2 py-1 text-[10px] text-white transition-transform duration-150 sm:translate-y-full sm:group-hover:translate-y-0"
+          >
+            <span
+              class="block truncate"
+            >
+              Image 1
+            </span>
+          </div>
+          <button
+            aria-label="Quitar imagen 1"
+            class="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white/90 text-gray-500 opacity-100 shadow-sm transition-opacity hover:bg-white hover:text-red-500 sm:opacity-0 sm:group-hover:opacity-100"
+            type="button"
+          >
+            <span
+              aria-label="delete"
+              class="anticon anticon-delete"
+              role="img"
+              style="font-size: 11px;"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="delete"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div
+          class="group relative w-full max-w-[220px] overflow-hidden rounded-md bg-gray-50 shadow-sm"
+        >
+          <div
+            class="relative w-full overflow-hidden rounded-md"
+            style="height: 124px;"
+          >
+            <img
+              alt="Imagen 2"
+              decoding="async"
+              fetchpriority="low"
+              loading="lazy"
+              placeholder="[object Object]"
+              preview="[object Object]"
+              src="test2.jpg"
+              style="width: 220px; height: 124px; object-fit: cover;"
+            />
+          </div>
+          <div
+            class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-0 bg-black/60 px-2 py-1 text-[10px] text-white transition-transform duration-150 sm:translate-y-full sm:group-hover:translate-y-0"
+          >
+            <span
+              class="block truncate"
+            >
+              Image 2
+            </span>
+          </div>
+          <button
+            aria-label="Quitar imagen 2"
+            class="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white/90 text-gray-500 opacity-100 shadow-sm transition-opacity hover:bg-white hover:text-red-500 sm:opacity-0 sm:group-hover:opacity-100"
+            type="button"
+          >
+            <span
+              aria-label="delete"
+              class="anticon anticon-delete"
+              role="img"
+              style="font-size: 11px;"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="delete"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ImageGallerySection component > renders skeletons when isLoadingImages is true 1`] = `
+<div>
+  <div
+    class="bg-gray-250 p-4 rounded-md flex flex-col gap-4"
+  >
+    <div
+      class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <h4
+        class="ant-typography css-dev-only-do-not-override-mncuj7"
+        style="margin-bottom: 0px;"
+      >
+        Galería de Imágenes
+      </h4>
+      <div
+        class="flex items-center justify-between gap-2 sm:justify-end"
+      >
+        <span
+          class="text-xs text-gray-500"
+        >
+          0
+          /
+          3
+           imágenes
+        </span>
+        <button
+          class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined itsa-btn itsa-btn--md itsa-btn--secondary"
+          type="button"
+        >
+          <span
+            class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            <div
+              class="flex items-center gap-2"
+            >
+              <span
+                aria-label="plus"
+                class="anticon anticon-plus"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="plus"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                  />
+                  <path
+                    d="M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z"
+                  />
+                </svg>
+              </span>
+              Subir imagen
+            </div>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-3 place-items-center p-2"
+    >
+      <div
+        class="w-full max-w-[220px] overflow-hidden rounded-md bg-gray-50 shadow-sm"
+      >
+        <div
+          data-testid="skeleton-image"
+          style="width: 220px; height: 124px;"
+        />
+      </div>
+      <div
+        class="w-full max-w-[220px] overflow-hidden rounded-md bg-gray-50 shadow-sm"
+      >
+        <div
+          data-testid="skeleton-image"
+          style="width: 220px; height: 124px;"
+        />
+      </div>
+      <div
+        class="w-full max-w-[220px] overflow-hidden rounded-md bg-gray-50 shadow-sm"
+      >
+        <div
+          data-testid="skeleton-image"
+          style="width: 220px; height: 124px;"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
