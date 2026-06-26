@@ -70,6 +70,12 @@ export { ImagePreview } from './components/ImagePreview';
 export { ImageMaintenance } from './components/ImageMaintenance';
 export { UploadImage } from './components/UploadImage';
 export type { IUploadImageProps, UploadImageFileType } from './components/UploadImage';
+export { UploadImageCompressor } from './components/UploadImageCompressor';
+export type { IUploadImageCompressorProps, IGenericLocalImage } from './components/UploadImageCompressor';
+export { ImageWithSkeleton } from './components/ImageWithSkeleton';
+export type { IImageWithSkeletonProps } from './components/ImageWithSkeleton';
+export { ImageGallerySection } from './components/ImageGallerySection';
+export type { IImageGallerySectionProps } from './components/ImageGallerySection';
 export { InfoRow } from './components/InfoRow/InfoRow';
 export { reportBaseHtml, reportHeaderHtml } from './components/HtmlCssReport';
 export { ItemList } from './components/ItemList';
@@ -157,6 +163,7 @@ export * from './types';
 export * from './types/schema';
 export * from './utils/constants';
 export * from './utils/errors/errorMessages';
+export * from './utils/imageUtils';
 
 export * from './store';
 

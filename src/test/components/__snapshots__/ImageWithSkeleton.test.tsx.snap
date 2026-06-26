@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ImageWithSkeleton component > renders Image when src is provided 1`] = `
+<div>
+  <div
+    class="relative w-full overflow-hidden rounded-md"
+    style="height: 124px;"
+  >
+    <img
+      alt="Test image"
+      decoding="sync"
+      fetchpriority="high"
+      loading="eager"
+      placeholder="[object Object]"
+      preview="[object Object]"
+      src="test.jpg"
+      style="width: 220px; height: 124px; object-fit: cover;"
+    />
+  </div>
+</div>
+`;
+
+exports[`ImageWithSkeleton component > renders Skeleton when src is empty 1`] = `
+<div>
+  <div
+    class="relative w-full"
+    style="height: 124px;"
+  >
+    <div
+      data-testid="skeleton-image"
+      style="width: 220px; height: 124px;"
+    />
+  </div>
+</div>
+`;
