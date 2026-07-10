@@ -327,6 +327,24 @@ body,
 			border-color: #F9A825;
 		}
 
+	.itsa-btn--danger {
+		color: #d90022;
+		background-color: #ffffff;
+		border: 1px solid #d90022;
+	}
+
+		.itsa-btn--danger:hover {
+			background-color: #ffdada;
+			color: #d90022;
+			border-color: #d90022;
+		}
+
+		.itsa-btn--danger:active {
+			background-color: #ffdada;
+			color: #d90022;
+			border-color: #d90022;
+		}
+
 	/* Tamaños */
 	.itsa-btn--sm {
 		@apply max-h-12 text-xs rounded-[8px];
@@ -407,6 +425,25 @@ body,
 			color: #F9A825 !important;
 			border-color: #F9A825 !important;
 		}
+
+	.ant-btn.itsa-btn--danger {
+		color: #d90022 !important;
+		background-color: #ffffff !important;
+		border-color: #d90022 !important;
+	}
+
+	.ant-btn.itsa-btn--danger:hover,
+	.ant-btn.itsa-btn--danger:focus {
+		color: #d90022 !important;
+		background-color: #ffdada !important;
+		border-color: #d90022 !important;
+	}
+
+	.ant-btn.itsa-btn--danger:active {
+		color: #d90022 !important;
+		border-color: #d90022 !important;
+		background-color: #ffdada !important;
+	}
 
 	/* Primario AntD: usa tokens CSS para hover/active (reduce duplicación) */
 		.ant-btn.itsa-btn--primary {

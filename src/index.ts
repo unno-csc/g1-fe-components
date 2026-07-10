@@ -7,6 +7,7 @@ export { Button } from './components/Button/';
 export { ButtonAddItem } from './components/ButtonAddItem/';
 export { ButtonAntd } from './components/ButtonAntd/';
 export { ButtonIcon } from './components/ButtonIcon/';
+export { ButtonWithIcon } from './components/ButtonWithIcon';
 export { BreadcrumbCustom } from './components/BreadcrumbCustom';
 export { Card } from './components/Card/Card';
 export { Carousel } from './components/Carousel';
