@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ButtonWithIcon component > calls onClick handler when clicked 1`] = `
+<div>
+  <button
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
+    type="button"
+  >
+    <span
+      class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      Click
+    </span>
+  </button>
+</div>
+`;
+
+exports[`ButtonWithIcon component > passes props to AntButton 1`] = `
+<div>
+  <button
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
+    type="button"
+  >
+    <span
+      class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      Primary
+    </span>
+  </button>
+</div>
+`;
+
+exports[`ButtonWithIcon component > renders danger type with correct classes 1`] = `
+<div>
+  <button
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined itsa-btn itsa-btn--md itsa-btn--danger"
+    type="button"
+  >
+    <span
+      class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      Danger
+    </span>
+  </button>
+</div>
+`;
+
+exports[`ButtonWithIcon component > renders disabled button 1`] = `
+<div>
+  <button
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary itsa-btn--disabled rounded-[12px]"
+    disabled=""
+    type="button"
+  >
+    <span
+      class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      Disabled
+    </span>
+  </button>
+</div>
+`;
+
+exports[`ButtonWithIcon component > renders label text 1`] = `
+<div>
+  <button
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
+    type="button"
+  >
+    <span
+      class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      Click me
+    </span>
+  </button>
+</div>
+`;
+
+exports[`ButtonWithIcon component > renders with an icon 1`] = `
+<div>
+  <button
+    class="ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid itsa-btn itsa-btn--md itsa-btn--primary"
+    type="button"
+  >
+    <span
+      class="ant-btn-icon"
+    >
+      <span
+        data-testid="test-icon"
+      >
+        🔥
+      </span>
+    </span>
+    <span
+      class="block w-full overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      With Icon
+    </span>
+  </button>
+</div>
+`;
