@@ -40,8 +40,12 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 			// causing the input to "re-populate" after clearing. Use `null` to keep it cleared.
 			field.onChange(null);
 		} else {
-			const numValue = Number(cleanValue);
-			field.onChange(isNaN(numValue) ? undefined : numValue);
+			if (cleanValue.match(/\.$/) || cleanValue.match(/\.0+$/) || cleanValue.match(/\.[0-9]+0$/)) {
+				field.onChange(cleanValue);
+			} else {
+				const numValue = Number(cleanValue);
+				field.onChange(isNaN(numValue) ? undefined : numValue);
+			}
 		}
 	};
 
@@ -70,7 +74,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 			e.key === 'ArrowDown' ||
 			e.key === 'Home' ||
 			e.key === 'End' ||
-			(e.ctrlKey && (e.key === 'a' || e.key === 'c' || e.key === 'v' || e.key === 'x'))
+			((e.ctrlKey || e.metaKey) && ['a', 'c', 'v', 'x'].includes(e.key.toLowerCase()))
 		) {
 			return;
 		}
