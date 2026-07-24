@@ -3,11 +3,11 @@
 exports[`Notification component > renders error type notification 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--error"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--error"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-error ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-error ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -37,7 +37,11 @@ exports[`Notification component > renders error type notification 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -48,11 +52,11 @@ exports[`Notification component > renders error type notification 1`] = `
 exports[`Notification component > renders info type notification 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -84,7 +88,11 @@ exports[`Notification component > renders info type notification 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -95,11 +103,11 @@ exports[`Notification component > renders info type notification 1`] = `
 exports[`Notification component > renders notification with description 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -131,7 +139,11 @@ exports[`Notification component > renders notification with description 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -142,11 +154,11 @@ exports[`Notification component > renders notification with description 1`] = `
 exports[`Notification component > renders notification with title and description 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -179,7 +191,7 @@ exports[`Notification component > renders notification with title and descriptio
           class="ant-alert-message"
         >
           <span
-            class="font-bold"
+            class="font-bold text-sm tracking-tight"
           >
             Test Title
           </span>
@@ -187,7 +199,11 @@ exports[`Notification component > renders notification with title and descriptio
         <div
           class="ant-alert-description"
         >
-          Test Description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test Description
+          </span>
         </div>
       </div>
     </div>
@@ -198,11 +214,11 @@ exports[`Notification component > renders notification with title and descriptio
 exports[`Notification component > renders success type notification 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--success"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--success"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-success ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-success ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -234,7 +250,11 @@ exports[`Notification component > renders success type notification 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -245,11 +265,11 @@ exports[`Notification component > renders success type notification 1`] = `
 exports[`Notification component > renders warning type notification 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--warning"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--warning"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-warning ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-warning ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -281,7 +301,11 @@ exports[`Notification component > renders warning type notification 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -292,11 +316,11 @@ exports[`Notification component > renders warning type notification 1`] = `
 exports[`Notification component > renders with custom width as number 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 300px;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -328,7 +352,11 @@ exports[`Notification component > renders with custom width as number 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -339,11 +367,11 @@ exports[`Notification component > renders with custom width as number 1`] = `
 exports[`Notification component > renders with custom width as string 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 500px;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -375,7 +403,11 @@ exports[`Notification component > renders with custom width as string 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -386,11 +418,11 @@ exports[`Notification component > renders with custom width as string 1`] = `
 exports[`Notification component > renders with default width (100%) 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -422,7 +454,11 @@ exports[`Notification component > renders with default width (100%) 1`] = `
         <div
           class="ant-alert-description"
         >
-          Test notification description
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Test notification description
+          </span>
         </div>
       </div>
     </div>
@@ -433,11 +469,11 @@ exports[`Notification component > renders with default width (100%) 1`] = `
 exports[`Notification component > renders with long description 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -469,7 +505,11 @@ exports[`Notification component > renders with long description 1`] = `
         <div
           class="ant-alert-description"
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </span>
         </div>
       </div>
     </div>
@@ -480,11 +520,11 @@ exports[`Notification component > renders with long description 1`] = `
 exports[`Notification component > renders without title 1`] = `
 <div>
   <div
-    class="mb-4 animate-slideInRight itsa-notification itsa-notification--info"
+    class="mb-2 animate-slideInRight itsa-notification itsa-notification--info"
     style="width: 100%;"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description w-full css-dev-only-do-not-override-mncuj7"
+      class="ant-alert ant-alert-info ant-alert-with-description w-full !py-1.5 !px-2 [&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px] [&_.ant-alert-message]:!mb-1 css-dev-only-do-not-override-mncuj7"
       data-show="true"
       role="alert"
     >
@@ -516,7 +556,11 @@ exports[`Notification component > renders without title 1`] = `
         <div
           class="ant-alert-description"
         >
-          Only description here
+          <span
+            class="text-sm text-gray-600 leading-tight"
+          >
+            Only description here
+          </span>
         </div>
       </div>
     </div>

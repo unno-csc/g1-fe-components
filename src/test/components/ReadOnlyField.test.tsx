@@ -25,12 +25,12 @@ describe('ReadOnlyField component', () => {
 	it('applies visual variant classes', () => {
 		render(<ReadOnlyField label="Total" value="$ 1,240.50" emphasize dashed className="custom-field" />);
 
-		const wrapper = screen.getByText('Total').parentElement;
-		const value = screen.getByText('$ 1,240.50');
+		const wrapper = screen.getByText('Total').parentElement?.parentElement;
+		const valueContainer = screen.getByText('$ 1,240.50').parentElement;
 
 		expect(wrapper).toHaveClass('border-dashed');
 		expect(wrapper).toHaveClass('custom-field');
-		expect(value).toHaveClass('font-semibold');
-		expect(value).toHaveClass('text-gray-900');
+		expect(valueContainer).toHaveClass('font-semibold');
+		expect(valueContainer).toHaveClass('text-gray-900');
 	});
 });

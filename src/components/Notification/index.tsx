@@ -54,7 +54,7 @@ const NotificationComponent = ({
 	};
 
 	const notificationClasses = classNames(
-		'mb-4',
+		'mb-2',
 		'animate-slideInRight',
 		'itsa-notification',
 		`itsa-notification--${type}`,
@@ -70,14 +70,18 @@ const NotificationComponent = ({
 			data-testid={testId}
 		>
 			<Alert
-				message={title ? <span className="font-bold">{title}</span> : undefined}
-				description={description}
+				message={title ? <span className="font-bold text-sm tracking-tight">{title}</span> : undefined}
+				description={<span className="text-sm text-gray-600 leading-tight">{description}</span>}
 				type={type}
 				closable={closable}
 				onClose={handleClose}
 				showIcon={showIcon}
 				icon={showIcon ? getIcon() : undefined}
-				className="w-full"
+				className={classNames(
+					"w-full !py-1.5 !px-2",
+					"[&_.ant-alert-icon]:!mt-[2px] [&_.ant-alert-icon]:!text-[18px]",
+					"[&_.ant-alert-message]:!mb-1"
+				)}
 			/>
 		</div>
 	);
