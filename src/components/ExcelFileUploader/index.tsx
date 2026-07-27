@@ -10,11 +10,13 @@ export interface IExcelFileUploaderProps<TFieldValues extends FieldValues> {
 	control: Control<TFieldValues>;
 	description?: string;
 	disabled?: boolean;
+	hideDropzoneWhenFull?: boolean;
 	label: string;
 	maxFiles?: number;
 	maxSizeMB?: number;
 	name: Path<TFieldValues>;
 	optional?: boolean;
+	readOnly?: boolean;
 }
 
 const excelFileUploaderVariantConfig: IMultipleFileUploaderVariantConfig = {

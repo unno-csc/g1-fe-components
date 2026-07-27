@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
@@ -160,5 +160,100 @@ describe('PdfFileUploader — modo edicion', () => {
 		render(<EditHarness existingFileUrl="https://example.com/file.pdf" />);
 
 		expect(screen.getByText('Archivo cargado')).toBeInTheDocument();
+	});
+});
+
+describe('PdfFileUploader — hideDropzoneWhenFull', () => {
+	function HideDropzoneHarness() {
+		const methods = useForm<FormValues>({
+			defaultValues: {
+				files: [
+					new File(['pdf-content'], 'a.pdf', { type: 'application/pdf' }),
+					new File(['pdf-content'], 'b.pdf', { type: 'application/pdf' }),
+				],
+			},
+		});
+
+		return (
+			<FormProvider {...methods}>
+				<PdfFileUploader<FormValues>
+					name="files"
+					label="Archivos PDF"
+					control={methods.control}
+					maxFiles={2}
+					hideDropzoneWhenFull
+				/>
+			</FormProvider>
+		);
+	}
+
+	it('oculta la zona de arrastre cuando se alcanza el maximo de archivos', () => {
+		render(<HideDropzoneHarness />);
+
+		expect(screen.queryByText(/Haz clic/i)).not.toBeInTheDocument();
+		expect(screen.getByText('a.pdf')).toBeInTheDocument();
+		expect(screen.getByText('b.pdf')).toBeInTheDocument();
+	});
+
+	it('vuelve a mostrar la zona de arrastre al eliminar un archivo', async () => {
+		const user = userEvent.setup();
+		render(<HideDropzoneHarness />);
+
+		await user.click(screen.getByRole('button', { name: 'Eliminar a.pdf' }));
+
+		expect(screen.getByText(/Haz clic/i)).toBeInTheDocument();
+		expect(screen.queryByText('a.pdf')).not.toBeInTheDocument();
+		expect(screen.getByText('b.pdf')).toBeInTheDocument();
+	});
+});
+
+describe('PdfFileUploader — readOnly', () => {
+	function ReadOnlyHarness() {
+		const methods = useForm<FormValues>({
+			defaultValues: {
+				files: [new File(['pdf-content'], 'contrato.pdf', { type: 'application/pdf' })],
+			},
+		});
+
+		return (
+			<FormProvider {...methods}>
+				<PdfFileUploader<FormValues>
+					name="files"
+					label="Archivos PDF"
+					control={methods.control}
+					readOnly
+				/>
+				<FilesCounter />
+			</FormProvider>
+		);
+	}
+
+	it('no muestra el boton de eliminar en los archivos ya cargados', () => {
+		render(<ReadOnlyHarness />);
+
+		expect(screen.getByText('contrato.pdf')).toBeInTheDocument();
+		expect(
+			screen.queryByRole('button', { name: 'Eliminar contrato.pdf' }),
+		).not.toBeInTheDocument();
+	});
+
+	it('la zona de arrastre no acepta interacciones de mouse/teclado', () => {
+		const { container } = render(<ReadOnlyHarness />);
+		const dropzone = container.querySelector('.ant-upload-drag') as HTMLElement;
+
+		expect(dropzone).toHaveStyle({ pointerEvents: 'none' });
+	});
+
+	it('ignora archivos nuevos aunque se dispare un cambio directo sobre el input', async () => {
+		const { container } = render(<ReadOnlyHarness />);
+		const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+		const newFile = new File(['pdf-content'], 'nuevo.pdf', { type: 'application/pdf' });
+
+		fireEvent.change(input, { target: { files: [newFile] } });
+
+		await waitFor(() => {
+			expect(screen.getByTestId('files-count')).toHaveTextContent('1');
+		});
+		expect(screen.queryByText('nuevo.pdf')).not.toBeInTheDocument();
 	});
 });

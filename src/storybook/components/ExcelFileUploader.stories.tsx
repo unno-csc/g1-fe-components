@@ -17,6 +17,11 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+const createMockFile = (name: string, sizeKB = 120): File =>
+	new File([new Uint8Array(sizeKB * 1024)], name, {
+		type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+	});
+
 // ---------- Bound wrapper ----------
 const BoundExcelFileUploader = (props: Omit<IExcelFileUploaderProps<FormValues>, 'control'>) => {
 	const { control } = useFormContext<FormValues>();
@@ -78,6 +83,8 @@ const meta: Meta<typeof BoundExcelFileUploader> = {
 		maxSizeMB: { control: { type: 'number', min: 1, max: 100 } },
 		optional: { control: 'boolean' },
 		disabled: { control: 'boolean' },
+		hideDropzoneWhenFull: { control: 'boolean' },
+		readOnly: { control: 'boolean' },
 	},
 };
 
@@ -156,6 +163,49 @@ export const Disabled: Story = {
 	render: (args) => (
 		<RHFForm>
 			<BoundExcelFileUploader {...args} />
+		</RHFForm>
+	),
+};
+
+// ---------- Ocultar dropzone al llegar al máximo ----------
+export const HideDropzoneWhenFull: Story = {
+	name: 'Ocultar dropzone al completar el máximo',
+	args: {
+		name: 'files',
+		label: 'Archivos Excel',
+		maxFiles: 2,
+		hideDropzoneWhenFull: true,
+	},
+	render: (args) => (
+		<RHFForm
+			defaultValues={{
+				files: [createMockFile('reporte-enero.xlsx'), createMockFile('reporte-febrero.xlsx')],
+			}}
+		>
+			<BoundExcelFileUploader {...args} />
+			<Text type="secondary" style={{ fontSize: 12 }}>
+				Con el máximo de archivos alcanzado, la zona de arrastre se oculta. Elimina un archivo
+				para que vuelva a aparecer.
+			</Text>
+		</RHFForm>
+	),
+};
+
+// ---------- Solo lectura ----------
+export const ReadOnly: Story = {
+	name: 'Solo lectura',
+	args: {
+		name: 'files',
+		label: 'Archivos Excel',
+		readOnly: true,
+	},
+	render: (args) => (
+		<RHFForm defaultValues={{ files: [createMockFile('reporte-anual.xlsx')] }}>
+			<BoundExcelFileUploader {...args} />
+			<Text type="secondary" style={{ fontSize: 12 }}>
+				En modo solo lectura no se puede eliminar el archivo ni arrastrar/seleccionar uno nuevo,
+				pero la apariencia se mantiene normal (sin el grisado de `disabled`).
+			</Text>
 		</RHFForm>
 	),
 };

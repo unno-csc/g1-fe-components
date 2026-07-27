@@ -13,12 +13,14 @@ export interface IPdfFileUploaderProps<TFieldValues extends FieldValues> {
 	disabled?: boolean;
 	existingFileUrl?: string;
 	existingFileName?: string;
+	hideDropzoneWhenFull?: boolean;
 	label: string;
 	maxFiles?: number;
 	maxSizeMB?: number;
 	name: Path<TFieldValues>;
 	onExistingFileClick?: () => void;
 	optional?: boolean;
+	readOnly?: boolean;
 }
 
 const pdfFileUploaderVariantConfig: IMultipleFileUploaderVariantConfig = {
@@ -52,12 +54,14 @@ const PdfFileUploaderComponent = <TFieldValues extends FieldValues>({
 	disabled = false,
 	existingFileUrl: _existingFileUrl,
 	existingFileName,
+	hideDropzoneWhenFull,
 	label,
 	maxFiles,
 	maxSizeMB,
 	name,
 	onExistingFileClick,
 	optional,
+	readOnly = false,
 }: IPdfFileUploaderProps<TFieldValues>) => {
 	const hasExisting = !!(existingFileName ?? _existingFileUrl);
 	const [showUploader, setShowUploader] = useState(!hasExisting);
@@ -92,7 +96,7 @@ const PdfFileUploaderComponent = <TFieldValues extends FieldValues>({
 							)}
 						</div>
 
-						{!disabled && (
+						{!disabled && !readOnly && (
 							<button
 								type="button"
 								onClick={() => setShowUploader(true)}
@@ -112,11 +116,13 @@ const PdfFileUploaderComponent = <TFieldValues extends FieldValues>({
 			control={control}
 			description={description}
 			disabled={disabled}
+			hideDropzoneWhenFull={hideDropzoneWhenFull}
 			label={label}
 			maxFiles={maxFiles}
 			maxSizeMB={maxSizeMB}
 			name={name}
 			optional={optional}
+			readOnly={readOnly}
 			config={pdfFileUploaderVariantConfig}
 		/>
 	);

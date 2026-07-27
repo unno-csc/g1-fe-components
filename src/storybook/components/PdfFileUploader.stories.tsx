@@ -17,6 +17,9 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+const createMockFile = (name: string, sizeKB = 120): File =>
+	new File([new Uint8Array(sizeKB * 1024)], name, { type: 'application/pdf' });
+
 const BoundPdfFileUploader = (props: Omit<IPdfFileUploaderProps<FormValues>, 'control'>) => {
 	const { control } = useFormContext<FormValues>();
 	return <PdfFileUploader<FormValues> {...props} control={control} />;
@@ -79,6 +82,8 @@ const meta: Meta<typeof BoundPdfFileUploader> = {
 		maxSizeMB: { control: { type: 'number', min: 1, max: 100 } },
 		optional: { control: 'boolean' },
 		disabled: { control: 'boolean' },
+		hideDropzoneWhenFull: { control: 'boolean' },
+		readOnly: { control: 'boolean' },
 	},
 };
 
@@ -176,6 +181,66 @@ export const WithExistingFileDisabled: Story = {
 	render: args => (
 		<RHFForm>
 			<BoundPdfFileUploader {...args} />
+		</RHFForm>
+	),
+};
+
+export const HideDropzoneWhenFull: Story = {
+	name: 'Ocultar dropzone al completar el maximo',
+	args: {
+		name: 'files',
+		label: 'Archivos PDF',
+		maxFiles: 2,
+		hideDropzoneWhenFull: true,
+	},
+	render: args => (
+		<RHFForm
+			defaultValues={{
+				files: [createMockFile('acta-enero.pdf'), createMockFile('acta-febrero.pdf')],
+			}}
+		>
+			<BoundPdfFileUploader {...args} />
+			<Text type="secondary" style={{ fontSize: 12 }}>
+				Con el maximo de archivos alcanzado, la zona de arrastre se oculta. Elimina un archivo
+				para que vuelva a aparecer.
+			</Text>
+		</RHFForm>
+	),
+};
+
+export const ReadOnly: Story = {
+	name: 'Solo lectura',
+	args: {
+		name: 'files',
+		label: 'Archivos PDF',
+		readOnly: true,
+	},
+	render: args => (
+		<RHFForm defaultValues={{ files: [createMockFile('acta-2024.pdf')] }}>
+			<BoundPdfFileUploader {...args} />
+			<Text type="secondary" style={{ fontSize: 12 }}>
+				En modo solo lectura no se puede eliminar el archivo ni cargar uno nuevo, pero la
+				apariencia se mantiene normal (sin el grisado de `disabled`).
+			</Text>
+		</RHFForm>
+	),
+};
+
+export const WithExistingFileReadOnly: Story = {
+	name: 'Modo edicion — archivo existente solo lectura',
+	args: {
+		name: 'files',
+		label: 'Contrato firmado',
+		existingFileName: 'contrato_2024_firmado.pdf',
+		existingFileUrl: 'https://example.com/contrato_2024_firmado.pdf',
+		readOnly: true,
+	},
+	render: args => (
+		<RHFForm>
+			<BoundPdfFileUploader {...args} />
+			<Text type="secondary" style={{ fontSize: 12 }}>
+				El boton &quot;Cambiar&quot; no se muestra en modo solo lectura.
+			</Text>
 		</RHFForm>
 	),
 };

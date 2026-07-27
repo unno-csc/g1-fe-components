@@ -76,11 +76,13 @@ interface IControlledMultipleFileUploaderProps<TFieldValues extends FieldValues>
 	control: Control<TFieldValues>;
 	description?: string;
 	disabled?: boolean;
+	hideDropzoneWhenFull?: boolean;
 	label: string;
 	maxFiles?: number;
 	maxSizeMB?: number;
 	name: Path<TFieldValues>;
 	optional?: boolean;
+	readOnly?: boolean;
 }
 
 export const ControlledMultipleFileUploader = <TFieldValues extends FieldValues>({
@@ -88,11 +90,13 @@ export const ControlledMultipleFileUploader = <TFieldValues extends FieldValues>
 	control,
 	description,
 	disabled = false,
+	hideDropzoneWhenFull = false,
 	label,
 	maxFiles = 10,
 	maxSizeMB = 10,
 	name,
 	optional = false,
+	readOnly = false,
 }: IControlledMultipleFileUploaderProps<TFieldValues>) => {
 	const id = useId();
 	const errorId = `${id}-error`;
@@ -105,6 +109,7 @@ export const ControlledMultipleFileUploader = <TFieldValues extends FieldValues>
 				const errorMessage = fieldState.error?.message as string | undefined;
 				const files = Array.isArray(field.value) ? (field.value as File[]) : [];
 				const isAtMax = files.length >= maxFiles;
+				const shouldHideDropzone = hideDropzoneWhenFull && isAtMax;
 
 				const uploadFileList: UploadFile<File>[] = files.map(file => ({
 					uid: getFileUid(file),
@@ -116,6 +121,8 @@ export const ControlledMultipleFileUploader = <TFieldValues extends FieldValues>
 				}));
 
 				const beforeUpload = (file: RcFile): boolean | typeof Upload.LIST_IGNORE => {
+					if (readOnly) return Upload.LIST_IGNORE;
+
 					const isValidType = isAcceptedFileType(
 						file,
 						config.acceptedMimeTypes,
@@ -156,82 +163,87 @@ export const ControlledMultipleFileUploader = <TFieldValues extends FieldValues>
 					<div className="flex flex-col gap-1">
 						<FormLabel label={label} htmlFor={id} optional={optional} />
 
-						<Dragger
-							id={id}
-							accept={config.accept}
-							className="group"
-							multiple
-							showUploadList={false}
-							disabled={disabled || isAtMax}
-							fileList={uploadFileList}
-							beforeUpload={beforeUpload}
-							onChange={handleChange}
-							openFileDialogOnClick={!disabled && !isAtMax}
-							style={{ borderColor: errorMessage !== undefined ? '#ef4444' : undefined }}
-						>
-							<div className="flex flex-col items-center gap-3 px-4 py-5">
-								<div className="relative">
-									<div
-										className={`flex h-16 w-16 items-center justify-center rounded-2xl border shadow-sm transition-colors duration-200 ${
-											isAtMax
-												? 'border-gray-200 bg-gray-50'
-												: config.iconContainerClassName
-										}`}
-									>
-										{config.getDropzoneIcon(isAtMax)}
-									</div>
-									{files.length > 0 && !isAtMax && (
-										<div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-green-500 shadow">
-											<CheckCircleFilled style={{ fontSize: 11, color: 'white' }} />
-										</div>
-									)}
-									{isAtMax && (
-										<div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 shadow">
-											<WarningFilled style={{ fontSize: 11, color: 'white' }} />
-										</div>
-									)}
-								</div>
-
-								<div className="space-y-1 text-center">
-									{isAtMax ? (
-										<p className="text-sm font-semibold text-gray-400">
-											Limite de {maxFiles} archivos alcanzado
-										</p>
-									) : (
-										<p className="text-sm font-semibold text-gray-700">
-											<span className={config.accentTextClassName}>Haz clic</span> o arrastra tus
-											archivos aqui
-										</p>
-									)}
-									<p className="text-xs text-gray-400">
-										{description ??
-											config.buildDefaultDescription({
-												maxFiles,
-												maxSizeMB,
-											})}
-									</p>
-								</div>
-
-								<div className="flex items-center gap-2">
-									{!isAtMax && (
-										<div className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1">
-											<CloudUploadOutlined style={{ fontSize: 12, color: '#6b7280' }} />
-											<span className="text-xs text-gray-500">Subir archivos</span>
-										</div>
-									)}
-									{files.length > 0 && (
+						{!shouldHideDropzone && (
+							<Dragger
+								id={id}
+								accept={config.accept}
+								className="group"
+								multiple
+								showUploadList={false}
+								disabled={disabled || isAtMax}
+								fileList={uploadFileList}
+								beforeUpload={beforeUpload}
+								onChange={handleChange}
+								openFileDialogOnClick={!disabled && !isAtMax && !readOnly}
+								style={{
+									borderColor: errorMessage !== undefined ? '#ef4444' : undefined,
+									pointerEvents: readOnly ? 'none' : undefined,
+								}}
+							>
+								<div className="flex flex-col items-center gap-3 px-4 py-5">
+									<div className="relative">
 										<div
-											className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 ${config.badgeClassName}`}
+											className={`flex h-16 w-16 items-center justify-center rounded-2xl border shadow-sm transition-colors duration-200 ${
+												isAtMax
+													? 'border-gray-200 bg-gray-50'
+													: config.iconContainerClassName
+											}`}
 										>
-											{config.getBadgeIcon()}
-											<span className="text-xs font-medium">
-												{files.length} {files.length === 1 ? 'archivo' : 'archivos'}
-											</span>
+											{config.getDropzoneIcon(isAtMax)}
 										</div>
-									)}
+										{files.length > 0 && !isAtMax && (
+											<div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-green-500 shadow">
+												<CheckCircleFilled style={{ fontSize: 11, color: 'white' }} />
+											</div>
+										)}
+										{isAtMax && (
+											<div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 shadow">
+												<WarningFilled style={{ fontSize: 11, color: 'white' }} />
+											</div>
+										)}
+									</div>
+
+									<div className="space-y-1 text-center">
+										{isAtMax ? (
+											<p className="text-sm font-semibold text-gray-400">
+												Limite de {maxFiles} archivos alcanzado
+											</p>
+										) : (
+											<p className="text-sm font-semibold text-gray-700">
+												<span className={config.accentTextClassName}>Haz clic</span> o arrastra tus
+												archivos aqui
+											</p>
+										)}
+										<p className="text-xs text-gray-400">
+											{description ??
+												config.buildDefaultDescription({
+													maxFiles,
+													maxSizeMB,
+												})}
+										</p>
+									</div>
+
+									<div className="flex items-center gap-2">
+										{!isAtMax && (
+											<div className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1">
+												<CloudUploadOutlined style={{ fontSize: 12, color: '#6b7280' }} />
+												<span className="text-xs text-gray-500">Subir archivos</span>
+											</div>
+										)}
+										{files.length > 0 && (
+											<div
+												className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 ${config.badgeClassName}`}
+											>
+												{config.getBadgeIcon()}
+												<span className="text-xs font-medium">
+													{files.length} {files.length === 1 ? 'archivo' : 'archivos'}
+												</span>
+											</div>
+										)}
+									</div>
 								</div>
-							</div>
-						</Dragger>
+							</Dragger>
+						)}
 
 						{errorMessage !== undefined && <FormLabelError label={errorMessage} id={errorId} />}
 
@@ -262,7 +274,7 @@ export const ControlledMultipleFileUploader = <TFieldValues extends FieldValues>
 											{String(index + 1).padStart(2, '0')}
 										</span>
 
-										{!disabled && (
+										{!disabled && !readOnly && (
 											<button
 												type="button"
 												onClick={() => removeFile(index)}

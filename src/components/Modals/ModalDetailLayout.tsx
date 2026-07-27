@@ -67,14 +67,7 @@ export const ModalDetailLayout = ({
 					<div className="px-4 py-4">{tableSlot}</div>
 				</section>
 
-				{summarySlot && (
-					<div className="flex flex-col items-end">
-						<div className="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white md:max-w-sm">
-							<div className="h-1 w-full bg-amber-400" />
-							<div className="px-4 py-4">{summarySlot}</div>
-						</div>
-					</div>
-				)}
+				{summarySlot}
 			</div>
 		</div>
 	);

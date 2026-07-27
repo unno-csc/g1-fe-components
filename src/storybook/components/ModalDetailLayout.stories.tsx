@@ -118,23 +118,28 @@ export const Default: Story = {
 				/>
 			}
 			summarySlot={
-				<div className="flex flex-col gap-2 text-xs text-zinc-700">
-					<div className="flex items-center justify-between gap-2">
-						<span className="font-medium">COSTO NACIONAL:</span>
-						<span className="text-right">$ 1,505.00</span>
-					</div>
-					<div className="flex items-center justify-between gap-2">
-						<span className="font-medium">COSTO IMPORTADO:</span>
-						<span className="text-right">$ 1,501.25</span>
-					</div>
-					<div className="flex items-center justify-between gap-2">
-						<span className="font-medium">COSTO TOTAL:</span>
-						<span className="text-right font-semibold">$ 3,006.25</span>
-					</div>
-					<div className="border-t border-zinc-200 pt-2">
-						<div className="flex items-center justify-between gap-2">
-							<span className="font-medium">% INTEGRACIÓN:</span>
-							<span className="text-right font-semibold">50.02%</span>
+				<div className="flex flex-col items-end">
+					<div className="w-full overflow-hidden rounded-xl border border-zinc-200 bg-white md:max-w-sm">
+						<div className="h-1 w-full bg-amber-400" />
+						<div className="flex flex-col gap-2 px-4 py-4 text-xs text-zinc-700">
+							<div className="flex items-center justify-between gap-2">
+								<span className="font-medium">COSTO NACIONAL:</span>
+								<span className="text-right">$ 1,505.00</span>
+							</div>
+							<div className="flex items-center justify-between gap-2">
+								<span className="font-medium">COSTO IMPORTADO:</span>
+								<span className="text-right">$ 1,501.25</span>
+							</div>
+							<div className="flex items-center justify-between gap-2">
+								<span className="font-medium">COSTO TOTAL:</span>
+								<span className="text-right font-semibold">$ 3,006.25</span>
+							</div>
+							<div className="border-t border-zinc-200 pt-2">
+								<div className="flex items-center justify-between gap-2">
+									<span className="font-medium">% INTEGRACIÓN:</span>
+									<span className="text-right font-semibold">50.02%</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
