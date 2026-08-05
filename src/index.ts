@@ -32,6 +32,8 @@ export { Dashboard } from './components/Dashboard';
 export { DetailView, createDetailSchema } from './components/DetailView';
 export { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 export { Empty } from './components/Empty';
+export { EmptyStateBox } from './components/EmptyStateBox';
+export type { IEmptyStateBoxProps } from './components/EmptyStateBox';
 export { ErrorPage } from './components/ErrorPage/ErrorPage';
 export { ExampleReport } from './components/Reports/ExampleProforma/ExampleReport';
 export { Fade } from './components/Fade/Fade';

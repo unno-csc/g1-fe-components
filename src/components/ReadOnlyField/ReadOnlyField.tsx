@@ -19,7 +19,10 @@ export interface IReadOnlyFieldProps {
 	descriptionPosition?: TReadOnlyFieldDescriptionPosition;
 	prefix?: ReactNode;
 	suffix?: ReactNode;
+	labelClassName?: string;
 }
+
+const DEFAULT_LABEL_CLASSNAME = 'text-xs font-medium uppercase tracking-[0.08em] text-gray-500';
 
 export const ReadOnlyField = ({
 	label,
@@ -37,6 +40,7 @@ export const ReadOnlyField = ({
 	descriptionPosition = 'bottom-label',
 	prefix,
 	suffix,
+	labelClassName,
 }: IReadOnlyFieldProps) => {
 	const hasValue = value !== undefined && value !== null && String(value) !== '';
 
@@ -76,7 +80,7 @@ export const ReadOnlyField = ({
 			style={Object.keys(customStyles).length > 0 ? customStyles : undefined}
 		>
 			<div className="flex flex-col">
-				<span className="text-xs font-medium uppercase tracking-[0.08em] text-gray-500">{label}</span>
+				<span className={labelClassName ?? DEFAULT_LABEL_CLASSNAME}>{label}</span>
 				{descriptionPosition === 'bottom-label' && renderDescription()}
 			</div>
 
