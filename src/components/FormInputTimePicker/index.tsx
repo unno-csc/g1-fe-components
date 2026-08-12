@@ -4,6 +4,8 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { memo, useId } from 'react';
+import classNames from 'classnames';
+import { useFormConfig } from '../FormConfigProvider';
 
 export interface IInputProps<TFieldValues extends FieldValues> extends Omit<InputProps, 'form' | 'name'> {
 	name: Path<TFieldValues>;
@@ -13,6 +15,7 @@ export interface IInputProps<TFieldValues extends FieldValues> extends Omit<Inpu
 	placeholder?: string;
 	optional?: boolean;
 	disabled?: boolean;
+	showDirtyState?: boolean;
 }
 
 const FormInputTimePickerComponent = <TFieldValues extends FieldValues>({
@@ -23,7 +26,11 @@ const FormInputTimePickerComponent = <TFieldValues extends FieldValues>({
 	optional = false,
 	allowClear = true,
 	disabled = false,
+	showDirtyState,
 }: IInputProps<TFieldValues>) => {
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
+
 	const id = useId();
 	const errId = `${id}-error`;
 	return (
@@ -33,7 +40,7 @@ const FormInputTimePickerComponent = <TFieldValues extends FieldValues>({
 			render={({ field, fieldState }) => {
 				const errorMsg = fieldState.error?.message as string | undefined;
 				return (
-					<div className="flex flex-col gap-1">
+					<div className={classNames("flex flex-col gap-1", { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 						<FormLabel label={label} htmlFor={id} optional={optional} />
 						<TimePicker
 							id={id}

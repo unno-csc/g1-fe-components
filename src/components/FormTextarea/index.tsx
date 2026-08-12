@@ -4,13 +4,16 @@ import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { Textarea } from '@/components/Textarea/Textarea';
 import { memo, useId, useMemo } from 'react';
+import classNames from 'classnames';
 import { TTextTransform } from '@/types';
+import { useFormConfig } from '../FormConfigProvider';
 
 export interface IFormTextareaProps<TFieldValues extends FieldValues> extends Omit<TextAreaProps, 'form' | 'name'> {
   name: Path<TFieldValues>;
   label: string;
   control: Control<TFieldValues>;
   showCaracteres?: boolean;
+  showDirtyState?: boolean;
   placeholder?: string;
   errorIdentificationExists?: string;
   autoComplete?: string;
@@ -27,8 +30,12 @@ const FormTextareaComponent = <TFieldValues extends FieldValues>({
   autoComplete = 'off',
   disabled = false,
   textTransform = 'none',
+  showDirtyState,
   ...rest
 }: IFormTextareaProps<TFieldValues>) => {
+  const { showDirtyState: contextShowDirtyState } = useFormConfig();
+  const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
+
   const id = useId();
   const errId = `${id}-error`;
 
@@ -61,7 +68,7 @@ const FormTextareaComponent = <TFieldValues extends FieldValues>({
           field.onChange(transformedValue);
         };
         return (
-          <div className="flex flex-col gap-1">
+          <div className={classNames("flex flex-col gap-1", { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
             <FormLabel label={label} htmlFor={id} />
             <Textarea
               id={id as string}

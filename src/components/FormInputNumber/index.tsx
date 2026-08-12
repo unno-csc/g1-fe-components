@@ -4,8 +4,10 @@ import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { Input } from '@/components/Input/Input';
 import { memo, useId, useMemo } from 'react';
+import classNames from 'classnames';
 import { EInput } from '@/enums';
 import { filterPositiveNumbersOnly } from '@/helpers';
+import { useFormConfig } from '@/components/FormConfigProvider';
 
 export interface IInputProps<TFieldValues extends FieldValues> extends Omit<InputProps, 'form' | 'name'> {
 	name: Path<TFieldValues>;
@@ -16,6 +18,7 @@ export interface IInputProps<TFieldValues extends FieldValues> extends Omit<Inpu
 	disabled?: boolean;
 	suffix?: string;
 	prefix?: string;
+	showDirtyState?: boolean;
 }
 
 const FormInputComponent = <TFieldValues extends FieldValues>({
@@ -27,8 +30,12 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	disabled = false,
 	suffix,
 	prefix,
+	showDirtyState,
 	...rest
 }: IInputProps<TFieldValues>) => {
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
+
 	const id = useId();
 	const errId = `${id}-error`;
 
@@ -109,7 +116,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 			render={({ field, fieldState }) => {
 				const errorMsg = fieldState.error?.message as string | undefined;
 				return (
-					<div className="flex flex-col gap-0.5">
+					<div className={classNames("flex flex-col gap-0.5", { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 						<FormLabel label={label} htmlFor={id} />
 						<Input
 							id={id as string}

@@ -4,9 +4,11 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { memo, useId } from 'react';
-import dayjs from 'dayjs';
+import classNames from 'classnames';
+import dayjs, { Dayjs } from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { EDateMaskFormat } from '@/enums';
+import { useFormConfig } from '../FormConfigProvider';
 
 dayjs.extend(customParseFormat);
 
@@ -35,6 +37,8 @@ export interface IInputProps<TFieldValues extends FieldValues>
 	optional?: boolean;
 	format?: EDateMaskFormat | string;
 	disabled?: boolean;
+	disabledDate?: (current: Dayjs) => boolean;
+	showDirtyState?: boolean;
 }
 
 const FormInputDatePickerComponent = <TFieldValues extends FieldValues>({
@@ -47,8 +51,12 @@ const FormInputDatePickerComponent = <TFieldValues extends FieldValues>({
 	disabled = false,
 	allowClear = true,
 	minuteStep,
+	showDirtyState,
 	...rest
 }: IInputProps<TFieldValues>) => {
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
+
 	const id = useId();
 	const errId = `${id}-error`;
 	const resolvedShowTime = getShowTimeConfig(format, minuteStep);
@@ -61,7 +69,7 @@ const FormInputDatePickerComponent = <TFieldValues extends FieldValues>({
 				const errorMsg = fieldState.error?.message as string | undefined;
 				const dateValue = field.value ? dayjs(field.value, format, true) : null;
 				return (
-					<div className="flex flex-col gap-0.5">
+					<div className={classNames("flex flex-col gap-0.5", { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 						<FormLabel label={label} htmlFor={id} optional={optional} />
 						<DatePicker
 							{...rest}

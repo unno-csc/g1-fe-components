@@ -819,4 +819,17 @@ body,
 	font-weight: 400 !important;
 }
 
+/* ===== Dirty Fields Feedback ===== */
+.dirty-field .ant-input,
+.dirty-field .ant-input-password,
+.dirty-field .ant-input-affix-wrapper,
+.dirty-field .ant-select-selector,
+.dirty-field .ant-picker,
+.dirty-field .ant-input-number,
+.dirty-field .ant-btn {
+	border-color: #facc15 !important;
+	transition: border-color 0.3s ease;
+}
+
+
 

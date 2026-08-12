@@ -1,5 +1,6 @@
 import { useModalResponsive } from '@/hooks';
 import { useMemo } from 'react';
+import classNames from 'classnames';
 import { Button } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { ReactNode } from 'react';
@@ -7,6 +8,7 @@ import { FormLabel } from '../FormLabel';
 import { FormLabelError } from '../FormLabelError';
 import { Controller, FieldValues, Path } from 'react-hook-form';
 import { Control } from 'react-hook-form';
+import { useFormConfig } from '../FormConfigProvider';
 
 export interface IFormButtonSelectorValue {
 	value: number;
@@ -21,6 +23,7 @@ export interface IFormButtonSelectorProps<TFieldValues extends FieldValues> {
 	closable?: boolean;
 	disabled?: boolean;
 	value?: IFormButtonSelectorValue;
+	showDirtyState?: boolean;
 }
 
 export const FormButtonSelector = <TFieldValues extends FieldValues>({
@@ -32,7 +35,11 @@ export const FormButtonSelector = <TFieldValues extends FieldValues>({
 	name,
 	closable = false,
 	disabled = false,
+	showDirtyState,
 }: IFormButtonSelectorProps<TFieldValues>) => {
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
+
 	const { openModal } = useModalResponsive();
 
 	const handleOpenModal = () => {
@@ -58,7 +65,7 @@ export const FormButtonSelector = <TFieldValues extends FieldValues>({
 				return (
 					<div className="flex flex-col gap-1">
 						<FormLabel label={title} />
-						<div className={`${closable ? 'flex items-center' : ''}`}>
+						<div className={classNames({ 'flex items-center': closable, 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 							<Button
 								variant="outlined"
 								color={errorMsg ? 'danger' : undefined}

@@ -4,8 +4,10 @@ import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { Input } from '@/components/Input/Input';
 import { memo, useId, useMemo } from 'react';
+import classNames from 'classnames';
 import { EInput } from '@/enums';
 import { TTextTransform } from '@/types';
+import { useFormConfig } from '../FormConfigProvider';
 
 export interface IInputProps<TFieldValues extends FieldValues> extends Omit<InputProps, 'form' | 'name'> {
 	name: Path<TFieldValues>;
@@ -17,6 +19,7 @@ export interface IInputProps<TFieldValues extends FieldValues> extends Omit<Inpu
 	autoComplete?: string;
 	disabled?: boolean;
 	textTransform?: TTextTransform;
+	showDirtyState?: boolean;
 }
 
 const FormInputComponent = <TFieldValues extends FieldValues>({
@@ -29,8 +32,11 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 	autoComplete = 'off',
 	disabled = false,
 	textTransform = 'uppercase',
+	showDirtyState,
 	...inputProps
 }: IInputProps<TFieldValues>) => {
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
 	const id = useId();
 	const errId = `${id}-error`;
 
@@ -63,12 +69,11 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 					field.onChange(transformedValue);
 				};
 
-
 				const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
 					field.onBlur();
 					const inputValue = e.target.value ?? '';
 					let transformedValue = inputValue;
-					
+
 					if (textTransform === 'uppercase') {
 						transformedValue = inputValue.toUpperCase();
 					} else if (textTransform === 'lowercase') {
@@ -79,7 +84,7 @@ const FormInputComponent = <TFieldValues extends FieldValues>({
 				};
 
 				return (
-					<div className="flex flex-col gap-0.5">
+					<div className={classNames('flex flex-col gap-0.5', { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 						<FormLabel label={label} htmlFor={id} />
 						<Input
 							id={id as string}
