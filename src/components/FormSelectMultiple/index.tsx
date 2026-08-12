@@ -1,6 +1,8 @@
 import { memo, useId, useMemo } from 'react';
+import classNames from 'classnames';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { SelectProps } from 'antd';
+import { useFormConfig } from '../FormConfigProvider';
 import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { Select } from '@/components/Select';
@@ -17,6 +19,7 @@ export interface IFormSelectMultipleProps<TFieldValues extends FieldValues>
 	placeholder?: string;
 	isLoading?: boolean;
 	disabled?: boolean;
+	showDirtyState?: boolean;
 }
 
 const FormSelectMultipleComponent = <TFieldValues extends FieldValues>({
@@ -28,10 +31,13 @@ const FormSelectMultipleComponent = <TFieldValues extends FieldValues>({
 	placeholder,
 	isLoading,
 	disabled = false,
+	showDirtyState,
 	...selectProps
 }: IFormSelectMultipleProps<TFieldValues>) => {
 	const id = useId();
 	const errId = `${id}-error`;
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
 
 	const filterOption = (input: string, option: TMultipleSelectOption) => {
 		return (option.label ?? '').toLowerCase().includes(input.toLowerCase());
@@ -59,7 +65,7 @@ const FormSelectMultipleComponent = <TFieldValues extends FieldValues>({
 				const selectStatus = hasError ? 'error' : undefined;
 
 				return (
-					<div className="flex flex-col gap-0.5">
+					<div className={classNames("flex flex-col gap-0.5", { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 						<FormLabel label={label} htmlFor={id} />
 						<Select
 							id={id}

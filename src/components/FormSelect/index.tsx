@@ -2,8 +2,10 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FormLabel } from '@/components/FormLabel';
 import { FormLabelError } from '@/components/FormLabelError';
 import { memo, useId, useMemo } from 'react';
+import classNames from 'classnames';
 import { SelectProps } from 'antd';
 import { Select } from '@/components/Select';
+import { useFormConfig } from '@/components/FormConfigProvider';
 
 export interface IFormSelectProps<TFieldValues extends FieldValues> extends Omit<SelectProps, 'form' | 'name'> {
 	name: Path<TFieldValues>;
@@ -15,6 +17,7 @@ export interface IFormSelectProps<TFieldValues extends FieldValues> extends Omit
 	placeholder?: string;
 	isLoading?: boolean;
 	disabled?: boolean;
+	showDirtyState?: boolean;
 }
 
 const FormSelectComponent = <TFieldValues extends FieldValues>({
@@ -27,16 +30,19 @@ const FormSelectComponent = <TFieldValues extends FieldValues>({
 	placeholder,
 	isLoading,
 	disabled = false,
+	showDirtyState,
 }: IFormSelectProps<TFieldValues>) => {
 	const id = useId();
 	const errId = `${id}-error`;
+	const { showDirtyState: contextShowDirtyState } = useFormConfig();
+	const isDirtyStateActive = showDirtyState ?? contextShowDirtyState;
 
 	const filterOption = (input: string, option: { label: string; value: string | number }) => {
 		return (option.label ?? '').toLowerCase().includes(input.toLowerCase());
 	};
 
 	const placeholderUppercase = useMemo(() => {
-		if(placeholder && placeholder.trim().length > 0){
+		if (placeholder && placeholder.trim().length > 0) {
 			return placeholder.toUpperCase();
 		}
 		return 'Seleccionar item';
@@ -51,7 +57,7 @@ const FormSelectComponent = <TFieldValues extends FieldValues>({
 				const validValues = options.map(o => o.value);
 				const safeValue = validValues.includes(field.value) ? field.value : undefined;
 				return (
-					<div className="flex flex-col gap-0.5">
+					<div className={classNames('flex flex-col gap-0.5', { 'dirty-field': isDirtyStateActive && fieldState.isDirty })}>
 						<FormLabel label={label} htmlFor={id} />
 						<Select
 							id={id as string}

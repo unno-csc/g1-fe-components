@@ -58,6 +58,7 @@ export { FilterInputDatePicker } from './components/FilterInputDatePicker';
 export { FormLabel } from './components/FormLabel';
 export { FormButtonSelector } from './components/FormButtonSelector';
 export { FormLabelError } from './components/FormLabelError';
+export { FormConfigProvider, useFormConfig } from './components/FormConfigProvider';
 export type { IFormDateTimePickerProps } from './components/FormDateTimePicker';
 export { ExcelFileUploader } from './components/ExcelFileUploader';
 export type { IExcelFileUploaderProps } from './components/ExcelFileUploader';
