@@ -1,0 +1,143 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FormSwitch component > applies custom classNameBorder and className 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-1 w-full custom-container"
+  >
+    <div
+      class="flex items-center gap-2 w-full h-full justify-center p-1 border rounded-[6px] transition-colors duration-300 border-gray-200 custom-border-class"
+    >
+      <span
+        class="itsa-switch-custom"
+        style="--switch-active-bg: #F9A825;"
+      >
+        <button
+          aria-checked="true"
+          class="ant-switch css-dev-only-do-not-override-mncuj7 ant-switch-checked"
+          role="switch"
+          type="button"
+        >
+          <div
+            class="ant-switch-handle"
+          />
+          <span
+            class="ant-switch-inner"
+          >
+            <span
+              class="ant-switch-inner-checked"
+            />
+            <span
+              class="ant-switch-inner-unchecked"
+            />
+          </span>
+        </button>
+      </span>
+      <label
+        class="text-sm font-medium"
+      >
+        Estado
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormSwitch component > renders label and toggles switch value 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-1 w-full"
+  >
+    <div
+      class="flex items-center gap-2 w-full h-full justify-center p-1 border rounded-[6px] transition-colors duration-300 border-gray-200"
+    >
+      <span
+        class="itsa-switch-custom"
+        style="--switch-active-bg: #F9A825;"
+      >
+        <button
+          aria-checked="true"
+          class="ant-switch css-dev-only-do-not-override-mncuj7 ant-switch-checked"
+          role="switch"
+          style="min-width: 108px;"
+          type="button"
+        >
+          <div
+            class="ant-switch-handle"
+          />
+          <span
+            class="ant-switch-inner"
+          >
+            <span
+              class="ant-switch-inner-checked"
+            >
+              <span
+                style="color: rgb(255, 255, 255);"
+              >
+                ACTIVA
+              </span>
+            </span>
+            <span
+              class="ant-switch-inner-unchecked"
+            >
+              <span
+                style="color: rgb(255, 255, 255);"
+              >
+                INACTIVA
+              </span>
+            </span>
+          </span>
+        </button>
+      </span>
+      <label
+        class="text-sm font-medium"
+      >
+        Estado de la Orden
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FormSwitch component > renders without border wrapper when hideWrapperBorder is true 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-1 w-full"
+  >
+    <div
+      class="flex items-center gap-2"
+    >
+      <span
+        class="itsa-switch-custom"
+        style="--switch-active-bg: #F9A825;"
+      >
+        <button
+          aria-checked="true"
+          class="ant-switch css-dev-only-do-not-override-mncuj7 ant-switch-checked"
+          role="switch"
+          type="button"
+        >
+          <div
+            class="ant-switch-handle"
+          />
+          <span
+            class="ant-switch-inner"
+          >
+            <span
+              class="ant-switch-inner-checked"
+            />
+            <span
+              class="ant-switch-inner-unchecked"
+            />
+          </span>
+        </button>
+      </span>
+      <label
+        class="text-sm font-medium"
+      >
+        Sin Borde
+      </label>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Grid and useBreakpoint > renders responsive component evaluating isMdUp correctly 1`] = `
+<div>
+  <div
+    data-testid="responsive-wrapper"
+  >
+    <span>
+      Mobile View
+    </span>
+  </div>
+</div>
+`;
