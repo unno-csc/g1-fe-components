@@ -58,12 +58,14 @@ const meta: Meta<typeof BoundFormSwitch> = {
 	component: BoundFormSwitch,
 	parameters: { layout: 'centered' },
 	argTypes: {
-		label: { control: 'text' },
-		disabled: { control: 'boolean' },
-		checkedLabel: { control: 'text' },
-		uncheckedLabel: { control: 'text' },
-		activeBgColor: { control: 'color' },
-		inactiveBgColor: { control: 'color' },
+		label: { control: 'text', description: 'Texto de la etiqueta' },
+		disabled: { control: 'boolean', description: 'Estado deshabilitado' },
+		checkedLabel: { control: 'text', description: 'Texto cuando está activado' },
+		uncheckedLabel: { control: 'text', description: 'Texto cuando está desactivado' },
+		activeBgColor: { control: 'color', description: 'Color de fondo activo' },
+		inactiveBgColor: { control: 'color', description: 'Color de fondo inactivo' },
+		hideWrapperBorder: { control: 'boolean', description: 'Oculta el borde exterior' },
+		classNameBorder: { control: 'text', description: 'Clase CSS personalizada para el contenedor con borde' },
 	},
 };
 export default meta;
@@ -162,3 +164,18 @@ export const ShowErrorOnSubmit: Story = {
 	),
 };
 
+export const WithCustomBorder: Story = {
+	name: 'Con borde personalizado',
+	args: {
+		name: 'enabled',
+		label: 'Estado de la Orden',
+		checkedLabel: 'ACTIVA',
+		uncheckedLabel: 'INACTIVA',
+		classNameBorder: 'p-2 border-2 border-primary-500 rounded-lg shadow-sm',
+	},
+	render: args => (
+		<RHFForm defaultValues={{ enabled: true }}>
+			<BoundFormSwitch {...args} />
+		</RHFForm>
+	),
+};

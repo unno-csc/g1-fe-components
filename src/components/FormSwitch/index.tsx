@@ -16,6 +16,9 @@ export interface IFormSwitchProps<TFieldValues extends FieldValues>
 	hideWrapperBorder?: boolean;
 	showDirtyState?: boolean;
 	onChange?: (checked: boolean) => void;
+	className?: string;
+	classNameBorder?: string;
+	contentClassName?: string;
 }
 
 const FormSwitchComponent = <TFieldValues extends FieldValues>({
@@ -27,6 +30,9 @@ const FormSwitchComponent = <TFieldValues extends FieldValues>({
 	hideWrapperBorder = false,
 	showDirtyState,
 	onChange,
+	className,
+	classNameBorder,
+	contentClassName,
 	...rest
 }: IFormSwitchProps<TFieldValues>) => {
 	const { showDirtyState: contextShowDirtyState } = useFormConfig();
@@ -39,16 +45,25 @@ const FormSwitchComponent = <TFieldValues extends FieldValues>({
 			render={({ field, fieldState }) => {
 				const errorMsg = fieldState.error?.message as string | undefined;
 				return (
-					<div className={classNames("flex flex-col gap-1", {
-						'p-1 border rounded-[6px] transition-colors duration-300': !hideWrapperBorder,
-						'border-gray-200': !hideWrapperBorder && !(isDirtyStateActive && fieldState.isDirty),
-						'border-[#facc15]': !hideWrapperBorder && (isDirtyStateActive && fieldState.isDirty)
-					})}>
-						<div className="flex items-center gap-2" onBlur={field.onBlur}>
+					<div className={classNames('flex flex-col gap-1 w-full', className)}>
+						<div
+							className={classNames(
+								'flex items-center gap-2',
+								{
+									'w-full h-full justify-center p-1 border rounded-[6px] transition-colors duration-300':
+										!hideWrapperBorder,
+									'border-gray-200': !hideWrapperBorder && !(isDirtyStateActive && fieldState.isDirty),
+									'border-[#facc15]': !hideWrapperBorder && isDirtyStateActive && fieldState.isDirty,
+								},
+								classNameBorder,
+								contentClassName
+							)}
+							onBlur={field.onBlur}
+						>
 							<Switch
 								{...rest}
 								checked={field.value}
-								onChange={(checked) => {
+								onChange={checked => {
 									field.onChange(checked);
 									if (onChange) {
 										onChange(checked);
@@ -57,7 +72,7 @@ const FormSwitchComponent = <TFieldValues extends FieldValues>({
 								checkedLabel={checkedLabel}
 								uncheckedLabel={uncheckedLabel}
 							/>
-							{label && <label className="text-sm">{label}</label>}
+							{label && <label className="text-sm font-medium">{label}</label>}
 						</div>
 						{errorMsg && <FormLabelError label={errorMsg} />}
 					</div>

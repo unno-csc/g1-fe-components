@@ -60,6 +60,8 @@ export { FormButtonSelector } from './components/FormButtonSelector';
 export { FormLabelError } from './components/FormLabelError';
 export { FormConfigProvider, useFormConfig } from './components/FormConfigProvider';
 export type { IFormDateTimePickerProps } from './components/FormDateTimePicker';
+export { Grid, useBreakpoint } from './components/Grid';
+export type { IScreenMap, TBreakpoint, TScreenMap } from './components/Grid';
 export { ExcelFileUploader } from './components/ExcelFileUploader';
 export type { IExcelFileUploaderProps } from './components/ExcelFileUploader';
 export { PdfFileUploader } from './components/PdfFileUploader';
