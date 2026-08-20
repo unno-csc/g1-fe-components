@@ -46,6 +46,7 @@ export { FormSelect } from './components/FormSelect';
 export { FormSelectMultiple } from './components/FormSelectMultiple';
 export { FormCheckBox } from './components/FormCheckBox';
 export { FormRadio } from './components/FormRadio';
+export type { IFormRadioProps } from './components/FormRadio';
 export { FormInputPassword } from './components/FormInputPassword';
 export { FormInputDatePicker } from './components/FormInputDatePicker';
 export { FormDateTimePicker } from './components/FormDateTimePicker';
@@ -101,6 +102,16 @@ export { Redirect } from './components/Redirect/Redirect';
 export { ReadOnlyField } from './components/ReadOnlyField';
 export type { IReadOnlyFieldProps } from './components/ReadOnlyField';
 export { Radio } from './components/Radio/Radio';
+export type {
+	IRadioProps,
+	IRadioGroupProps,
+	IRadioButtonProps,
+	TRadioVariant,
+	TRadioChangeEvent,
+	TRadioGroupOptionType,
+	TRadioGroupButtonStyle,
+	TRadioComponent,
+} from './components/Radio/Radio';
 export { Select } from './components/Select';
 export { Segmented } from './components/Segmented/Segmented';
 export type { ISegmentedProps } from './components/Segmented/Segmented';

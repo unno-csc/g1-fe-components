@@ -13,9 +13,9 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 // Wrapper que obtiene el control del contexto del formulario
-const BoundFormRadio = (props: Omit<IFormRadioProps<FormValues>, 'control'>) => {
+const BoundFormRadio = ({ name, ...rest }: Omit<IFormRadioProps<FormValues>, 'control'>) => {
 	const { control } = useFormContext<FormValues>();
-	return <FormRadio {...props} control={control as any} />;
+	return <FormRadio label="" name={name} {...rest} control={control} />;
 };
 
 // ---------- Wrapper con RHF ----------
@@ -24,7 +24,7 @@ const RHFForm: React.FC<{
 	defaultValues?: Partial<FormValues>;
 	mode?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
 	onSubmitLogLabel?: string;
-}> = ({ children, defaultValues, mode = 'onBlur', onSubmitLogLabel = 'submit' }) => {
+}> = ({ children, defaultValues, mode = 'onBlur' }) => {
 	const methods = useForm<FormValues>({
 		resolver: zodResolver(schema),
 		defaultValues: { gender: undefined, ...defaultValues },
@@ -34,9 +34,8 @@ const RHFForm: React.FC<{
 	return (
 		<FormProvider {...methods}>
 			<form
-				onSubmit={methods.handleSubmit(data => {
-					// eslint-disable-next-line no-console
-					console.log(onSubmitLogLabel, data);
+				onSubmit={methods.handleSubmit(() => {
+					// submit handler for story demo
 				})}
 				style={{ width: 360 }}
 			>
@@ -130,10 +129,8 @@ export const ShowErrorOnSubmit: Story = {
 		],
 	},
 	render: args => (
-		<RHFForm mode="onSubmit" onSubmitLogLabel="submit-invalid">
+		<RHFForm mode="onSubmit">
 			<BoundFormRadio {...args} />
 		</RHFForm>
 	),
 };
-
-
