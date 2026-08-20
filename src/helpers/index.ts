@@ -89,6 +89,29 @@ import {
 	updateChildUnderParent,
 } from './treeNode';
 
+import {
+	encryptData,
+	decryptData,
+	decryptDataFromStorage,
+	setDataEncryptedInStorage,
+} from './encrypt';
+
+export {
+	encryptData,
+	decryptData,
+	decryptDataFromStorage,
+	setDataEncryptedInStorage,
+};
+
+export type { AppEnvironment } from './environmentWatermark';
+export {
+	ENVIRONMENT_WATERMARK_LAYER_CLASSNAME,
+	HEADER_ENVIRONMENT_WATERMARK_LAYER_CLASSNAME,
+	getEnvironmentWatermarkLabel,
+	renderEnvironmentWatermark,
+	renderHeaderEnvironmentWatermark,
+} from './environmentWatermark';
+
 export {
 	addOrderParamIfMissing,
 	buildQueryParams,

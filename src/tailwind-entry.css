@@ -800,6 +800,78 @@ body,
 	font-weight: 400 !important;
 }
 
+/* ===== TableMobileTypeCollapse: header visible con acciones a la derecha ===== */
+
+.itsa-table-mobile-collapse .ant-collapse-header {
+	align-items: center !important;
+	background: #f8fafc !important;
+	border-bottom: 1px solid #e5e7eb !important;
+	overflow: visible !important;
+}
+
+.itsa-table-mobile-collapse .ant-collapse-item {
+	background: #ffffff !important;
+}
+
+.itsa-table-mobile-collapse .ant-collapse-header-text {
+	flex: 1 1 auto !important;
+	min-width: 0 !important;
+	overflow: visible !important;
+}
+
+.itsa-table-mobile-collapse .ant-collapse-content,
+.itsa-table-mobile-collapse .ant-collapse-content-box {
+	background: #ffffff !important;
+}
+
+.itsa-table-mobile-collapse .ant-collapse-content-box {
+	padding: 0 !important;
+}
+
+.itsa-table-mobile-collapse .ant-collapse-expand-icon {
+	padding-inline-start: 8px !important;
+}
+
+/* Refresh bar: sits above table header, same background, no visual gap */
+
+.itsa-table-wrapper--refresh .itsa-table-refresh-bar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 32px;
+	padding: 0 8px;
+	background: #eef1f3;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.itsa-table-wrapper--refresh .itsa-table-refresh-button {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: auto;
+	padding: 0 4px;
+	line-height: 1.1;
+}
+
+.itsa-table-wrapper--refresh .ant-table-wrapper {
+	margin-top: 0;
+}
+
+.itsa-table-wrapper--refresh .itsa-table--with-refresh .ant-table-header {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.itsa-table-wrapper--refresh .itsa-table--with-refresh .ant-table-thead > tr > th:first-child {
+	border-top-left-radius: 0 !important;
+}
+
+.itsa-table-wrapper--refresh .itsa-table--with-refresh .ant-table-thead > tr > th:last-child {
+	border-top-right-radius: 0 !important;
+}
+
 /* ===== Dirty Fields Feedback ===== */
 .dirty-field .ant-input,
 .dirty-field .ant-input-password,

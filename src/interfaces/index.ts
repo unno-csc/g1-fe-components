@@ -486,3 +486,28 @@ export interface IActionsValidatePermission {
 	moduleId: number;
 	submoduleId: number;
 }
+
+export type IFiltersSelectMultiFilter = Record<string, string>;
+
+export interface IFieldConfig<T extends object = Record<string, unknown>> {
+	key: Extract<keyof T, string>;
+	label: string;
+	placeholder: string;
+	visible?: boolean;
+}
+
+export interface SelectMultiFilterProps<T extends object = Record<string, unknown>> {
+	data: T[];
+	loading?: boolean;
+	value?: T | null;
+	fields: IFieldConfig<T>[];
+	valueKey: Extract<keyof T, string>;
+	placeholder?: string;
+
+	allowClear?: boolean;
+	filtersDebounceMs?: number;
+
+	onFiltersChange?: (filters: IFiltersSelectMultiFilter) => void;
+	onSelect?: (item: T) => void;
+	onClear?: () => void;
+}
