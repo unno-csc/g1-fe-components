@@ -1,70 +1,260 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Radio component > renders label when provided 1`] = `
+exports[`Radio component > renders Radio.Button items correctly 1`] = `
 <div>
-  <div>
-    <p>
-      Choose option
-    </p>
-    <div
-      class="ant-radio-group ant-radio-group-outline motor1-radio css-dev-only-do-not-override-mncuj7"
+  <div
+    class="ant-radio-group ant-radio-group-outline motor1-radio-group itsa-radio--default css-dev-only-do-not-override-mncuj7"
+  >
+    <label
+      class="ant-radio-button-wrapper motor1-radio-button itsa-radio--default css-dev-only-do-not-override-mncuj7"
     >
-      <label
-        class="ant-radio-wrapper css-dev-only-do-not-override-mncuj7"
+      <span
+        class="ant-radio-button"
       >
+        <input
+          checked=""
+          class="ant-radio-button-input"
+          name="test-id"
+          type="radio"
+          value="s"
+        />
         <span
-          class="ant-radio ant-wave-target"
-        >
-          <input
-            class="ant-radio-input"
-            name="test-id"
-            type="radio"
-            value="1"
-          />
-          <span
-            class="ant-radio-inner"
-          />
-        </span>
+          class="ant-radio-button-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-button-label"
+      >
+        Pequeño
+      </span>
+    </label>
+    <label
+      class="ant-radio-button-wrapper ant-radio-button-wrapper-checked motor1-radio-button itsa-radio--default css-dev-only-do-not-override-mncuj7"
+    >
+      <span
+        class="ant-radio-button ant-radio-button-checked"
+      >
+        <input
+          class="ant-radio-button-input"
+          name="test-id"
+          type="radio"
+          value="m"
+        />
         <span
-          class="ant-radio-label"
-        >
-          Option 1
-        </span>
-      </label>
-    </div>
+          class="ant-radio-button-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-button-label"
+      >
+        Mediano
+      </span>
+    </label>
+    <label
+      class="ant-radio-button-wrapper motor1-radio-button itsa-radio--default css-dev-only-do-not-override-mncuj7"
+    >
+      <span
+        class="ant-radio-button"
+      >
+        <input
+          class="ant-radio-button-input"
+          name="test-id"
+          type="radio"
+          value="l"
+        />
+        <span
+          class="ant-radio-button-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-button-label"
+      >
+        Grande
+      </span>
+    </label>
   </div>
 </div>
 `;
 
-exports[`Radio component > renders radio options and allows selection 1`] = `
+exports[`Radio component > renders radio group with compound Radio items and allows selection 1`] = `
 <div>
-  <div>
-    <div
-      class="ant-radio-group ant-radio-group-outline motor1-radio css-dev-only-do-not-override-mncuj7"
+  <div
+    class="ant-radio-group ant-radio-group-outline motor1-radio-group itsa-radio--default css-dev-only-do-not-override-mncuj7"
+  >
+    <label
+      class="ant-radio-wrapper motor1-radio itsa-radio--default css-dev-only-do-not-override-mncuj7"
     >
-      <label
-        class="ant-radio-wrapper css-dev-only-do-not-override-mncuj7"
+      <span
+        class="ant-radio ant-wave-target"
       >
+        <input
+          checked=""
+          class="ant-radio-input"
+          name="test-id"
+          type="radio"
+          value="false"
+        />
         <span
-          class="ant-radio ant-wave-target"
-        >
-          <input
-            checked=""
-            class="ant-radio-input"
-            name="test-id"
-            type="radio"
-            value="1"
-          />
-          <span
-            class="ant-radio-inner"
-          />
-        </span>
+          class="ant-radio-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-label"
+      >
+        Venta Normal
+      </span>
+    </label>
+    <label
+      class="ant-radio-wrapper ant-radio-wrapper-checked motor1-radio itsa-radio--default css-dev-only-do-not-override-mncuj7"
+    >
+      <span
+        class="ant-radio ant-wave-target ant-radio-checked"
+      >
+        <input
+          class="ant-radio-input"
+          name="test-id"
+          type="radio"
+          value="true"
+        />
         <span
-          class="ant-radio-label"
-        >
-          Option 1
-        </span>
-      </label>
+          class="ant-radio-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-label"
+      >
+        Consignación
+      </span>
+    </label>
+  </div>
+</div>
+`;
+
+exports[`Radio component > renders radio options array and allows selection 1`] = `
+<div>
+  <div
+    class="ant-radio-group ant-radio-group-outline motor1-radio-group itsa-radio--default css-dev-only-do-not-override-mncuj7"
+  >
+    <label
+      class="ant-radio-wrapper css-dev-only-do-not-override-mncuj7"
+    >
+      <span
+        class="ant-radio ant-wave-target"
+      >
+        <input
+          checked=""
+          class="ant-radio-input"
+          name="test-id"
+          type="radio"
+          value="1"
+        />
+        <span
+          class="ant-radio-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-label"
+      >
+        Option 1
+      </span>
+    </label>
+    <label
+      class="ant-radio-wrapper ant-radio-wrapper-checked css-dev-only-do-not-override-mncuj7"
+    >
+      <span
+        class="ant-radio ant-wave-target ant-radio-checked"
+      >
+        <input
+          class="ant-radio-input"
+          name="test-id"
+          type="radio"
+          value="2"
+        />
+        <span
+          class="ant-radio-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-label"
+      >
+        Option 2
+      </span>
+    </label>
+  </div>
+</div>
+`;
+
+exports[`Radio component > renders single radio item correctly 1`] = `
+<div>
+  <label
+    class="ant-radio-wrapper motor1-radio itsa-radio--default css-dev-only-do-not-override-mncuj7"
+  >
+    <span
+      class="ant-radio ant-wave-target ant-radio-checked"
+    >
+      <input
+        class="ant-radio-input"
+        type="radio"
+        value="terms"
+      />
+      <span
+        class="ant-radio-inner"
+      />
+    </span>
+    <span
+      class="ant-radio-label"
+    >
+      Acepto términos y condiciones
+    </span>
+  </label>
+</div>
+`;
+
+exports[`Radio component > renders with warning variant correctly 1`] = `
+<div>
+  <div
+    class="ant-radio-group ant-radio-group-outline motor1-radio-group itsa-radio--warning css-dev-only-do-not-override-mncuj7"
+  >
+    <label
+      class="ant-radio-wrapper ant-radio-wrapper-checked motor1-radio itsa-radio--warning css-dev-only-do-not-override-mncuj7"
+    >
+      <span
+        class="ant-radio ant-wave-target ant-radio-checked"
+      >
+        <input
+          checked=""
+          class="ant-radio-input"
+          name="test-id"
+          type="radio"
+          value="warn"
+        />
+        <span
+          class="ant-radio-inner"
+        />
+      </span>
+      <span
+        class="ant-radio-label"
+      >
+        Advertencia
+      </span>
+    </label>
+  </div>
+</div>
+`;
+
+exports[`Radio component > supports legacy usage with label, options and value props directly on Radio 1`] = `
+<div>
+  <div
+    class="motor1-radio-container"
+  >
+    <p
+      class="text-sm font-medium text-gray-800 mb-1"
+    >
+      Modo de visualización
+    </p>
+    <div
+      class="ant-radio-group ant-radio-group-outline motor1-radio-group itsa-radio--default css-dev-only-do-not-override-mncuj7"
+    >
       <label
         class="ant-radio-wrapper ant-radio-wrapper-checked css-dev-only-do-not-override-mncuj7"
       >
@@ -72,10 +262,11 @@ exports[`Radio component > renders radio options and allows selection 1`] = `
           class="ant-radio ant-wave-target ant-radio-checked"
         >
           <input
+            checked=""
             class="ant-radio-input"
             name="test-id"
             type="radio"
-            value="2"
+            value="detail"
           />
           <span
             class="ant-radio-inner"
@@ -84,7 +275,29 @@ exports[`Radio component > renders radio options and allows selection 1`] = `
         <span
           class="ant-radio-label"
         >
-          Option 2
+          Detalle
+        </span>
+      </label>
+      <label
+        class="ant-radio-wrapper css-dev-only-do-not-override-mncuj7"
+      >
+        <span
+          class="ant-radio ant-wave-target"
+        >
+          <input
+            class="ant-radio-input"
+            name="test-id"
+            type="radio"
+            value="list"
+          />
+          <span
+            class="ant-radio-inner"
+          />
+        </span>
+        <span
+          class="ant-radio-label"
+        >
+          Lista
         </span>
       </label>
     </div>

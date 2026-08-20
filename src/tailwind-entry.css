@@ -164,17 +164,17 @@ body,
 }
 
 .itsa-radio--default .ant-radio .ant-radio-inner {
-  border-color: var(--ant-colorBorder, #d9d9d9) !important;
+	border-color: var(--ant-colorBorder, #d9d9d9);
 }
 
 .itsa-radio--default .ant-radio-wrapper:hover .ant-radio-inner,
-.itsa-radio--default .ant-radio:hover .ant-radio-inner,
-.itsa-radio--default .ant-radio-input:focus+.ant-radio-inner {
-  border-color: var(--ant-colorBorder, #d9d9d9) !important;
+.itsa-radio--default .ant-radio:hover .ant-radio-inner {
+	border-color: var(--motor1-primary) !important;
 }
 
 .itsa-radio--default .ant-radio-checked .ant-radio-inner {
 	border-color: var(--motor1-primary) !important;
+	background-color: #ffffff !important;
 }
 
 .itsa-radio--default .ant-radio-checked .ant-radio-inner::after {
@@ -185,42 +185,32 @@ body,
 	background-color: var(--motor1-primary) !important;
 }
 
-/* Fondo del círculo interno siempre blanco al estar checked */
-.itsa-radio--default .ant-radio-checked .ant-radio-inner,
-.itsa-radio--default .ant-radio-wrapper-checked .ant-radio .ant-radio-inner {
-	background-color: #ffffff !important;
+.itsa-radio--default .ant-radio-input:focus + .ant-radio-inner {
+	box-shadow: none !important;
 }
 
-/* Anillo exterior (pseudo-elemento) y focus outline */
-.itsa-radio--default .ant-radio-checked::after {
-	border-color: var(--motor1-primary) !important;
-}
-
-.itsa-radio--default .ant-radio-wrapper:hover .ant-radio-checked::after {
-	border-color: var(--motor1-primary) !important;
-}
-
-.itsa-radio--default .ant-radio-input:focus+.ant-radio-inner {
+.itsa-radio--default .ant-radio-input:focus-visible + .ant-radio-inner {
 	box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.24) !important;
 }
 
+/* Radio warning variant */
 .itsa-radio--warning {
 	--ant-colorPrimary: #F9A825;
 	--ant-primary-color: #F9A825;
 }
 
 .itsa-radio--warning .ant-radio .ant-radio-inner {
-	border-color: var(--ant-colorBorder, #d9d9d9) !important;
+	border-color: var(--ant-colorBorder, #d9d9d9);
 }
 
 .itsa-radio--warning .ant-radio-wrapper:hover .ant-radio-inner,
-.itsa-radio--warning .ant-radio:hover .ant-radio-inner,
-.itsa-radio--warning .ant-radio-input:focus+.ant-radio-inner {
-	border-color: var(--ant-colorBorder, #d9d9d9) !important;
+.itsa-radio--warning .ant-radio:hover .ant-radio-inner {
+	border-color: #F9A825 !important;
 }
 
 .itsa-radio--warning .ant-radio-checked .ant-radio-inner {
 	border-color: #F9A825 !important;
+	background-color: #ffffff !important;
 }
 
 .itsa-radio--warning .ant-radio-checked .ant-radio-inner::after {
@@ -231,20 +221,11 @@ body,
 	background-color: #F9A825 !important;
 }
 
-.itsa-radio--warning .ant-radio-checked .ant-radio-inner,
-.itsa-radio--warning .ant-radio-wrapper-checked .ant-radio .ant-radio-inner {
-	background-color: #ffffff !important;
+.itsa-radio--warning .ant-radio-input:focus + .ant-radio-inner {
+	box-shadow: none !important;
 }
 
-.itsa-radio--warning .ant-radio-checked::after {
-	border-color: #F9A825 !important;
-}
-
-.itsa-radio--warning .ant-radio-wrapper:hover .ant-radio-checked::after {
-	border-color: #F9A825 !important;
-}
-
-.itsa-radio--warning .ant-radio-input:focus+.ant-radio-inner {
+.itsa-radio--warning .ant-radio-input:focus-visible + .ant-radio-inner {
 	box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.24) !important;
 }
 
