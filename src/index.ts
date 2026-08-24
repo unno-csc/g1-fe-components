@@ -71,6 +71,11 @@ export { ExcelFileUploader } from './components/ExcelFileUploader';
 export type { IExcelFileUploaderProps } from './components/ExcelFileUploader';
 export { PdfFileUploader } from './components/PdfFileUploader';
 export type { IPdfFileUploaderProps } from './components/PdfFileUploader';
+export { FormFileUploader } from './components/FormFileUploader';
+export type {
+	IFormFileUploaderProps,
+	TFormFileUploaderVariantColor,
+} from './components/FormFileUploader';
 export { InputPassword } from './components/InputPassword';
 export { InputAddress } from './components/InputAddress';
 export { Input } from './components/Input/Input';
