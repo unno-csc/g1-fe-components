@@ -1,23 +1,200 @@
 export const getSegmentedStyles = (): string => `
+	/* ==========================================================================
+	   Base
+	   ========================================================================== */
+
 	.itsa-segmented.ant-segmented {
-		padding: 4px;
-		border-radius: 12px;
-		background: #FFFBEA;
-		border: 1px solid #FDE68A;
+		padding: 2px !important;
+		border-radius: 8px !important;
+		background-color: #FAFAFA;
+		border: 1px solid #E4E4E7;
+		box-sizing: border-box;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
+	/* AntD internal group */
+	.itsa-segmented .ant-segmented-group {
+		position: relative;
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+
+	/* Selected thumb */
+	.itsa-segmented .ant-segmented-thumb {
+		border-radius: 6px !important;
+		transition:
+			transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+			width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+	}
+
+	/* Common item */
 	.itsa-segmented .ant-segmented-item {
-		color: #111111;
-		border-radius: 8px;
+		border-radius: 6px !important;
 		font-weight: 500;
+		font-size: 13px;
+		transition:
+			color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+			background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 	}
 
 	.itsa-segmented .ant-segmented-item-selected {
-		background: #111111;
-		color: #FFFFFF;
+		border-radius: 6px !important;
+		font-weight: 600 !important;
+		z-index: 2;
 	}
 
-	.itsa-segmented .ant-segmented-item-selected:hover {
-		color: #FFFFFF;
+	.itsa-segmented .ant-segmented-item-label {
+		min-height: 28px !important;
+		line-height: 28px !important;
+		padding: 0 12px !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		user-select: none;
+	}
+
+	/* ==========================================================================
+	   Variant: Default
+	   Zinc container + White active segment
+	   ========================================================================== */
+
+	.itsa-segmented--default.ant-segmented {
+		background-color: #FAFAFA !important; /* zinc-50 */
+		border: 1px solid #E4E4E7 !important; /* zinc-200 */
+	}
+
+	.itsa-segmented--default .ant-segmented-thumb,
+	.itsa-segmented--default .ant-segmented-item-selected {
+		background: #FFFFFF !important;
+		background-color: #FFFFFF !important;
+		color: #18181B !important; /* zinc-900 */
+		box-shadow:
+			0 1px 3px 0 rgba(0, 0, 0, 0.08),
+			0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+	}
+
+	.itsa-segmented--default .ant-segmented-item {
+		color: #52525B !important; /* zinc-600 */
+	}
+
+	.itsa-segmented--default
+		.ant-segmented-item:hover:not(.ant-segmented-item-disabled):not(.ant-segmented-item-selected) {
+		color: #27272A !important; /* zinc-800 */
+		background-color: #F4F4F5 !important; /* zinc-100 */
+	}
+
+	.itsa-segmented--default .ant-segmented-item-selected:hover {
+		color: #18181B !important;
+	}
+
+	/* ==========================================================================
+	   Variant: Brand
+	   Amber container + White active segment
+	   ========================================================================== */
+
+	.itsa-segmented--brand.ant-segmented {
+		background-color: #FFFBEB !important; /* amber-50 */
+		border: 1px solid #FDE68A !important; /* amber-200 */
+	}
+
+	.itsa-segmented--brand .ant-segmented-thumb,
+	.itsa-segmented--brand .ant-segmented-item-selected {
+		background: #FFFFFF !important;
+		background-color: #FFFFFF !important;
+		color: #18181B !important; /* zinc-900 */
+		box-shadow:
+			0 1px 3px 0 rgba(0, 0, 0, 0.08),
+			0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+	}
+
+	.itsa-segmented--brand .ant-segmented-item {
+		color: #B45309; /* amber-700 */
+	}
+
+	.itsa-segmented--brand
+		.ant-segmented-item:hover:not(.ant-segmented-item-disabled):not(.ant-segmented-item-selected) {
+		color: #92400E !important; /* amber-800 */
+		background-color: #FEF3C7 !important; /* amber-100 */
+	}
+
+	.itsa-segmented--brand .ant-segmented-item-selected:hover {
+		color: #18181B !important;
+	}
+
+	/* ==========================================================================
+	   Sizes
+	   ========================================================================== */
+
+	/* Size: small */
+
+	.itsa-segmented.ant-segmented-sm,
+	.itsa-segmented--sm.ant-segmented {
+		padding: 2px !important;
+		border-radius: 6px !important;
+	}
+
+	.itsa-segmented.ant-segmented-sm .ant-segmented-thumb,
+	.itsa-segmented.ant-segmented-sm .ant-segmented-item,
+	.itsa-segmented.ant-segmented-sm .ant-segmented-item-selected,
+	.itsa-segmented--sm .ant-segmented-thumb,
+	.itsa-segmented--sm .ant-segmented-item,
+	.itsa-segmented--sm .ant-segmented-item-selected {
+		border-radius: 4px !important;
+	}
+
+	.itsa-segmented.ant-segmented-sm .ant-segmented-item-label,
+	.itsa-segmented--sm .ant-segmented-item-label {
+		min-height: 24px !important;
+		line-height: 24px !important;
+		font-size: 12px !important;
+		padding: 0 8px !important;
+	}
+
+	/* Size: large */
+
+	.itsa-segmented.ant-segmented-lg,
+	.itsa-segmented--lg.ant-segmented {
+		padding: 3px !important;
+		border-radius: 10px !important;
+	}
+
+	.itsa-segmented.ant-segmented-lg .ant-segmented-thumb,
+	.itsa-segmented.ant-segmented-lg .ant-segmented-item,
+	.itsa-segmented.ant-segmented-lg .ant-segmented-item-selected,
+	.itsa-segmented--lg .ant-segmented-thumb,
+	.itsa-segmented--lg .ant-segmented-item,
+	.itsa-segmented--lg .ant-segmented-item-selected {
+		border-radius: 8px !important;
+	}
+
+	.itsa-segmented.ant-segmented-lg .ant-segmented-item-label,
+	.itsa-segmented--lg .ant-segmented-item-label {
+		min-height: 36px !important;
+		line-height: 36px !important;
+		font-size: 14px !important;
+		padding: 0 16px !important;
+	}
+
+	/* ==========================================================================
+	   Disabled
+	   ========================================================================== */
+
+	.itsa-segmented.ant-segmented-disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	.itsa-segmented.ant-segmented-disabled .ant-segmented-thumb,
+	.itsa-segmented.ant-segmented-disabled .ant-segmented-item-selected {
+		background: #E4E4E7 !important; /* zinc-200 */
+		background-color: #E4E4E7 !important;
+		box-shadow: none !important;
+		color: #71717A !important; /* zinc-500 */
+	}
+
+	.itsa-segmented.ant-segmented-disabled .ant-segmented-item {
+		color: #A1A1AA !important; /* zinc-400 */
+		cursor: not-allowed;
 	}
 `;

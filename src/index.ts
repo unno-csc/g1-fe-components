@@ -60,6 +60,7 @@ export { FilterSelect } from './components/FilterSelect';
 export { FilterInput } from './components/FilterInput';
 export { FormTextarea } from './components/FormTextarea';
 export { FilterInputDatePicker } from './components/FilterInputDatePicker';
+export type { IFilterInputDatePickerProps, FilterInputDatePickerProps } from './components/FilterInputDatePicker';
 export { FilterDateRangePicker } from './components/FilterDateRangePicker';
 export type { FilterDateRangePickerProps } from './components/FilterDateRangePicker';
 export { FormDateRangePicker } from './components/FormDateRangePicker';
@@ -86,6 +87,7 @@ export { Input } from './components/Input/Input';
 export { InputNumber } from './components/InputNumber';
 export type { InputNumberProps } from './components/InputNumber';
 export { InputSearch } from './components/InputSearch';
+export type { IInputSearchProps, InputSearchProps } from './components/InputSearch';
 export { Image } from './components/Image';
 export { ImageCatalog } from './components/ImageCatalog';
 export { ImagePreview } from './components/ImagePreview';
@@ -131,7 +133,7 @@ export type {
 } from './components/Radio/Radio';
 export { Select } from './components/Select';
 export { Segmented } from './components/Segmented/Segmented';
-export type { ISegmentedProps } from './components/Segmented/Segmented';
+export type { ISegmentedProps, TSegmentedVariant } from './components/Segmented/Segmented';
 export { SelectMultiFilter } from './components/SelectMultiFilter';
 export { SelectedItemsSlider } from './components/SelectedItemsSlider';
 export type {
