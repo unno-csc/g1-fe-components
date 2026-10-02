@@ -14,6 +14,7 @@ export interface IConfirmDeleteModalProps {
   title?: string;
   entityName?: string;
   message?: string;
+  children?: ReactNode;
   details?: IConfirmDeleteDetailItem[];
   confirmLabel?: string;
   cancelLabel?: string;
@@ -27,6 +28,7 @@ export const ConfirmDeleteModal = ({
   title = 'Confirmar Eliminación',
   entityName = 'registro',
   message,
+  children,
   details = [],
   confirmLabel = 'Eliminar',
   cancelLabel = 'Cancelar',
@@ -51,6 +53,7 @@ export const ConfirmDeleteModal = ({
       }
     >
       <p>{displayMessage}</p>
+      {children}
       {details.length > 0 && (
         <div className="mt-3 p-3 bg-gray-50 rounded-md">
           {details.map((detail, index) => (
@@ -63,3 +66,5 @@ export const ConfirmDeleteModal = ({
     </Modal>
   );
 };
+
+ConfirmDeleteModal.displayName = 'ConfirmDeleteModal';

@@ -1,58 +1,39 @@
-import { DatePicker } from 'antd';
-import { DatePickerProps } from 'antd/lib';
-import dayjs, { Dayjs } from 'dayjs';
-import { useEffect, useState } from 'react';
+import { DatePicker, type DatePickerProps } from 'antd';
+import dayjs, { type Dayjs } from 'dayjs';
+import { memo, useEffect, useId, useState } from 'react';
+import classNames from 'classnames';
+import { FormLabel } from '@/components/FormLabel';
 
-export interface FilterInputDatePickerProps extends Omit<DatePickerProps, 'format' | 'value' | 'onChange' | 'defaultValue'> {
+export interface IFilterInputDatePickerProps extends Omit<DatePickerProps, 'format' | 'value' | 'onChange' | 'defaultValue'> {
 	title?: string;
+	label?: string;
 	defaultValue?: string;
 	value?: string;
 	format?: string;
+	containerClassName?: string;
 	onChange?: (value: string) => void;
 }
 
-/**
- * FilterInputDatePicker - Componente de filtro para selección de fechas
- * 
- * Componente de entrada de fecha optimizado para filtros de búsqueda con el mismo diseño
- * que FilterInput. Incluye resaltado visual cuando tiene valor y formateo de fecha configurable.
- * 
- * @component
- * @example
- * ```tsx
- * // Ejemplo básico
- * <FilterInputDatePicker
- *   title="Fecha de inicio"
- *   placeholder="Seleccione fecha"
- *   onChange={(date) => console.log(date)}
- * />
- * 
- * // Con valor controlado
- * <FilterInputDatePicker
- *   title="Fecha de nacimiento"
- *   value={birthDate}
- *   format="DD/MM/YYYY"
- *   onChange={setBirthDate}
- * />
- * 
- * // Con formato personalizado
- * <FilterInputDatePicker
- *   title="Fecha de inicio"
- *   value={startDate}
- *   format="YYYY-MM-DD"
- *   onChange={handleDateChange}
- *   placeholder="YYYY-MM-DD"
- * />
- * ```
- */
-export const FilterInputDatePicker = ({
+export type FilterInputDatePickerProps = IFilterInputDatePickerProps;
+
+const FilterInputDatePickerComponent = ({
 	title,
+	label,
 	defaultValue,
 	value,
 	format = 'YYYY-MM-DD',
 	onChange,
+	className,
+	style,
+	id: customId,
+	containerClassName,
+	picker,
 	...rest
-}: FilterInputDatePickerProps) => {
+}: IFilterInputDatePickerProps) => {
+	const generatedId = useId();
+	const id = customId ?? generatedId;
+	const displayLabel = label ?? title;
+
 	const [internalValue, setInternalValue] = useState<string | undefined>(
 		value ?? defaultValue
 	);
@@ -60,50 +41,59 @@ export const FilterInputDatePicker = ({
 	const resolvedValue = value ?? internalValue;
 
 	useEffect(() => {
-		if (defaultValue) {
+		if (value === undefined && defaultValue !== undefined) {
 			setInternalValue(defaultValue);
 		}
-	}, [defaultValue]);
+	}, [defaultValue, value]);
 
 	const handleChange = (date: Dayjs | null) => {
 		const formattedValue = date ? date.format(format) : '';
-		
-		if (onChange) {
-			onChange(formattedValue);
-		}
-		
-		if (typeof value === 'undefined') {
+
+		onChange?.(formattedValue);
+
+		if (value === undefined) {
 			setInternalValue(formattedValue);
 		}
 	};
 
-	const hasValue = resolvedValue && resolvedValue.trim().length > 0;
+	const hasValue = !!(resolvedValue && resolvedValue.trim().length > 0);
 
 	const dateValue = resolvedValue && dayjs(resolvedValue, format).isValid() 
 		? dayjs(resolvedValue, format) 
 		: null;
 
+	const resolvedFormat = picker && picker !== 'date' ? format : { format, type: 'mask' as const };
+
+	const dynamicStyle = hasValue
+		? {
+				borderColor: '#93c5fd',
+				boxShadow: '0 0 0 2px rgba(59, 130, 246, 0.15)',
+		  }
+		: undefined;
+
 	return (
-		<div className="flex flex-col gap-0">
-			<small className="font-bold pl-1">{title}</small>
+		<div className={classNames('flex flex-col gap-0.5', containerClassName)}>
+			{displayLabel && <FormLabel label={displayLabel} htmlFor={id} />}
 			<DatePicker
 				{...rest}
-				className="w-full"
-				format={{
-					format: format,
-					type: 'mask',
-				}}
+				id={id}
+				picker={picker}
+				className={classNames('w-full rounded-lg max-h-8', className)}
+				format={resolvedFormat}
 				value={dateValue}
 				onChange={handleChange}
 				style={{
-					height: '27px',
-					lineHeight: '18px',
-					fontSize: '13px',
 					transition: 'box-shadow 160ms ease, border-color 160ms ease',
-					boxShadow: hasValue ? '0 0 0 2px rgba(59, 130, 246, 0.15)' : undefined,
-					borderColor: hasValue ? '#93c5fd' : undefined,
+					...dynamicStyle,
+					...style,
 				}}
 			/>
 		</div>
 	);
 };
+
+export const FilterInputDatePicker = memo(FilterInputDatePickerComponent) as typeof FilterInputDatePickerComponent & {
+	displayName?: string;
+};
+
+FilterInputDatePicker.displayName = 'FilterInputDatePicker';

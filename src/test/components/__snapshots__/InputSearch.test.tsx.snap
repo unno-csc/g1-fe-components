@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputSearch component > renders correctly with default props and matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-0.5"
+  >
+    <span
+      class="ant-input-affix-wrapper css-dev-only-do-not-override-mncuj7 ant-input-outlined w-full rounded-lg max-h-8"
+    >
+      <input
+        aria-invalid="false"
+        class="ant-input css-dev-only-do-not-override-mncuj7"
+        id="_r_0_"
+        placeholder="Buscar algo..."
+        type="text"
+        value=""
+      />
+      <span
+        class="ant-input-suffix"
+      >
+        <span
+          class="itsa-inputsearch-suffix inline-flex items-center gap-1"
+        >
+          <span
+            style="visibility: visible; display: none;"
+          />
+        </span>
+      </span>
+    </span>
+  </div>
+</div>
+`;
