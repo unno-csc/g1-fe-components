@@ -76,7 +76,7 @@ export interface IUserInformation {
 // TODO: clean up this file after implementations starts
 import { EAddressType, EEmailType, EPhoneConnectionType, EPhoneType } from '@/enums';
 import { TDate, TInputOptions, TInputRules, TTextTransform } from '@/types';
-import { SelectProps } from 'antd';
+import { SelectProps, type RowProps } from 'antd';
 import { FilterValue, SorterResult, TablePaginationConfig } from 'antd/es/table/interface';
 import { Dayjs } from 'dayjs';
 import { ReactNode } from 'react';
@@ -268,6 +268,23 @@ export interface IIcon {
 	iconName: string;
 }
 
+export type TLocationColSpanValue =
+	| number
+	| string
+	| { span?: number; flex?: string | number };
+
+export interface ILocationSelectorColSpan {
+	xs?: TLocationColSpanValue;
+	sm?: TLocationColSpanValue;
+	md?: TLocationColSpanValue;
+	lg?: TLocationColSpanValue;
+	xl?: TLocationColSpanValue;
+	xxl?: TLocationColSpanValue;
+	default?: TLocationColSpanValue;
+}
+
+export type TLocationColSpan = number | ILocationSelectorColSpan;
+
 export interface ILocationSelectorProps {
 	optionsCountries: SelectProps['options'];
 	optionsProvinces: SelectProps['options'];
@@ -280,13 +297,13 @@ export interface ILocationSelectorProps {
 	onChangeCountry: (value: number) => void;
 	onChangeProvince: (value: number) => void;
 	onChangeCanton: (value: number) => void;
-	onChangeParish: (value: number) => void;
+	onChangeParish?: (value: number) => void;
 	valueCountryId?: number;
 	valueProvinceId?: number;
 	valueCantonId?: number;
 	valueParishId?: number;
-	onChangeOtherCountryDescription: (value: string) => void;
-	otherCountryDescription: string;
+	onChangeOtherCountryDescription?: (value: string) => void;
+	otherCountryDescription?: string;
 	showParish?: boolean;
 	showProvince?: boolean;
 	showCanton?: boolean;
@@ -300,6 +317,10 @@ export interface ILocationSelectorProps {
 	errorProvince?: string;
 	errorCanton?: string;
 	errorParish?: string;
+	colSpan?: TLocationColSpan;
+	gutter?: RowProps['gutter'];
+	className?: string;
+	colClassName?: string;
 }
 
 export interface IUserRole {
