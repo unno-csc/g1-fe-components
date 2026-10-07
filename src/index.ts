@@ -107,7 +107,14 @@ export { List } from './components/List';
 export { Login } from './components/Login';
 export { Link } from './components/Link/Link';
 export { LocationDisplay } from './components/LocationDisplay/LocationDisplay';
-export { LocationSelector } from './components/LocationSelector';
+export {
+	LocationSelector,
+	type ILocationSelectorProps,
+	type ILocationSelectorColSpan,
+	type TLocationColSpan,
+	type TLocationColSpanValue,
+	type LocationSelectorProps,
+} from './components/LocationSelector';
 export { Map } from './components/Map';
 export { Modal } from './components/Modal/Modal';
 export { ModalResponsive } from './components/ModalResponsive';
