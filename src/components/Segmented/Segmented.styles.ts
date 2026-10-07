@@ -40,7 +40,7 @@ export const getSegmentedStyles = (): string => `
 
 	.itsa-segmented .ant-segmented-item-selected {
 		border-radius: 6px !important;
-		font-weight: 600 !important;
+		font-weight: 500 !important;
 		z-index: 2;
 	}
 
@@ -70,6 +70,7 @@ export const getSegmentedStyles = (): string => `
 		background-color: #FFFFFF !important;
 		color: #18181B !important; /* zinc-900 */
 		box-shadow:
+			inset 0 0 0 1px #FFB900, /* amber-400 */
 			0 1px 3px 0 rgba(0, 0, 0, 0.08),
 			0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
 	}
