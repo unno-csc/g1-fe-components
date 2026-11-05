@@ -1,3 +1,7 @@
+export interface IPermissions {
+	agencies: IAgency[];
+}
+
 export interface IGetPermissionResponse {
 	code: number;
 	message: string;
@@ -11,6 +15,13 @@ export interface Result {
 export interface IAgency {
 	id: number;
 	name: string;
+	subAgencies?: ISubAgency[];
+	modules?: IModule[];
+}
+
+export interface ISubAgency {
+	id: number;
+	name: string;
 	modules: IModule[];
 }
 
@@ -18,20 +29,34 @@ export interface IModule {
 	id: number;
 	name: string;
 	icon: string;
-	entorno: string;
+	entorno?: string;
 	submodules: ISubmodule[];
 }
 
 export interface ISubmodule {
 	id: number;
 	name: string;
-	pathPadre: string | null;
-	path: string | null;
-	icon: string | null;
+	pathPadre?: string | null;
+	path?: string | null;
+	icon?: string | null;
 	url?: string | null;
 	groups?: ISubmodule[];
-	programs?: ISubmodule[];
+	programs?: IProgram[] | ISubmodule[];
 	actions?: IActions;
+	root?: boolean;
+	roleId?: number;
+}
+
+export interface IProgram {
+	id: number;
+	roleId?: number;
+	name: string;
+	root?: boolean;
+	path?: string | null;
+	icon?: string | null;
+	url?: string | null;
+	actions?: IActions;
+	pathPadre?: string | null;
 }
 
 export interface IActions {
@@ -63,14 +88,20 @@ export interface IUserRole {
 	moduleId: number;
 }
 
+export interface IUserBusinessLine {
+	id: number;
+	name: string;
+}
+
 export interface IUserInformation {
 	identification: string;
 	identificationType: string;
-	businessLineIds: number[];
+	businessLines: IUserBusinessLine[];
 	name: string;
 	picture: string;
 	email: string;
 	roles: IUserRole[];
+	userId?: number;
 }
 //--------------------------------------------------->
 // TODO: clean up this file after implementations starts
@@ -329,14 +360,20 @@ export interface IUserRole {
 	name: string;
 	moduleId: number;
 }
+export interface IUserBusinessLine {
+	id: number;
+	name: string;
+}
+
 export interface IUserInformation {
 	identification: string;
 	identificationType: string;
-	businessLineIds: number[];
+	businessLines: IUserBusinessLine[];
 	name: string;
 	picture: string;
 	email: string;
 	roles: IUserRole[];
+	userId?: number;
 }
 export interface IProgramActions {
 	actions: IActions;
@@ -532,3 +569,15 @@ export interface SelectMultiFilterProps<T extends object = Record<string, unknow
 	onSelect?: (item: T) => void;
 	onClear?: () => void;
 }
+
+export interface IItemNotification {
+	key: string;
+	title: string;
+	description: string;
+	date: string;
+	onClick: () => void;
+	entity: string;
+	icon?: ReactNode;
+	isReadDate?: string;
+}
+

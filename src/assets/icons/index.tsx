@@ -7,6 +7,7 @@ import AddProductIcon from './icon-add-product.svg?react';
 import AddToCartIcon from './icon-add-to-cart.svg?react';
 import AiIcon from './icon-ai.svg?react';
 import AlertIcon from './icon-alert.svg?react';
+import AllTerrainIcon from './icon-all-terrain.svg?react';
 import AppleIcon from './icon-apple.svg?react';
 import ArrowLeftIcon from './icon-arrow-left.svg?react';
 import ArrowRightIcon from './icon-arrow-right.svg?react';
@@ -33,6 +34,8 @@ import EditIcon from './icon-edit.svg?react';
 import EmailIcon from './icon-email.svg?react';
 import EyeIcon from './icon-eye.svg?react';
 import EyeOffIcon from './icon-eye-off.svg?react';
+import EngineIcon from './icon-engine.svg?react';
+import QrIcon from './icon-qr-svgrepo.svg?react';
 import FeriadosIcon from './icon-feriados.svg?react';
 import FilterIcon from './icon-filter.svg?react';
 import FiltersIcon from './icon-filters.svg?react';
@@ -165,6 +168,7 @@ export {
   AddToCartIcon,
   AiIcon,
   AlertIcon,
+  AllTerrainIcon,
   AppleIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -190,6 +194,7 @@ export {
   EditIcon,
   EmailIcon,
   EyeIcon,
+  EngineIcon,
   EyeOffIcon,
   FeriadosIcon,
   FilterIcon,
@@ -252,6 +257,7 @@ export {
   Promo1Icon,
   ProvidenciasIcon,
   PuntosIcon,
+  QrIcon,
   ReclamosIcon,
   RegalosIcon,
   RemoveItemIcon,

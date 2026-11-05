@@ -6,6 +6,20 @@ export default {
 	content: ['./src/**/*.{ts,tsx}', './.storybook/**/*.{js,ts,jsx,tsx,mdx}'],
 	theme: {
 		colors: {
+			'motor1-primary': 'var(--motor1-primary)',
+			'motor1-amber': {
+				50: 'var(--motor1-amber-50)',
+				100: 'var(--motor1-amber-100)',
+				200: 'var(--motor1-amber-200)',
+				300: 'var(--motor1-amber-300)',
+				400: 'var(--motor1-amber-400)',
+				500: 'var(--motor1-amber-500)',
+				600: 'var(--motor1-amber-600)',
+				700: 'var(--motor1-amber-700)',
+				800: 'var(--motor1-amber-800)',
+				900: 'var(--motor1-amber-900)',
+				950: 'var(--motor1-amber-950)',
+			},
 			amber: colors.amber,
 			zinc: colors.zinc,
 			'primary-50': '#FCEEEE',
@@ -19,6 +33,8 @@ export default {
 			'primary-800': '#000000',
 			'primary-900': '#6b6b6b',
 
+			black: '#000000',
+			white: '#FFFFFF',
 			'black-100': '#000000',
 			'white-100': '#FFFFFF',
 

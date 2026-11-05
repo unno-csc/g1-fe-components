@@ -51,7 +51,7 @@ export const TableMobileTypeCollapse = <T extends object>({
 	selectionMode = 'multiple',
 }: ITableMobileTypeCollapseProps<T>) => {
 	const { programId, fnApiValidatePermissionAction } = useControlActions();
-	const currentAgency = useAppLayoutStore(state => state.currentAgency);
+	const currentAgency = useAppLayoutStore(state => state.subAgency ?? state.currentAgency);
 	const { actionsUser } = useActionsUser();
 	const leadingColumns = columns.slice(0, 2);
 
