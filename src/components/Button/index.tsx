@@ -26,7 +26,7 @@ export interface IButtonProps {
 
 export const Button = (props: IButtonProps) => {
 	const isOnline = useOnlineStatus();
-	const currentAgency = useAppLayoutStore(state => state.currentAgency);
+	const currentAgency = useAppLayoutStore(state => state.subAgency ?? state.currentAgency);
 	const { programId, fnApiValidatePermissionAction } = useControlActions();
 	const { userActionPermissions } = useUserActionPermissions();
 	// const { width, block = false, actionType, validateWithApiAction = false, showBtnDisabled, loading = false } = props;

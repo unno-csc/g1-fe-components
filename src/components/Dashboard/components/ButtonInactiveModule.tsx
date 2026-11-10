@@ -5,18 +5,64 @@ export interface IButtonInactiveModuleProps {
 	name: string;
 	icon: string;
 	onclick: () => void;
+	colorDefault?: string;
+	colorHover?: string;
 }
 
-export const ButtonInactiveModule = ({ name, icon, onclick }: IButtonInactiveModuleProps) => {
-		return (
+export const ButtonInactiveModule = ({
+	name,
+	icon,
+	onclick,
+	colorDefault,
+	colorHover = 'var(--motor1-amber-400)',
+}: IButtonInactiveModuleProps) => {
+	return (
 		<ButtonAntd
 			type="default"
 			onClick={onclick}
-			className="flex flex-col items-center justify-center min-w-[70px] w-[70px] sm:w-[100px] md:w-[115px] lg:w-[125px] xl:w-[135px] 2xl:w-[145px] h-auto min-h-[70px] sm:min-h-[90px] md:min-h-[105px] lg:min-h-[115px] xl:min-h-[120px] bg-white border border-gray-200 hover:border-gray-300 hover:shadow-md active:scale-95 py-2 px-1.5 sm:py-2.5 sm:px-2 md:px-2.5 gap-1 sm:gap-1.5 rounded-lg sm:rounded-xl shadow-sm sm:shadow-md transition-all duration-200"
+			className="
+			group
+			flex flex-col items-center justify-center 
+			min-w-[70px] w-[70px] 
+			sm:w-[100px] md:w-[115px] lg:w-[125px] xl:w-[135px] 2xl:w-[145px] 
+			h-auto min-h-[70px] 
+			sm:min-h-[90px] md:min-h-[105px] lg:min-h-[115px] xl:min-h-[120px] 
+			bg-white border border-gray-200 
+			text-gray-400
+			hover:shadow-md 
+			hover:!border-[var(--border-hover)]
+			hover:!text-[var(--icon-hover)]
+			hover:[--icon-default:var(--icon-hover)]
+			[&_svg_*]:transition-colors [&_svg_*]:duration-200
+			active:scale-95 py-2 px-1.5 
+			sm:py-2.5 sm:px-2 md:px-2.5 gap-1 sm:gap-1.5 
+			rounded-lg sm:rounded-xl shadow-sm 
+			sm:shadow-md transition-all duration-200
+			"
+			style={
+				{
+					...(colorDefault && { '--icon-default': colorDefault }),
+					'--text-default': colorDefault || '#9ca3af',
+					'--icon-hover': colorHover,
+					'--border-hover': colorHover,
+				} as React.CSSProperties
+			}
 		>
-			{getIcon(icon, 'w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12 !text-gray-400 shrink-0')}
+			{getIcon(
+				icon,
+				'w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12 shrink-0 [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain',
+			)}
 			<strong
-				className="whitespace-normal text-[8px] leading-[1.2] sm:text-[10px] sm:leading-snug md:text-xs md:leading-tight lg:text-xs xl:text-sm text-gray-400 text-center break-words hyphens-auto px-0.5 w-full"
+				className="
+			whitespace-normal text-[8px] 
+			leading-[1.2] 
+			sm:text-[10px] sm:leading-snug md:text-xs md:leading-tight lg:text-xs xl:text-sm 
+			text-center break-words hyphens-auto 
+			px-0.5 w-full
+			text-[var(--text-default)]
+			transition-colors duration-200
+			group-hover:![color:var(--icon-hover)]
+			"
 			>
 				{name}
 			</strong>

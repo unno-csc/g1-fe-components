@@ -83,7 +83,7 @@ export const getProgramActionsbyPath = (path: string, module: IModule): IProgram
 		const programs = submodule.programs;
 		if (programs && programs.length > 0) {
 			for (const program of programs) {
-				const url = program.url ? program.url : undefined;
+				const url = program.url ?? program.path ?? undefined;
 				const programPath = program.path ? program.path : undefined;
 
 				// Buscar tanto en url como en path
@@ -95,9 +95,10 @@ export const getProgramActionsbyPath = (path: string, module: IModule): IProgram
 					matchesPath(programPath, targetPath);
 
 				if (urlMatch || pathMatch) {
-					if (program.actions) {
-						return { actions: program.actions, program: program };
-					}
+					return {
+						actions: program.actions ?? ({} as IActions),
+						program: program as unknown as ISubmodule,
+					};
 				}
 			}
 		}
@@ -109,7 +110,7 @@ export const getProgramActionsbyPath = (path: string, module: IModule): IProgram
 				const groupPrograms = group.programs;
 				if (groupPrograms && groupPrograms.length > 0) {
 					for (const program of groupPrograms) {
-						const url = program.url ? program.url : undefined;
+						const url = program.url ?? program.path ?? undefined;
 						const programPath = program.path ? program.path : undefined;
 
 						// Buscar tanto en url como en path
@@ -121,9 +122,10 @@ export const getProgramActionsbyPath = (path: string, module: IModule): IProgram
 							matchesPath(programPath, targetPath);
 
 						if (urlMatch || pathMatch) {
-							if (program.actions) {
-								return { actions: program.actions, program: program };
-							}
+							return {
+								actions: program.actions ?? ({} as IActions),
+								program: program as unknown as ISubmodule,
+							};
 						}
 					}
 				}

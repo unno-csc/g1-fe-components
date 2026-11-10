@@ -6,6 +6,6 @@
 <style>
   .stroke-primary { stroke: var(--icon-default, #B3B3B3); }
   .stroke-secondary { stroke: var(--icon-default, black); }
-  .fill-secondary { fill: var(--icon-default, #EA3B48); }
+  .fill-secondary { fill: var(--icon-default, #FBBF24); }
 </style>
 </svg>

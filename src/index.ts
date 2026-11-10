@@ -1,8 +1,11 @@
 export { PdfMaintenance } from './components/PdfMaintenance';
 export { Alert } from './components/Alert/Alert';
-export { AppLayout } from './components/AppLayout';
+export { AppLayout } from './components/AppLayoutRefactor';
+export type { AppLayoutProps } from './components/AppLayoutRefactor';
 export { Avatar } from './components/Avatar/Avatar';
 export { Badge } from './components/Badge/Badge';
+export { BusinessLineSelect } from './components/BusinessLineSelect';
+export type { IBusinessLineSelectProps } from './components/BusinessLineSelect';
 export { Button } from './components/Button/';
 export { ButtonAddItem } from './components/ButtonAddItem/';
 export { ButtonAntd } from './components/ButtonAntd/';

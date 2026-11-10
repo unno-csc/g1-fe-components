@@ -4,7 +4,7 @@ import { AppstoreOutlined } from '@ant-design/icons';
 
 export type IconName = keyof typeof Icons;
 
-interface GetIconOptions {
+export interface IGetIconOptions {
 	className?: string;
 	style?: React.CSSProperties;
 	/**
@@ -12,8 +12,9 @@ interface GetIconOptions {
 	 */
 	size?: number | string;
 }
+export type GetIconOptions = IGetIconOptions;
 
-export const getIconByName = (name: string | null | undefined, options: GetIconOptions = {}) => {
+export const getIconByName = (name: string | null | undefined, options: IGetIconOptions = {}) => {
 	const { className, style, size } = options;
 	const iconsMap = Icons as unknown as Record<string, React.ComponentType<any>>;
 	const IconComponent = name ? iconsMap[name] : undefined;
@@ -43,5 +44,6 @@ export const resolveIconComponent = (name: string | null | undefined): React.Com
 	const iconsMap = Icons as unknown as Record<string, React.ComponentType<any>>;
 	return name ? iconsMap[name] ?? null : null;
 };
+
 
 

@@ -10,11 +10,11 @@
 </g>
 <defs>
 <clipPath id="clip0_162270_53818">
-<rect width="23.726" height="21.3275" fill="white"/>
+<rect width="23.95" height="24.43" fill="white"/>
 </clipPath>
 </defs>
 <style>
   .primary { fill: var(--icon-default, black); }
-  .secondary { fill: var(--icon-default, #EA3B48); }
+  .secondary { fill: var(--icon-default, #FBBF24); }
 </style>
 </svg>

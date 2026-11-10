@@ -10,9 +10,22 @@
 		"Segoe UI Emoji", "Noto Color Emoji";
 }
 
-/* Variable de color primario global para este paquete */
+/* Variables corporativas globales Motor1 */
 :root {
 	--motor1-primary: #F9A825;
+
+	/* Paleta corporativa Amber */
+	--motor1-amber-50: #FFFBEB;
+	--motor1-amber-100: #FEF3C7;
+	--motor1-amber-200: #FDE68A;
+	--motor1-amber-300: #FCD34D;
+	--motor1-amber-400: #FBBF24;
+	--motor1-amber-500: #F59E0B;
+	--motor1-amber-600: #D97706;
+	--motor1-amber-700: #B45309;
+	--motor1-amber-800: #92400E;
+	--motor1-amber-900: #78350F;
+	--motor1-amber-950: #451A03;
 }
 
 html,
@@ -41,6 +54,59 @@ body,
 
 .menu-options .ant-menu {
 	overflow-x: hidden !important;
+}
+
+.menu-options .ant-menu-inline .ant-menu-item,
+.menu-options .ant-menu-inline .ant-menu-submenu-title {
+	height: 32px !important;
+	line-height: 32px !important;
+	margin-block: 2px !important;
+	border-radius: 6px !important;
+}
+
+.menu-options .ant-menu-inline .ant-menu-item:not(.ant-menu-item-selected):hover,
+.menu-options .ant-menu-inline .ant-menu-submenu-title:hover {
+	background-color: rgba(255, 255, 255, 0.45) !important;
+	color: #1F2937 !important;
+}
+
+.menu-options .ant-menu .ant-menu-item-icon {
+	width: 16px !important;
+	min-width: 16px !important;
+	max-width: 16px !important;
+	height: 16px !important;
+	min-height: 16px !important;
+	max-height: 16px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-shrink: 0 !important;
+	margin-inline-end: 8px !important;
+	overflow: hidden !important;
+}
+
+.menu-options .ant-menu .ant-menu-item-icon > span,
+.menu-options .ant-menu .ant-menu-item-icon .anticon {
+	width: 16px !important;
+	min-width: 16px !important;
+	max-width: 16px !important;
+	height: 16px !important;
+	min-height: 16px !important;
+	max-height: 16px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-shrink: 0 !important;
+}
+
+.menu-options .ant-menu .ant-menu-item-icon svg {
+	width: 16px !important;
+	height: 16px !important;
+	max-width: 16px !important;
+	max-height: 16px !important;
+	display: block !important;
+	object-fit: contain !important;
+	flex-shrink: 0 !important;
 }
 
 .menu-options .ant-menu-submenu .ant-menu-submenu>.ant-menu-submenu-title {
@@ -853,6 +919,25 @@ body,
 	height: auto;
 	padding: 0 4px;
 	line-height: 1.1;
+}
+
+/* Business line select: light blue border + selected value styling */
+.itsa-business-line-select.ant-select:not(.ant-select-disabled) .ant-select-selector,
+.itsa-business-line-select.ant-select.ant-select-focused:not(.ant-select-disabled) .ant-select-selector,
+.itsa-business-line-select.ant-select.ant-select-open:not(.ant-select-disabled) .ant-select-selector {
+	border-radius: 0.5rem !important;
+	border-width: 1.8px !important;
+	border-color: #93c5fd !important;
+	box-shadow: none !important;
+}
+
+.itsa-business-line-select.ant-select:not(.ant-select-disabled) .ant-select-selection-item {
+	color: #ea3b48 !important;
+	font-weight: 600 !important;
+}
+
+.itsa-business-line-select.ant-select:not(.ant-select-disabled) .ant-select-arrow {
+	color: #93c5fd !important;
 }
 
 .itsa-table-wrapper--refresh .ant-table-wrapper {

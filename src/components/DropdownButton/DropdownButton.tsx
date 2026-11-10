@@ -48,7 +48,7 @@ export const DropdownButton = ({
 	placement = 'bottomLeft',
 }: IDropdownButtonProps) => {
 	const isOnline = useOnlineStatus();
-	const currentAgency = useAppLayoutStore(state => state.currentAgency);
+	const currentAgency = useAppLayoutStore(state => state.subAgency ?? state.currentAgency);
 	const { programId, fnApiValidatePermissionAction } = useControlActions();
 	const { userActionPermissions } = useUserActionPermissions();
 
