@@ -2,9 +2,9 @@ import { DEFAULT_PAGINATION_CONFIG, TABLE_SCROLL } from '@/constants';
 import { EActionType } from '@/enums';
 import { disabledActionButton, parseSorter } from '@/helpers/functions';
 import { useControlActions } from '@/hooks';
-import { useAppLayoutStore } from '@/store';
+import { useActionsUser, useAppLayoutStore } from '@/store';
 import { ITableColumnAction, TStrictColumnType, TStrictTableColumnsType } from '@/types';
-import { MoreOutlined, ReloadOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, MoreOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Table as AntTable, TableProps as AntTableProps, Button, Dropdown, TablePaginationConfig, Modal } from 'antd';
 import { ColumnsType, FilterValue, SorterResult, TableCurrentDataSource, TableLocale } from 'antd/es/table/interface';
 import { MouseEvent, useState } from 'react';
@@ -70,8 +70,9 @@ export const Table = <T extends object>({
 	rowClassName,
 	rootClassName,
 }: ITableProps<T>) => {
-	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
+	const { programId, fnApiValidatePermissionAction } = useControlActions();
 	const currentAgency = useAppLayoutStore(state => state.subAgency ?? state.currentAgency);
+	const { actionsUser } = useActionsUser();
 	const finalPagination = showPagination ? paginationConfig : false;
 	const baseTableScopeClass = 'itsa-table--head-rounded';
 	const resolvedRootClassName = [baseTableScopeClass, rootClassName, className].filter(Boolean).join(' ');
@@ -87,7 +88,7 @@ export const Table = <T extends object>({
 	});
 
 	const clickAction = async (action: ITableColumnAction<T>, record: T) => {
-		const isPermitted = disabledActionButton(action.actionType, actions);
+		const isPermitted = disabledActionButton(action.actionType, actionsUser);
 		if (isPermitted) return;
 		const isDisabled = typeof action.disabled === 'function' ? action.disabled(record) : !!action.disabled;
 		if (isDisabled) return;
@@ -144,38 +145,59 @@ export const Table = <T extends object>({
 				width: ACTIONS_COLUMN_WIDTH,
 				align: 'center',
 				fixed: 'right',
-				render: (record: T) => (
-					<Dropdown
-						disabled={!!getActionsDisabled?.(record)}
-						placement="bottomRight"
-						menu={{
-							items: (columnActions || [])
-								.filter(action => {
-									// const hasPermission = false;//! disabledActionButton(action.actionType, actions);
-									const actionDisabled =
-										typeof action.disabled === 'function' ? action.disabled(record) : !!action.disabled;
-									return !actionDisabled;
-								})
-								.map((action, index) => ({
-									label: action.title,
-									key: action.key || `action-${index}`,
-									icon: typeof action.icon === 'function' ? action.icon(record) : action.icon,
-									onClick: () => clickAction(action, record),
-									danger: action.danger,
-								})),
-						}}
-					>
-						<Button
-							type="text"
-							shape="round"
-							size="small"
-							className="w-full"
-							disabled={!!getActionsDisabled?.(record) || !!getActionsTriggerDisabled?.(record)}
+				render: (record: T) => {
+					const resultActionsItems = (columnActions || [])
+						.filter(action => {
+							const isDisabled = disabledActionButton(action.actionType, actionsUser);
+							if (isDisabled === true) {
+								return false;
+							}
+							const actionDisabled =
+								typeof action.disabled === 'function' ? action.disabled(record) : !!action.disabled;
+							return !actionDisabled;
+						})
+						.map((action, index) => ({
+							label: action.title,
+							key: action.key || `action-${index}`,
+							icon: typeof action.icon === 'function' ? action.icon(record) : action.icon,
+							onClick: () => clickAction(action, record),
+							danger: action.danger,
+						}));
+
+					const dropdownItems =
+						resultActionsItems.length > 0
+							? resultActionsItems
+							: [
+									{
+										label: 'Sin acciones disponibles',
+										key: 'no-actions',
+										icon: <InfoCircleOutlined />,
+										onClick: () => {},
+										danger: false,
+										disabled: true,
+									},
+								];
+
+					return (
+						<Dropdown
+							disabled={!!getActionsDisabled?.(record)}
+							placement="bottomRight"
+							menu={{
+								items: dropdownItems,
+							}}
 						>
-							<MoreOutlined style={{ fontSize: 24 }} rotate={90} />
-						</Button>
-					</Dropdown>
-				),
+							<Button
+								type="text"
+								shape="round"
+								size="small"
+								className="w-full"
+								disabled={!!getActionsDisabled?.(record) || !!getActionsTriggerDisabled?.(record)}
+							>
+								<MoreOutlined style={{ fontSize: 24 }} rotate={90} />
+							</Button>
+						</Dropdown>
+					);
+				},
 			};
 			return [...columns, actionsColumn];
 		}
