@@ -27,7 +27,7 @@ export const ControlActionsProvider = ({ children, fnApiValidatePermissionAction
 	};
 	
 	const [currentPath, setCurrentPath] = useState<string>(getInitialPath());
-	const currentModule = useAppLayoutStore(state => state.currentModule);
+	const currentModule = useAppLayoutStore(state => state.module);
 	const [actions, setActions] = useState<IActions>();
 	const [programId, setProgramId] = useState<number>();
 

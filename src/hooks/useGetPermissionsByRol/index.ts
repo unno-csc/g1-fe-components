@@ -10,7 +10,7 @@ export interface IUseGetUserInformationProps {
 
 export const useGetUserInformation = (): IUseGetUserInformationProps => {
 	const userInformation = useAppLayoutStore(state => state.userInformation);
-	const currentModule = useAppLayoutStore(state => state.currentModule);
+	const currentModule = useAppLayoutStore(state => state.module);
 
 	const userRole = useMemo((): IUserRole | undefined => {
 		return userInformation?.roles.find(role => role.moduleId === currentModule?.id) ?? undefined;

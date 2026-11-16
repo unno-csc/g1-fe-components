@@ -19,3 +19,5 @@ export { useDestructureRoutes } from './useDestructureRoutes/useDestructureRoute
 export { useImageUploadManager } from './useImageUploadManager';
 export { useSubmitWithDirtyCheck } from './useSubmitWithDirtyCheck';
 export { useBreakpoint } from '../components/Grid';
+export { useUserCurrentRole } from './useUserCurrentRole';
+export { useScreenViewport } from './useScreenViewport';

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type AppEnvironment = 'LOCAL' | 'DESARROLLO' | 'PRUEBAS' | 'PRODUCCION';
+export type AppEnvironment = 'LOCAL' | 'DESARROLLO' | 'PRUEBAS' | 'QA' | 'PRODUCCION';
 
 const LOGIN_WATERMARK_ROWS = 20;
 const LOGIN_WATERMARK_COLS = 10;
@@ -32,6 +32,7 @@ export function getEnvironmentWatermarkLabel(environment: AppEnvironment): strin
 		LOCAL: 'LOCAL',
 		DESARROLLO: 'DESARROLLO',
 		PRUEBAS: 'PRUEBAS',
+		QA: 'QA',
 		PRODUCCION: 'PRODUCCIÓN',
 	};
 	return map[environment];

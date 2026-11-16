@@ -1,11 +1,9 @@
-import type { StoryObj } from '@storybook/react';
-import type { ISubmodule } from '../../interfaces';
+import type { Decorator, StoryObj } from '@storybook/react';
 import { Dashboard } from '../../components/Dashboard';
-import { AppLayout } from '../../components/AppLayout';
-import { useAppLayoutStore } from '../../store/appLayout.store';
+import { AppLayout } from '../../components/AppLayoutRefactor';
+import { useAppLayoutStore } from '../../store';
+import { PERMISSIONS_MOCK } from '../../components/AppLayoutRefactor/mocks/permissions.mock';
 import { useEffect } from 'react';
-import { AGENCIES_DATA } from '../../constants/agencies';
-import { useNavigate } from 'react-router-dom';
 
 const meta = {
 	title: 'Components/Dashboard',
@@ -31,24 +29,20 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const withRealData = (Story: any, context: any) => {
-	const setCurrentAgency = useAppLayoutStore(state => state.setCurrentAgency);
-	
+const withRealData: Decorator = (Story) => {
+	const setPermissions = useAppLayoutStore(state => state.setPermissions);
+
 	useEffect(() => {
-		if (AGENCIES_DATA.length > 0) {
-			setCurrentAgency(AGENCIES_DATA[0]);
-		}
-	}, [setCurrentAgency]);
-	
-	return <Story {...context} />;
+		setPermissions(PERMISSIONS_MOCK);
+	}, [setPermissions]);
+
+	return <Story />;
 };
 
 export const Default: Story = {
 	decorators: [withRealData],
 	args: {
-		handleNavigateProgram: (program: ISubmodule) => {
-			console.log('Navegando a programa:', program);
-		},
+		handleNavigateProgram: () => {},
 	},
 	parameters: {
 		docs: {
@@ -75,20 +69,16 @@ export const Empty: Story = {
 export const WithinAppLayout: Story = {
 	decorators: [withRealData],
 	args: {
-		handleNavigateProgram: (program: ISubmodule) => {
-			console.log('Navegando a programa:', program);
-		},
+		handleNavigateProgram: () => {},
 	},
 	render: (args) => {
-		const navigate = useNavigate();
-		
 		return (
 			<AppLayout
-				navigateApp={navigate}
+				optionsCompany={[]}
 				loadingAppLayout={false}
+				onCloseSession={() => {}}
+				menuItemsNavigate={args.handleNavigateProgram}
 				userActions={{ items: [] }}
-				notifications={{ items: [] }}
-				onClickOptionMenu={() => {}}
 			>
 				<Dashboard {...args} />
 			</AppLayout>

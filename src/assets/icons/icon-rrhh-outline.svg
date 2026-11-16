@@ -16,6 +16,6 @@
 </defs>
 <style>
   .primary { fill: var(--icon-default, black); }
-  .secondary { fill: var(--icon-default, #EA3B48); }
+  .secondary { fill: var(--icon-default, #FBBF24); }
 </style>
 </svg>

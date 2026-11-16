@@ -12,7 +12,7 @@ export const ButtonActiveSubmodule = ({ name, onclick }: IButtonActiveSubmoduleP
 			type="text"
 			size="small"
 			onClick={onclick}
-			className="px-2 sm:px-3 min-h-[35px] h-auto flex items-center justify-center font-medium text-xs sm:text-sm rounded-none text-primary-700 border-0 hover:!text-primary-700 hover:!bg-transparent active:bg-primary-50/30 transition-all duration-200 whitespace-nowrap"
+			className="px-2 sm:px-3 min-h-[35px] h-auto flex items-center justify-center font-medium text-xs sm:text-sm rounded-none text-primary-700 border-0 hover:!text-primary-700 hover:!bg-transparent active:bg-gray-50 transition-all duration-200 whitespace-nowrap"
 		>
 			<strong className="text-xs sm:text-sm leading-tight">{name}</strong>
 		</ButtonAntd>

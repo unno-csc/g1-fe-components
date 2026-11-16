@@ -1,5 +1,4 @@
-import { IModule, ISubmodule } from '@/interfaces';
-import { useAppLayoutStore } from '@/store/appLayout.store';
+import { IModule, IProgram, ISubmodule } from '@/interfaces';
 import { useSidebarStore } from '@/hooks';
 import { ButtonActiveModule } from './ButtonActiveModule';
 import { ButtonInactiveModule } from './ButtonInactiveModule';
@@ -10,26 +9,26 @@ import { ButtonInactiveSubmodule } from './ButtonInactiveSubmodule';
 import { Input } from 'antd';
 import { getIcon } from '@/helpers/menu/menuDataTransformer';
 import { RightOutlined, SearchOutlined, SettingOutlined, DownOutlined } from '@ant-design/icons';
+import { useAppLayoutStore } from '@/store';
 
 export interface IHomeProps {
-	handleNavigateProgram: (program: ISubmodule) => void;
+	handleNavigateProgram: (program: IProgram) => void;
 }
 
 export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 	const collapsed = useSidebarStore(state => state.collapsed);
-	const currentModule = useAppLayoutStore(state => state.currentModule);
-	const setCurrentModule = useAppLayoutStore(state => state.setCurrentModule);
+	const currentModule = useAppLayoutStore(state => state.module);
+	const selectModule = useAppLayoutStore(state => state.selectModule);
 	const currentSubmodule = useAppLayoutStore(state => state.currentSubmodule);
-	const setCurrentSubmodule = useAppLayoutStore(state => state.setCurrentSubmodule);
-	const agencies = useAppLayoutStore(state => state.currentAgency);
-	const modules = agencies?.modules ?? [];
+	const selectSubmodule = useAppLayoutStore(state => state.selectSubmodule);
+	const subAgency = useAppLayoutStore(state => state.subAgency);
+	const modules = subAgency?.modules ?? [];
 	const submodules = currentModule?.submodules ?? [];
 	const [searchBySubmoduleId, setSearchBySubmoduleId] = useState<Record<ISubmodule['id'], string>>({});
 	const [openGroupIds, setOpenGroupIds] = useState<Record<ISubmodule['id'], Record<string | number, boolean>>>({});
 	const tabsContainerRef = useRef<HTMLDivElement | null>(null);
-	const tabRefs = useRef<Record<ISubmodule['id'], HTMLDivElement | null>>({} as any);
+	const tabRefs = useRef<Record<ISubmodule['id'], HTMLDivElement | null>>({});
 	const [indicator, setIndicator] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
-
 	const recomputeIndicator = () => {
 		if (!currentSubmodule) return;
 		const el = tabRefs.current[currentSubmodule.id];
@@ -57,13 +56,13 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 
 	const buttonHeader = (module: IModule) => {
 		if (module.id === currentModule?.id) {
-			return <ButtonActiveModule name={module.name} icon={module.icon} onclick={() => setCurrentModule(module)} />;
+			return <ButtonActiveModule name={module.name} icon={module.icon} onclick={() => selectModule(module.id)} />;
 		}
 
-		return <ButtonInactiveModule name={module.name} icon={module.icon} onclick={() => setCurrentModule(module)} />;
+		return <ButtonInactiveModule name={module.name} icon={module.icon} onclick={() => selectModule(module.id)} />;
 	};
 
-	const uniqueById = (items: ISubmodule[] = []) => {
+	const uniqueById = <T extends { id: number },>(items: T[] = []) => {
 		const seen = new Set<number>();
 		return items.filter(item => {
 			if (seen.has(item.id)) return false;
@@ -72,7 +71,7 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 		});
 	};
 
-	const programs = (programs: ISubmodule[], isNested = false) => {
+	const programs = (programs: IProgram[], isNested = false) => {
 		const paddingClass = isNested ? 'pl-2 sm:pl-3' : '';
 		return programs.map(program => {
 			const iconNode = program.icon
@@ -98,12 +97,14 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 
 	const groups = (groups: ISubmodule[]) => {
 		return groups.map((group, idx) => {
-			const open = openGroupIds[currentSubmodule?.id as any]?.[group.id] ?? idx === 0;
+			const subId = currentSubmodule?.id;
+			const open = subId !== undefined ? (openGroupIds[subId]?.[group.id] ?? idx === 0) : idx === 0;
 			const toggle = () => {
+				if (subId === undefined) return;
 				setOpenGroupIds(prev => ({
 					...prev,
-					[currentSubmodule?.id as any]: {
-						...(prev[currentSubmodule?.id as any] ?? {}),
+					[subId]: {
+						...(prev[subId] ?? {}),
 						[group.id]: !open,
 					},
 				}));
@@ -132,16 +133,16 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 		});
 	};
 
-	const filterUpdatePrograms = (items: ISubmodule[] = []) => {
-		return items.filter(program => !(program.path ?? '').includes('/update'));
+	const filterRootPrograms = (items: IProgram[] = []) => {
+		return items.filter(program => Boolean(program && program.root !== false));
 	};
 
 	const contentSubmodule = (submodule: ISubmodule) => {
 		const query = (searchBySubmoduleId[submodule.id] ?? '').toLowerCase().trim();
-		const basePrograms = filterUpdatePrograms(submodule.programs ?? []);
+		const basePrograms = filterRootPrograms(submodule.programs ?? []);
 		const baseGroups = (submodule.groups ?? []).map(group => ({
 			...group,
-			programs: filterUpdatePrograms(group.programs ?? []),
+			programs: filterRootPrograms(group.programs ?? []),
 		}));
 
 		const visiblePrograms = query
@@ -160,9 +161,9 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 					.filter(group => group.name.toLowerCase().includes(query) || (group.programs?.length ?? 0) > 0)
 			: baseGroups;
 
-		const groupedIds = new Set<NonNullable<ISubmodule['id']>>();
-		visibleGroups.forEach(g => (g.programs ?? []).forEach(p => groupedIds.add(p.id as any)));
-		const visibleProgramsDedup = visibleProgramsUnique.filter(p => !groupedIds.has(p.id as any));
+		const groupedIds = new Set<IProgram['id']>();
+		visibleGroups.forEach(group => group.programs.forEach(program => groupedIds.add(program.id)));
+		const visibleProgramsDedup = visibleProgramsUnique.filter(program => !groupedIds.has(program.id));
 
 		return (
 			<div className="flex-1 p-1 sm:p-2 min-h-0 h-full w-full overflow-y-auto">
@@ -181,7 +182,7 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 					name={submodule.name}
 					icon={submodule.icon ?? ''}
 					onclick={() => {
-						setCurrentSubmodule(submodule);
+						selectSubmodule(submodule.id);
 					}}
 				/>
 			);
@@ -191,7 +192,7 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 				name={submodule.name}
 				icon={submodule.icon ?? ''}
 				onclick={() => {
-					setCurrentSubmodule(submodule);
+					selectSubmodule(submodule.id);
 				}}
 			/>
 		);
@@ -220,7 +221,7 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 		<div className="flex-1 h-full w-full flex flex-col">
 			<div className="w-full">
 				<div className="flex flex-col w-full overflow-x-auto overflow-y-hidden">
-					<div className="flex flex-row flex-wrap gap-1.5 sm:gap-2 md:!gap-3 lg:!gap-4 justify-center py-3 sm:py-3">
+					<div className="flex flex-row flex-wrap gap-1.5 sm:gap-2 md:!gap-3 lg:!gap-4 justify-center py-3 sm:py-3 px-2">
 						{modules.map(module => (
 							<div key={module.id}>{buttonHeader(module)}</div>
 						))}
@@ -230,24 +231,28 @@ export const Home = ({ handleNavigateProgram }: IHomeProps) => {
 
 			<div className="w-full pt-1 sm:pt-2">
 				<div
-					ref={tabsContainerRef}
 					onScroll={recomputeIndicator}
-					className="relative flex flex-row flex-nowrap justify-center items-center overflow-x-auto pb-1"
+					className="w-full overflow-x-auto"
 				>
-					{submodules.map(submodule => (
-						<div
-							key={submodule.id}
-							ref={el => (tabRefs.current[submodule.id] = el)}
-							className="shrink-0"
-						>
-							{buttonSubmodule(submodule)}
-						</div>
-					))}
-					<div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[1px] bg-gray-200 z-0" />
 					<div
-						className="pointer-events-none absolute bottom-0 h-[2px] bg-primary-700 transition-all duration-300 ease-out z-10"
-						style={{ left: indicator.left, width: indicator.width }}
-					/>
+						ref={tabsContainerRef}
+						className="relative flex flex-row flex-nowrap justify-center items-center min-w-full w-max px-2 pb-1"
+					>
+						{submodules.map(submodule => (
+							<div
+								key={submodule.id}
+								ref={el => (tabRefs.current[submodule.id] = el)}
+								className="shrink-0"
+							>
+								{buttonSubmodule(submodule)}
+							</div>
+						))}
+						<div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[1px] bg-gray-200 z-0" />
+						<div
+							className="pointer-events-none absolute bottom-0 h-[2px] bg-primary-700 transition-all duration-300 ease-out z-10"
+							style={{ left: indicator.left, width: indicator.width }}
+						/>
+					</div>
 				</div>
 			</div>
 

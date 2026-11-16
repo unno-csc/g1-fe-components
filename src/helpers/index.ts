@@ -38,6 +38,7 @@ import {
 	mapPermissionsToMenuFormat,
 } from './objects';
 import { transformModuleToMenuData } from './menu/menuDataTransformer';
+import { filterOptions } from './filterOptions';
 import { clearLocalStorage } from './session';
 import { codeUserInputValidation } from './codeUserInputValidation';
 import {
@@ -123,6 +124,7 @@ export {
 	codeUserInputValidation,
 	createValueLabelMap,
 	fillRoute,
+	filterOptions,
 	filterMenuSidebar,
 	filterMenuTree,
 	filterNumericOnly,

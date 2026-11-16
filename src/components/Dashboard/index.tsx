@@ -1,8 +1,8 @@
-import { ISubmodule } from '@/interfaces';
+import { IProgram, ISubmodule } from '@/interfaces';
 import { Home } from './components/Home';
 
 export interface ICardModuleProps {
-	handleNavigateProgram: (program: ISubmodule) => void;
+	handleNavigateProgram: (program: IProgram | ISubmodule) => void;
 }
 
 export const Dashboard = ({ handleNavigateProgram }: ICardModuleProps) => {

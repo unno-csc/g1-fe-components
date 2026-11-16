@@ -3,13 +3,13 @@
 exports[`AppLayout > should render correctly with basic props 1`] = `
 <div>
   <div
-    class="flex h-[100dvh] w-full overflow-hidden"
+    class="flex h-[100dvh] w-full min-w-0 overflow-hidden"
   >
     <div
-      class="ant-layout p-2 gap-2 css-dev-only-do-not-override-mncuj7"
+      class="ant-layout h-full min-h-0 w-full min-w-0 md:p-0.5 gap-0.5 md:gap-2 css-dev-only-do-not-override-mncuj7"
     >
       <div
-        data-props="{"loadingAppLayout":false,"notifications":{"items":[]},"userActions":{"items":[]}}"
+        data-props="{"loadingAppLayout":false,"optionsCompany":[{"label":"Empresa 1","value":"1"}],"userActions":{"items":[]}}"
         data-testid="header-layout"
       >
         Header Content

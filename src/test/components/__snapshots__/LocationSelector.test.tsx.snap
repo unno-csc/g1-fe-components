@@ -21,7 +21,7 @@ exports[`LocationSelector component > renders default country selector and match
         </label>
       </div>
       <div
-        class="ant-select ant-select-outlined w-full rounded-lg css-dev-only-do-not-override-mncuj7 ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+        class="ant-select ant-select-outlined w-full rounded-lg w-full css-dev-only-do-not-override-mncuj7 ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
       >
         <div
           class="ant-select-selector"

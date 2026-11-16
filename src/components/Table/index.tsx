@@ -71,7 +71,7 @@ export const Table = <T extends object>({
 	rootClassName,
 }: ITableProps<T>) => {
 	const { programId, actions, fnApiValidatePermissionAction } = useControlActions();
-	const currentAgency = useAppLayoutStore(state => state.currentAgency);
+	const currentAgency = useAppLayoutStore(state => state.subAgency ?? state.currentAgency);
 	const finalPagination = showPagination ? paginationConfig : false;
 	const baseTableScopeClass = 'itsa-table--head-rounded';
 	const resolvedRootClassName = [baseTableScopeClass, rootClassName, className].filter(Boolean).join(' ');
