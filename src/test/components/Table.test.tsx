@@ -459,4 +459,17 @@ describe('Table component', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	it('renders "Sin acciones disponibles" when no actions are available in columnActions', async () => {
+		const user = userEvent.setup();
+		const { container } = render(
+			<Table {...defaultProps} showColumnActions={true} columnActions={[]} />,
+		);
+
+		const trigger = container.querySelector('.ant-dropdown-trigger');
+		expect(trigger).toBeInTheDocument();
+		await user.click(trigger!);
+
+		expect(await screen.findByText('Sin acciones disponibles')).toBeInTheDocument();
+	});
 });

@@ -86,7 +86,7 @@ export const useCustomNavigation = () => {
 
         const { data } = await securityApi.get<IValidateRouteResponse>(
           API_VERSIONS_MODULE.security + "validate-route/",
-          { params: { path: normalized, agency_id: agencyId } }
+          { params: { path: normalized, agency_id: agencyId, agencyId } }
         );
 
         const ok = data?.code === 1 && !!data?.result;
